@@ -1,0 +1,95 @@
+entity TransportRoute {
+	routeName String
+	routeDetails String
+	routeMapUrl String
+	noOfStops Integer
+	routeFrequency String
+	status String
+	createdBy String
+	createdOn LocalDate
+	updatedBy String
+	updatedOn LocalDate
+	branchId Long
+}
+
+entity Stopage {
+	stopageName String
+	status String
+	createdBy String
+	createdOn LocalDate
+	updatedBy String
+	updatedOn LocalDate
+	branchId Long
+}
+
+entity TransportRouteStopageLink {
+}
+
+entity Vehicle{
+	vehicleNumber String
+	vehicleType String
+	capacity Long
+	ownerShip String
+	dateOfRegistration LocalDate
+	yearOfManufacturing String
+	manufacturingCompany String
+	model String
+	chasisNo String
+	rcNo String
+	status String
+	onBoardingDate LocalDate
+	branchId Long
+}
+
+entity VehicleDriverLink {
+	employeeId Long
+}
+
+entity Contract{
+	vendorName String
+	typeOfOwnerShip String
+	durationOfContract String
+	startDate LocalDate
+	endDate LocalDate
+}
+
+entity VehicleContractLink {	
+}
+
+entity TransportRouteVehicleLink {
+}
+
+entity Insurance{
+	insuranceCompany String
+	typeOfInsurance String
+	dateOfInsurance LocalDate
+	validTill LocalDate
+}
+
+entity Documents{
+	fileName String
+	fileType String
+	filePath String
+	msOneDriveFilePath String maxlength(5000)
+	jsrOakRepoFilePath String maxlength(5000)
+	awsFilePath String maxlength(5000)
+}
+
+relationship ManyToOne {
+	Documents{vehicle} to Vehicle,
+	Documents{contract} to Contract,
+	TransportRouteStopageLink{transportRoute} to TransportRoute,
+	TransportRouteStopageLink{stopage} to Stopage,
+	VehicleDriverLink{vehicle} to Vehicle,
+	VehicleContractLink{vehicle} to Vehicle,
+	VehicleContractLink{contract} to Contract,
+	TransportRouteVehicleLink{transportRoute} to TransportRoute,
+	TransportRouteVehicleLink{vehicle} to Vehicle
+}
+
+relationship OneToOne{
+	Insurance{vehicle} to Vehicle{insurance},
+}
+
+dto * with mapstruct
+service all with serviceImpl
