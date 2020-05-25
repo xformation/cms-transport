@@ -1,0 +1,37 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.synectiks.transport"
+    },
+    "jhipsterVersion": "6.7.1",
+    "applicationType": "microservice",
+    "baseName": "transport",
+    "packageName": "com.synectiks.transport",
+    "packageFolder": "com/synectiks/transport",
+    "serverPort": "9098",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MDdiNzhkOWU5OWY4NjllNGUwMzYyYjM1MDQ2MTk3Y2UzOTlhMDk1NjhlZDMxMTg3YjYxZTU0YjBmYTU2NmVjM2YyZTQ2M2EyOWVlMmE1ZGIzMmFiODRjZWJkOTJmZDc0ZjJhMzFjYzcwYmE3NjYwMTlmZDE0MzI3Y2VkZjkzMDU=",
+    "embeddableLaunchScript": false,
+    "creationTimestamp": 1590389246491,
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
