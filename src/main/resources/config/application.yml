@@ -89,7 +89,7 @@ spring:
 # ===================================================================
 
 server:
-  port: 9093
+  port: 9098
 # ===================================================================
 # JHipster specific properties
 #
@@ -153,6 +153,7 @@ jhipster:
 
 application:
   feeSrvUrl: http://localhost:9095
+  stdSrvUrl: http://localhost:9093
   imagePath: webapp/static/images
   influxDbUrl: http://100.81.5.25:8086
   influxDb: cmsdb

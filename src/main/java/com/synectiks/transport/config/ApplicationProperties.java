@@ -27,6 +27,7 @@ public class ApplicationProperties {
     private String paymentRedirectUrl;
     private String feeSrvUrl;
     private String transportSrvUrl;
+    private String stdSrvUrl;
 
     public String getImagePath() {
         return imagePath;
@@ -154,5 +155,13 @@ public class ApplicationProperties {
 
     public void setTransportSrvUrl(String transportSrvUrl) {
         this.transportSrvUrl = transportSrvUrl;
+    }
+
+    public String getStdSrvUrl() {
+        return stdSrvUrl;
+    }
+
+    public void setStdSrvUrl(String stdSrvUrl) {
+        this.stdSrvUrl = stdSrvUrl;
     }
 }
