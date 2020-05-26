@@ -1,0 +1,61 @@
+{
+    "name": "TransportRoute",
+    "fields": [
+        {
+            "fieldName": "routeName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "routeDetails",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "routeMapUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "noOfStops",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "routeFrequency",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createdBy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createdOn",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "updatedBy",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "updatedOn",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "branchId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200526071500",
+    "entityTableName": "transport_route",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "transport",
+    "applications": "*",
+    "microserviceName": "transport"
+}

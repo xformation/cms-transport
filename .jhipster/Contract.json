@@ -1,0 +1,37 @@
+{
+    "name": "Contract",
+    "fields": [
+        {
+            "fieldName": "vendorName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "typeOfOwnerShip",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "durationOfContract",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20200526072000",
+    "entityTableName": "contract",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "transport",
+    "applications": "*",
+    "microserviceName": "transport"
+}

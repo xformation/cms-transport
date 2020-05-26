@@ -1,0 +1,29 @@
+{
+    "name": "VehicleDriverLink",
+    "fields": [
+        {
+            "fieldName": "employeeId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "vehicle",
+            "otherEntityRelationshipName": "vehicleDriverLink",
+            "relationshipName": "vehicle",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200526071900",
+    "entityTableName": "vehicle_driver_link",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "transport",
+    "applications": "*",
+    "microserviceName": "transport"
+}

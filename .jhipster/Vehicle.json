@@ -1,0 +1,77 @@
+{
+    "name": "Vehicle",
+    "fields": [
+        {
+            "fieldName": "vehicleNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "vehicleType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "capacity",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "ownerShip",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateOfRegistration",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "yearOfManufacturing",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "manufacturingCompany",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "model",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "chasisNo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "rcNo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "onBoardingDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "branchId",
+            "fieldType": "Long"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "insurance",
+            "otherEntityRelationshipName": "vehicle",
+            "relationshipName": "insurance",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20200526071800",
+    "entityTableName": "vehicle",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "transport",
+    "applications": "*",
+    "microserviceName": "transport"
+}

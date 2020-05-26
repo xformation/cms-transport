@@ -1,0 +1,42 @@
+{
+    "name": "Insurance",
+    "fields": [
+        {
+            "fieldName": "insuranceCompany",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "typeOfInsurance",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateOfInsurance",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "validTill",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "vehicle",
+            "otherEntityRelationshipName": "insurance",
+            "relationshipName": "vehicle",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "changelogDate": "20200526072300",
+    "entityTableName": "insurance",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "transport",
+    "applications": "*",
+    "microserviceName": "transport"
+}

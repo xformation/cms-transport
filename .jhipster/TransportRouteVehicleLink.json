@@ -1,0 +1,31 @@
+{
+    "name": "TransportRouteVehicleLink",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "transportRoute",
+            "otherEntityRelationshipName": "transportRouteVehicleLink",
+            "relationshipName": "transportRoute",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "vehicle",
+            "otherEntityRelationshipName": "transportRouteVehicleLink",
+            "relationshipName": "vehicle",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200526072200",
+    "entityTableName": "transport_route_vehicle_link",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "transport",
+    "applications": "*",
+    "microserviceName": "transport"
+}

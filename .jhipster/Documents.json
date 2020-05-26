@@ -1,0 +1,68 @@
+{
+    "name": "Documents",
+    "fields": [
+        {
+            "fieldName": "fileName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fileType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "filePath",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "msOneDriveFilePath",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "5000"
+        },
+        {
+            "fieldName": "jsrOakRepoFilePath",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "5000"
+        },
+        {
+            "fieldName": "awsFilePath",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": "5000"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "vehicle",
+            "otherEntityRelationshipName": "documents",
+            "relationshipName": "vehicle",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "contract",
+            "otherEntityRelationshipName": "documents",
+            "relationshipName": "contract",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200526072400",
+    "entityTableName": "documents",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "transport",
+    "applications": "*",
+    "microserviceName": "transport"
+}

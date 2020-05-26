@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity TransportRouteVehicleLink.
+    -->
+    <changeSet id="20200526072200-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="transport_route_id"
+                                 baseTableName="transport_route_vehicle_link"
+                                 constraintName="fk_transport_route_vehicle_link_transport_route_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transport_route"/>
+
+        <addForeignKeyConstraint baseColumnNames="vehicle_id"
+                                 baseTableName="transport_route_vehicle_link"
+                                 constraintName="fk_transport_route_vehicle_link_vehicle_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="vehicle"/>
+
+    </changeSet>
+</databaseChangeLog>

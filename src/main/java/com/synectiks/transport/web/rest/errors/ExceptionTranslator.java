@@ -1,7 +1,14 @@
 package com.synectiks.transport.web.rest.errors;
 
-import io.github.jhipster.web.util.HeaderUtil;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.servlet.http.HttpServletRequest;
+
+import com.synectiks.transport.web.rest.util.HeaderUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +23,9 @@ import org.zalando.problem.ProblemBuilder;
 import org.zalando.problem.Status;
 import org.zalando.problem.spring.web.advice.ProblemHandling;
 import org.zalando.problem.spring.web.advice.security.SecurityAdviceTrait;
-import org.zalando.problem.violations.ConstraintViolationProblem;
+import org.zalando.problem.spring.web.advice.validation.ConstraintViolationProblem;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
@@ -36,7 +39,6 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     private static final String PATH_KEY = "path";
     private static final String VIOLATIONS_KEY = "violations";
 
-    @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     /**
@@ -78,7 +80,7 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
     public ResponseEntity<Problem> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, @Nonnull NativeWebRequest request) {
         BindingResult result = ex.getBindingResult();
         List<FieldErrorVM> fieldErrors = result.getFieldErrors().stream()
-            .map(f -> new FieldErrorVM(f.getObjectName().replaceFirst("DTO$", ""), f.getField(), f.getCode()))
+            .map(f -> new FieldErrorVM(f.getObjectName(), f.getField(), f.getCode()))
             .collect(Collectors.toList());
 
         Problem problem = Problem.builder()
@@ -87,6 +89,15 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
             .withStatus(defaultConstraintViolationStatus())
             .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION)
             .with(FIELD_ERRORS_KEY, fieldErrors)
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleNoSuchElementException(NoSuchElementException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.NOT_FOUND)
+            .with(MESSAGE_KEY, ErrorConstants.ENTITY_NOT_FOUND_TYPE)
             .build();
         return create(ex, problem, request);
     }

@@ -1,0 +1,31 @@
+{
+    "name": "TransportRouteStopageLink",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "transportRoute",
+            "otherEntityRelationshipName": "transportRouteStopageLink",
+            "relationshipName": "transportRoute",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "stopage",
+            "otherEntityRelationshipName": "transportRouteStopageLink",
+            "relationshipName": "stopage",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200526071700",
+    "entityTableName": "transport_route_stopage_link",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "transport",
+    "applications": "*",
+    "microserviceName": "transport"
+}

@@ -1,6 +1,6 @@
 package com.synectiks.transport;
 
-import io.github.jhipster.config.DefaultProfileUtil;
+import com.synectiks.transport.config.DefaultProfileUtil;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
