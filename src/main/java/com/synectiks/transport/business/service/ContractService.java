@@ -224,20 +224,20 @@ public class ContractService {
             vo = CommonUtil.createCopyProperties(contract, CmsContractVo.class);
             vo.setStrStartDate(contract.getStartDate() != null ? DateFormatUtil.changeLocalDateFormat(contract.getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
             vo.setStrEndDate(contract.getEndDate() != null ? DateFormatUtil.changeLocalDateFormat(contract.getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
-//            vo.setExitCode(0L);
-//            if (cmsContractVo.getId() == null) {
-//                vo.setExitDescription("Contract is added successfully");
-//                logger.debug("Contract is added successfully");
-//            } else {
-//                vo.setExitDescription("Contract is updated successfully");
-//                logger.debug("Contract is updated successfully");
-//            }
+            vo.setExitCode(0L);
+            if (cmsContractVo.getId() == null) {
+                vo.setExitDescription("Contract is added successfully");
+                logger.debug("Contract is added successfully");
+            } else {
+                vo.setExitDescription("Contract is updated successfully");
+                logger.debug("Contract is updated successfully");
+            }
 
 
         } catch (Exception e) {
             vo = new CmsContractVo();
-//            vo.setExitCode(1L);
-//            vo.setExitDescription("Due to some exception, contract data not be saved");
+            vo.setExitCode(1L);
+            vo.setExitDescription("Due to some exception, contract data not be saved");
             logger.error("Contract save failed. Exception : ", e);
         }
         logger.info("Contract saved successfully");

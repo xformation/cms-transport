@@ -32,6 +32,7 @@ public class CmsStopageVo extends CmsCommonVo  implements Serializable {
     private Long transportRouteStopageLinkId;
     private CmsTransportRouteStopageLinkVo cmsTransportRouteStopageLinkVo;
     private List<TransportRouteStopageLink> routeStopageList;
+    private List<CmsStopageVo> dataList = new ArrayList<>();
     private Branch branch;
     private Long branchId;
 
@@ -163,26 +164,36 @@ public class CmsStopageVo extends CmsCommonVo  implements Serializable {
         this.cmsTransportRouteVo = cmsTransportRouteVo;
     }
 
+    public List<CmsStopageVo> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<CmsStopageVo> dataList) {
+        this.dataList = dataList;
+    }
+
     @Override
     public String toString() {
         return "CmsStopageVo{" +
-            "id=" + id +
-            ", stopageName='" + stopageName + '\'' +
-            ", status='" + status + '\'' +
-            ", createdBy='" + createdBy + '\'' +
-            ", createdOn=" + createdOn +
-            ", strCreatedOn='" + strCreatedOn + '\'' +
-            ", updatedBy='" + updatedBy + '\'' +
-            ", updatedOn=" + updatedOn +
-            ", strUpdatedOn='" + strUpdatedOn + '\'' +
-            ", transportRouteId=" + transportRouteId +
-            ", cmsTransportRouteVo=" + cmsTransportRouteVo +
-            ", transportRouteStopageLinkId=" + transportRouteStopageLinkId +
-            ", cmsTransportRouteStopageLinkVo=" + cmsTransportRouteStopageLinkVo +
-            ", routeStopageList=" + routeStopageList +
-            ", branch=" + branch +
-            ", branchId=" + branchId +
-            "} " + super.toString();
+                "id=" + id +
+                ", stopageName='" + stopageName + '\'' +
+                ", status='" + status + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", createdOn=" + createdOn +
+                ", strCreatedOn='" + strCreatedOn + '\'' +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", updatedOn=" + updatedOn +
+                ", strUpdatedOn='" + strUpdatedOn + '\'' +
+                ", transportRouteId=" + transportRouteId +
+                ", stopageId=" + stopageId +
+                ", cmsTransportRouteVo=" + cmsTransportRouteVo +
+                ", transportRouteStopageLinkId=" + transportRouteStopageLinkId +
+                ", cmsTransportRouteStopageLinkVo=" + cmsTransportRouteStopageLinkVo +
+                ", routeStopageList=" + routeStopageList +
+                ", dataList=" + dataList +
+                ", branch=" + branch +
+                ", branchId=" + branchId +
+                "} " + super.toString();
     }
 
     public Long getStopageId() {

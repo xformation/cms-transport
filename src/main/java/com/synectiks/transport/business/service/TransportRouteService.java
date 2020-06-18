@@ -1,11 +1,9 @@
 package com.synectiks.transport.business.service;
 
-
 import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.CmsTransportRouteVo;
-import com.synectiks.transport.domain.vo.CmsVehicleVo;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRouteInput;
 import com.synectiks.transport.repository.TransportRouteRepository;
 import com.synectiks.transport.repository.TransportRouteStopageLinkRepository;

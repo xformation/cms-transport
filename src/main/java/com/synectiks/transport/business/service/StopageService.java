@@ -2,10 +2,10 @@ package com.synectiks.transport.business.service;
 
 import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.constant.CmsConstants;
-import com.synectiks.transport.domain.Branch;
-import com.synectiks.transport.domain.Stopage;
-import com.synectiks.transport.domain.TransportRouteStopageLink;
+import com.synectiks.transport.domain.*;
+import com.synectiks.transport.domain.vo.CmsContractVo;
 import com.synectiks.transport.domain.vo.CmsStopageVo;
+import com.synectiks.transport.domain.vo.CmsTransportRouteVo;
 import com.synectiks.transport.graphql.types.Stopage.AddStopageInput;
 import com.synectiks.transport.repository.StopageRepository;
 import com.synectiks.transport.repository.TransportRouteStopageLinkRepository;
@@ -15,15 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class StopageService {
@@ -48,31 +46,104 @@ public class StopageService {
     @Autowired
     private ApplicationProperties applicationProperties;
 
-
-
-    public List<CmsStopageVo> getStopageList(){
-        List<Stopage> list = this.stopageRepository.findAll();
-        List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
-        logger.debug("Stopage list : "+list);
-        return ls;
-    }
-    public Stopage getStopage(Long id){
-        Optional<Stopage> s = this.stopageRepository.findById(id);
-        if(s.isPresent()) {
-            return s.get();
+    public List<CmsStopageVo> getCmsStopageListOnFilterCriteria(Map<String, String> criteriaMap) {
+        Stopage obj = new Stopage();
+        boolean isFilter = false;
+        if (criteriaMap.get("id") != null) {
+            obj.setId(Long.parseLong(criteriaMap.get("id")));
+            isFilter = true;
         }
-            logger.debug("Stopage object not found for the given id. "+id+". Returning null");
-            return null;
-    }
-
-    public List<CmsStopageVo> getCmsStopageList(){
-        List<Stopage> list = this.stopageRepository.findAll();
+        if (criteriaMap.get("stopageName") != null) {
+            obj.setStopageName(criteriaMap.get("stopageName"));
+            isFilter = true;
+        }
+        if (criteriaMap.get("status") != null) {
+            obj.setStatus(criteriaMap.get("status"));
+            isFilter = true;
+        }
+        if (criteriaMap.get("createdBy") != null) {
+            obj.setCreatedBy(criteriaMap.get("createdBy"));
+            isFilter = true;
+        }
+        if (criteriaMap.get("createdOn") != null) {
+            obj.setCreatedOn(DateFormatUtil.convertStringToLocalDate(criteriaMap.get("createdOn"), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            isFilter = true;
+        }
+        if (criteriaMap.get("updatedBy") != null) {
+            obj.setUpdatedBy(criteriaMap.get("updatedBy"));
+            isFilter = true;
+        }
+        if (criteriaMap.get("updatedOn") != null) {
+            obj.setUpdatedOn(DateFormatUtil.convertStringToLocalDate(criteriaMap.get("updatedOn"), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            isFilter = true;
+        }
+        if (criteriaMap.get("branchId") != null) {
+            obj.setBranchId(Long.parseLong(criteriaMap.get("branchId")));
+            isFilter = true;
+        }
+        List<Stopage> list = null;
+        if(isFilter) {
+            list = this.stopageRepository.findAll(Example.of(obj), Sort.by(Sort.Direction.DESC, "id"));
+        }else {
+            list = this.stopageRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        }
         List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
+        if(ls.size() == 0) {
+            return Collections.emptyList();
+        }
         Collections.sort(ls, (o1, o2) -> o2.getId().compareTo(o1.getId()));
-        logger.debug("CmsStopage list : "+list);
         return ls;
     }
-    public CmsStopageVo getCmsStopageVo(Long id){
+
+    public List<Stopage> getStopageListOnFilterCriteria(Map<String, String> criteriaMap) {
+        Stopage obj = new Stopage();
+        boolean isFilter = false;
+        if (criteriaMap.get("id") != null) {
+            obj.setId(Long.parseLong(criteriaMap.get("id")));
+            isFilter = true;
+        }
+        if (criteriaMap.get("stopageName") != null) {
+            obj.setStopageName(criteriaMap.get("stopageName"));
+            isFilter = true;
+        }
+        if (criteriaMap.get("status") != null) {
+            obj.setStatus(criteriaMap.get("status"));
+            isFilter = true;
+        }
+        if (criteriaMap.get("createdBy") != null) {
+            obj.setCreatedBy(criteriaMap.get("createdBy"));
+            isFilter = true;
+        }
+        if (criteriaMap.get("createdOn") != null) {
+            obj.setCreatedOn(DateFormatUtil.convertStringToLocalDate(criteriaMap.get("createdOn"), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            isFilter = true;
+        }
+        if (criteriaMap.get("updatedBy") != null) {
+            obj.setUpdatedBy(criteriaMap.get("updatedBy"));
+            isFilter = true;
+        }
+        if (criteriaMap.get("updatedOn") != null) {
+            obj.setUpdatedOn(DateFormatUtil.convertStringToLocalDate(criteriaMap.get("updatedOn"), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            isFilter = true;
+        }
+        if (criteriaMap.get("branchId") != null) {
+            obj.setBranchId(Long.parseLong(criteriaMap.get("branchId")));
+            isFilter = true;
+        }
+        List<Stopage> list = null;
+        if (isFilter) {
+            list = this.stopageRepository.findAll(Example.of(obj), Sort.by(Sort.Direction.DESC, "id"));
+        } else {
+            list = this.stopageRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        }
+        List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
+        if (ls.size() == 0) {
+            return Collections.emptyList();
+        }
+        Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+        return list;
+    }
+    public CmsStopageVo getCmsStopage(Long id){
         Optional<Stopage> s = this.stopageRepository.findById(id);
         if(s.isPresent()) {
             CmsStopageVo vo = CommonUtil.createCopyProperties(s.get(), CmsStopageVo.class);
@@ -83,6 +154,22 @@ public class StopageService {
         return null;
     }
 
+    public Stopage getStopage(Long id){
+        Optional<Stopage> s = this.stopageRepository.findById(id);
+        if(s.isPresent()) {
+            return s.get();
+        }
+        logger.debug("Stopage object not found for the given id. "+id+". Returning null");
+        return null;
+    }
+
+//    public List<CmsStopageVo> getStopageList(){
+//        List<Stopage> list = this.stopageRepository.findAll();
+//        List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
+//        logger.debug("Stopage list : "+list);
+//        return ls;
+//    }
+
     public List<TransportRouteStopageLink> getRouteStopageList(CmsStopageVo vo){
         TransportRouteStopageLink transportRouteStopageLink = new TransportRouteStopageLink();
         Stopage stopage = CommonUtil.createCopyProperties(vo, Stopage.class);
@@ -92,14 +179,35 @@ public class StopageService {
         return list;
     }
 
-    private List<CmsStopageVo> changeStopageToCmsStopageList(List<Stopage> list) {
+    private List<CmsStopageVo> changeStopageToCmsStopageList(List<Stopage> list){
         List<CmsStopageVo> ls = new ArrayList<>();
-        for (Stopage o : list) {
-            CmsStopageVo vo = CommonUtil.createCopyProperties(o, CmsStopageVo.class);
+        for(Stopage c: list) {
+            CmsStopageVo vo = CommonUtil.createCopyProperties(c, CmsStopageVo.class);
+            convertDatesAndProvideDependencies(c, vo);
             ls.add(vo);
         }
         return ls;
     }
+
+    private void convertDatesAndProvideDependencies(Stopage c, CmsStopageVo vo) {
+        if (c.getCreatedOn() != null) {
+            vo.setStrCreatedOn(DateFormatUtil.changeLocalDateFormat(c.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setCreatedOn(null);
+
+        }
+        if(c.getUpdatedOn() != null) {
+            vo.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(c.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setUpdatedOn(null);
+        }
+    }
+    public List<CmsStopageVo> getStopageList(){
+        List<Stopage> list = this.stopageRepository.findAll();
+        List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
+        Collections.sort(ls, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+        logger.debug("CmsStopage list : "+list);
+        return ls;
+    }
+
 
 //    public List<CmsStopageVo> searchStopage(VehicleListFilterInput filter) throws Exception{
 //        Stopage stopage = new Stopage();
@@ -132,19 +240,28 @@ public class StopageService {
             if (cmsStopageVo.getId() == null) {
                 logger.debug("Adding new stopage");
                 stopage = CommonUtil.createCopyProperties(cmsStopageVo, Stopage.class);
-                stopage.setCreatedOn(LocalDate.now());
+//                stopage.setCreatedOn(LocalDate.now());
             } else {
                 logger.debug("Updating existing stopage");
                 stopage = this.stopageRepository.findById(cmsStopageVo.getId()).get();
             }
-//            Stopage st = this.stopageRepository.findById(CmsStopageVo.getStopageId()).get();
-
-            stopage.setStopageName(cmsStopageVo.getStopageName());
-            stopage.setStatus(cmsStopageVo.getStatus());
-            stopage.setCreatedOn(cmsStopageVo.getCreatedOn());
-            stopage.setCreatedBy(cmsStopageVo.getCreatedBy());
-            stopage.setUpdatedOn(cmsStopageVo.getUpdatedOn());
-            stopage.setUpdatedBy(cmsStopageVo.getUpdatedBy());
+            //            Stopage st = this.stopageRepository.findById(CmsStopageVo.getStopageId()).get();
+            if (cmsStopageVo.getStopageName() != null) {
+                stopage.setStopageName(cmsStopageVo.getStopageName());
+            }
+            if (cmsStopageVo.getStatus() != null) {
+                stopage.setStatus(cmsStopageVo.getStatus());
+            }
+            if (cmsStopageVo.getUpdatedBy() != null) {
+                stopage.setUpdatedBy(cmsStopageVo.getUpdatedBy());
+            }
+            if (cmsStopageVo.getCreatedBy() != null) {
+                stopage.setCreatedBy(cmsStopageVo.getCreatedBy());
+            }
+            stopage.setCreatedOn(cmsStopageVo.getCreatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsStopageVo.getStrCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+            stopage.setUpdatedOn(cmsStopageVo.getUpdatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsStopageVo.getStrUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+//            stopage.setCreatedOn(cmsStopageVo.getStrCreatedOn());
+//            stopage.setUpdatedOn(cmsStopageVo.getUpdatedOn());
             stopage.setBranchId(cmsStopageVo.getBranchId());
 
             String prefUrl = applicationProperties.getPrefSrvUrl();
@@ -161,16 +278,23 @@ public class StopageService {
             vo.setStrUpdatedOn(stopage.getUpdatedOn() != null ? DateFormatUtil.changeLocalDateFormat(stopage.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
             vo.setCreatedOn(null);
             vo.setUpdatedOn(null);
-
+            vo.setExitCode(0L);
+            if (cmsStopageVo.getId() == null) {
+                vo.setExitDescription("stopage is added successfully");
+                logger.debug("stopage is added successfully");
+            } else {
+                vo.setExitDescription("stopage is updated successfully");
+                logger.debug("stopage is updated successfully");
+            }
         } catch (Exception e) {
             vo = new CmsStopageVo();
-//            vo.setExitCode(1L);
-//            vo.setExitDescription("Due to some exception, transportRoute data not be saved");
+            vo.setExitCode(1L);
+            vo.setExitDescription("Due to some exception, stopage data not be saved");
             logger.error("Stopage save failed. Exception : ", e);
         }
         logger.info("Stopage saved successfully");
-//        List ls = getTransportRouteList();
-//        vo.setDataList(ls);
+        List ls = getStopageList();
+        vo.setDataList(ls);
         return vo;
         }
     }
