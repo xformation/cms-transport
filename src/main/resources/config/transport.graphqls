@@ -1,0 +1,297 @@
+scalar Date
+
+ type Mutation {
+   addVehicle(input: AddVehicleInput): AddVehiclePayload
+   addContract(input: AddContractInput): AddContractPayload
+   addInsurance(input: AddInsuranceInput): AddInsurancePayload
+   addTransportRoute(input: AddTransportRouteInput): AddTransportRoutePayload
+   addStopage(input: AddStopageInput): AddStopagePayload
+   getVehicleList(filter: VehicleListFilterInput): [CmsVehicleVo]
+
+ }
+
+type Query {
+ vehicle(id: Long):Vehicle
+ getVehicleList:           [CmsVehicleVo]
+ getInsuranceList:         [CmsInsuranceVo]
+ getContractList:          [CmsContractVo]
+ getTransportRouteList:    [CmsTransportRouteVo]
+ getStopageList:           [CmsStopageVo]
+ createVehicleDataCache:   VehicleDataCache
+ createInsuranceDataCache: InsuranceDataCache
+}
+
+type VehicleDataCache{
+   transportRoute:  [CmsTransportRouteVo]
+   contract:        [CmsContractVo]
+   vehicle:         [CmsVehicleVo]
+   employee:        [Employee]
+   branches:        [Branch]
+}
+type InsuranceDataCache{
+   vehicle:             [CmsVehicleVo]
+}
+type CmsVehicleVo {
+    id:                  Long
+    vehicleNumber:       String
+    vehicleType:         String
+    capacity:            Long
+    ownerShip:           String
+    dateOfRegistration:  Date
+    yearOfManufacturing: String
+    manufacturingCompany:String
+    model:               String
+    chasisNo:            String
+    rcNo:                String
+    status:              String
+    startDate:           Date
+    endDate:             Date
+    onBoardingDate:      Date
+    validTill:           Date
+    strStartDate:        String
+    strEndDate:          String
+    strDateOfRegistration: String
+    strOnBoardingDate: String
+    strValidTill:        String
+    transportRouteId:    Long
+    contractId:          Long
+    branchId:            Long
+    cmsContractVo:       CmsContractVo
+    exitCode:            Long
+    exitDescription:     String
+    dataList:           [CmsVehicleVo]
+    routeVehicleList:   [TransportRouteVehicleLink]
+    driverList:         [VehicleDriverLink]
+    vehicleContractList:[VehicleContractLink]
+}
+
+type CmsInsuranceVo {
+     id:                             Long
+     insuranceCompany:               String
+     typeOfInsurance:                String
+     dateOfInsurance:                Date
+     validTill:                      Date
+     strDateOfInsurance:            String
+     strValidTill:                  String
+     vehicle:                       Vehicle
+     vehicleId:                     Long
+	 exitCode:                      Long
+     exitDescription:               String
+     dataList:                      [CmsInsuranceVo]
+
+}
+
+type CmsTransportRouteVo {
+    id:                 Long
+    routeName:          String
+    routeDetails:       String
+    routeMapUrl:        String
+    noOfStops:          Int
+    routeFrequency:     String
+    status:             String
+    createdBy:          String
+    createdOn:          Date
+    updatedOn:          Date
+    updatedBy:          String
+    BranchId:           String
+    strCreatedOn:       String
+    strUpdatedOn:       String
+    routeVehicleList:   [TransportRouteVehicleLink]
+    routeStopageList:   [TransportRouteStopageLink]
+    exitCode:           Long
+    exitDescription:    String
+    dataList:           [CmsTransportRouteVo]
+}
+type CmsContractVo {
+     id:                 Long
+     vendorName:         String
+     typeOfOwnerShip:    String
+     durationOfContract: String
+     startDate:          Date
+     endDate:            Date
+     strStartDate:       String
+     strEndDate:         String
+     exitCode:           Long
+     exitDescription:    String
+     dataList:           [CmsContractVo]
+     vehicleContractList:[VehicleContractLink]
+}
+type CmsStopageVo{
+        id:                Long
+        stopageName:       String
+        status:            String
+       	createdBy:          String
+       	createdOn:          Date
+       	strCreatedOn:      String
+       	updatedBy:         String
+       	updatedOn:         Date
+       	strUpdatedOn:      String
+       	BranchId:          String
+       	routeStopageList:   [TransportRouteStopageLink]
+}
+
+  type TransportRoute{
+    id:                 Long
+    routeName:          String
+    routeDetails:       String
+    routeMapUrl:        String
+    noOfStops:          Int
+    routeFrequency:     String
+    status :            String
+    createdBy:          String
+    createdOn:          Date
+    updatedBy:          String
+    updatedOn:          Date
+    branchId:           String
+}
+
+input VehicleListFilterInput {
+   transportRouteId:    String
+   vehicleId:           String
+   employeeId:          String
+}
+
+input AddContractInput{
+        id:                     Long
+        vendorName:             String
+        typeOfOwnerShip:        String
+        durationOfContract:     String
+        startDate:              Date
+        endDate:                Date
+        strStartDate:           String
+        strEndDate:             String
+}
+type AddContractPayload {
+    cmsContractVo: CmsContractVo
+}
+
+input AddTransportRouteInput {
+     id:                        Long
+     routeName:                 String
+     routeDetails:              String
+     routeMapUrl:               String
+     noOfStops:                 Int
+     routeFrequency:            String
+     status:                    String
+     createdBy:                 String
+     createdOn:                 String
+     updatedBy:                 String
+     updatedOn:                 String
+
+}
+type AddTransportRoutePayload {
+    cmsTransportRouteVo: CmsTransportRouteVo
+}
+
+input AddStopageInput{
+        id:            Long
+        stopageName:   String
+	    status:        String
+	    createdBy:     String
+	    createdOn:     String
+	    updatedBy:     String
+	    updatedOn:     String
+	    branchId:      Long
+}
+type AddStopagePayload{
+    cmsStopageVo: CmsStopageVo
+}
+type Vehicle{
+     id:                    Long
+     vehicleNumber:         String
+     vehicleType:           String
+     capacity:              Long
+     ownerShip:             String
+     dateOfRegistration:    Date
+     yearOfManufacturing:   String
+      manufacturingCompany: String
+      onBoardingDate:       Date
+      model:                String
+      chasisNo:             String
+      rcNo:                 String
+      status:               String
+      branchId:             Long
+}
+
+input AddVehicleInput{
+      id:                       Long
+     vehicleNumber:             String
+     vehicleType:               String
+     capacity:                  Long
+     ownerShip:                 String
+     yearOfManufacturing:       String
+     manufacturingCompany:      String
+     model:                     String
+     chasisNo:                  String
+     rcNo:                      String
+     branchId:                  Long
+     status:                    String
+     strDateOfRegistration:     String
+     strOnBoardingDate:         String
+}
+
+type AddVehiclePayload{
+    cmsVehicleVo:       CmsVehicleVo
+}
+
+type Insurance{
+        id:                 Long
+        insuranceCompany:   String
+        vehicle:            Vehicle
+        typeOfInsurance:    String
+        dateOfInsurance:    Date
+        validTill:          Date
+
+}
+
+ type Stopage{
+  id:              Long
+  stopageName:     String
+  status:          String
+  createdBy:       String
+  createdOn:       Date
+  updatedBy:       String
+  updatedOn:       Date
+  branchId:        Long
+}
+
+type VehicleDriverLink{
+       id:              Long
+       employeeId:      Long
+       vehicle:         Vehicle
+}
+
+type VehicleContractLink{
+
+        vehicle:         Vehicle
+        contract:        Contract
+}
+
+type TransportRouteStopageLink{
+        transportRoute:  TransportRoute
+        stopage:         Stopage
+}
+
+type TransportRouteVehicleLink {
+     transportRoute:  TransportRoute
+     vehicle:         Vehicle
+}
+
+input AddInsuranceInput{
+         id:                    Long
+         insuranceCompany:      String
+         typeOfInsurance:       String
+         strDateOfInsurance:    String
+         strValidTill:          String
+         dateOfInsurance:       Date
+         validTill:             Date
+         vehicleId:             Long
+}
+
+type AddInsurancePayload{
+    cmsInsuranceVo:CmsInsuranceVo
+}
+
+
+
+
