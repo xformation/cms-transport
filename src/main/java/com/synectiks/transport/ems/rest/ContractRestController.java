@@ -35,6 +35,9 @@ public class ContractRestController {
     @Autowired
     private ContractService contractService;
 
+    @Autowired
+    private CommonService commonService;
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/cmscontract-by-filters")
     public List<CmsContractVo> getCmsContractListOnFilterCriteria(@RequestParam Map<String, String> dataMap) throws Exception {
