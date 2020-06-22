@@ -19,10 +19,10 @@ public class CmsInsuranceVo extends CmsCommonVo implements Serializable {
     private Long vehicleId;
     private String insuranceCompany;
     private String typeOfInsurance;
-    private LocalDate dateOfInsurance;
-    private LocalDate validTill;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate dateOfInsurance;
+    private LocalDate validTill;
     private String strDateOfInsurance;
     private String strValidTill;
     private List<CmsInsuranceVo> dataList = new ArrayList<>();

@@ -266,7 +266,7 @@ public class StopageService {
 
             String prefUrl = applicationProperties.getPrefSrvUrl();
             if (cmsStopageVo.getBranchId() != null) {
-                String url = prefUrl + "/api/batch-by-id/" + cmsStopageVo.getBranchId();
+                String url = prefUrl + "/api/branch-by-id/" + cmsStopageVo.getBranchId();
                 Branch branch = this.commonService.getObject(url, Branch.class);
                 if (branch != null) {
                     stopage.setBranchName(branch.getBranchName());
@@ -293,7 +293,7 @@ public class StopageService {
             logger.error("Stopage save failed. Exception : ", e);
         }
         logger.info("Stopage saved successfully");
-        List ls = getStopageList();
+        List<CmsStopageVo> ls = getStopageList();
         vo.setDataList(ls);
         return vo;
         }
