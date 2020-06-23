@@ -41,6 +41,9 @@ public class Stopage implements Serializable {
     @Column(name = "branch_id")
     private Long branchId;
 
+    @javax.persistence.Transient
+    private String branchName;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -170,5 +173,12 @@ public class Stopage implements Serializable {
             ", updatedOn='" + getUpdatedOn() + "'" +
             ", branchId=" + getBranchId() +
             "}";
+    }
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 }

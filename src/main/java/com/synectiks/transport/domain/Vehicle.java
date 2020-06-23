@@ -60,6 +60,9 @@ public class Vehicle implements Serializable {
     @Column(name = "branch_id")
     private Long branchId;
 
+    @javax.persistence.Transient
+    private String branchName;
+
     @OneToOne(mappedBy = "vehicle")
     @JsonIgnore
     private Insurance insurance;
@@ -291,4 +294,12 @@ public class Vehicle implements Serializable {
             ", branchId=" + getBranchId() +
             "}";
     }
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
 }
