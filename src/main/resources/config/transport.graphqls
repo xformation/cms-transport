@@ -2,6 +2,27 @@ scalar Date
 
  type Mutation {
    addVehicle(input: AddVehicleInput): AddVehiclePayload
+   addContract(input: AddContractInput): AddContractPayload
+   addInsurance(input: AddInsuranceInput): AddInsurancePayload
+   addTransportRoute(input: AddTransportRouteInput): AddTransportRoutePayload
+   addStopage(input: AddStopageInput): AddStopagePayload
+   getVehicleList(filter: VehicleListFilterInput): [CmsVehicleVo]
+
+ }
+
+type Query {
+ vehicle(id: Long):Vehicle
+ getVehicleList:           [CmsVehicleVo]
+ getInsuranceList:         [CmsInsuranceVo]
+ getContractList:          [CmsContractVo]
+ getTransportRouteList:    [CmsTransportRouteVo]
+ getStopageList:           [CmsStopageVo]
+ createVehicleDataCache:   VehicleDataCache
+ createInsuranceDataCache: InsuranceDataCache
+
+}
+
+input VehicleListFilterInput {
    transportRouteId:    String
    vehicleId:           String
    employeeId:          String
