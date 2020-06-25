@@ -17,6 +17,8 @@ public class CmsContractVo extends CmsCommonVo implements Serializable {
     private String vendorName;
     private String typeOfOwnerShip;
     private String durationOfContract;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate startDate;
     private LocalDate endDate;
     private String strStartDate;
@@ -26,8 +28,7 @@ public class CmsContractVo extends CmsCommonVo implements Serializable {
     private Long contractId;
     private CmsVehicleVo cmsVehicleVo;
     private CmsVehicleContractLinkVo cmsVehicleContractLinkVo;
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+
     private List<VehicleContractLink> vehicleContractList;
     private List<CmsContractVo> dataList = new ArrayList<>();
 

@@ -116,8 +116,8 @@ public class Mutation implements GraphQLMutationResolver {
             Branch br = this.commonService.getObject(url, Branch.class);
 
             vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setDateOfRegistration(null);
             vo.setStrOnBoardingDate(DateFormatUtil.changeLocalDateFormat(vehicle.getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setDateOfRegistration(null);
             vo.setOnBoardingDate(null);
             vo.setBranch(br);
             ls.add(vo);

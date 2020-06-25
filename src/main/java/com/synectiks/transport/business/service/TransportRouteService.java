@@ -5,6 +5,7 @@ import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.CmsTransportRouteVo;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRouteInput;
+import com.synectiks.transport.repository.StopageRepository;
 import com.synectiks.transport.repository.TransportRouteRepository;
 import com.synectiks.transport.repository.TransportRouteStopageLinkRepository;
 import com.synectiks.transport.repository.TransportRouteVehicleLinkRepository;
@@ -51,6 +52,9 @@ public class TransportRouteService {
 
     @Autowired
     TransportRouteVehicleLinkService transportRouteVehicleLinkService;
+
+    @Autowired
+    StopageRepository stopageRepository;
 
     public List<CmsTransportRouteVo> getCmsTransportRouteListOnFilterCriteria(Map<String, String> criteriaMap) {
         TransportRoute obj = new TransportRoute();
@@ -276,6 +280,20 @@ public class TransportRouteService {
         return list;
     }
 
+    public List<TransportRoute> getTransportRouteList(Long branchId) {
+        List<TransportRoute> list = null;
+        if(branchId != null) {
+            TransportRoute tr = new TransportRoute();
+            tr.setBranchId(branchId);
+            list = this.transportRouteRepository.findAll(Example.of(tr));
+        }else {
+            list = this.transportRouteRepository.findAll();
+        }
+        Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+        return list;
+    }
+
+
     public List<CmsTransportRouteVo> searchTransportRoute(Long transportRouteId, String vehicleNumber) throws Exception {
         TransportRoute transportRoute = new TransportRoute();
 //        if (vehicleId != null) {
@@ -316,7 +334,7 @@ public class TransportRouteService {
             if (cmsTransportRouteVo.getId() == null) {
                 logger.debug("Adding new transportRoute");
                 transportRoute = CommonUtil.createCopyProperties(cmsTransportRouteVo, TransportRoute.class);
-                transportRoute.setCreatedOn(LocalDate.now());
+//                transportRoute.setCreatedOn(LocalDate.now());
             }
             else {
                 logger.debug("Updating existing transportRoute");
@@ -330,20 +348,19 @@ public class TransportRouteService {
                     transportRoute.setRouteFrequency(cmsTransportRouteVo.getRouteFrequency());
                     transportRoute.setStatus(cmsTransportRouteVo.getStatus());
                     transportRoute.setCreatedBy(cmsTransportRouteVo.getCreatedBy());
-                    transportRoute.setCreatedOn(cmsTransportRouteVo.getCreatedOn());
-//                    transportRoute.setStrCreatedOn(cmsTransportRouteVo.getStrCreatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsTransportRouteVo.getStrCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
                     transportRoute.setUpdatedBy(cmsTransportRouteVo.getUpdatedBy());
-                    transportRoute.setUpdatedOn(cmsTransportRouteVo.getUpdatedOn());
+                    transportRoute.setCreatedOn(cmsTransportRouteVo.getStrCreatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsTransportRouteVo.getStrCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+                    transportRoute.setUpdatedOn(cmsTransportRouteVo.getStrUpdatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsTransportRouteVo.getStrUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
                     transportRoute.setBranchId(cmsTransportRouteVo.getBranchId());
 
-            String prefUrl = applicationProperties.getPrefSrvUrl();
-            if(cmsTransportRouteVo.getBranchId() != null) {
-                String url = prefUrl+"/api/branch-by-id/"+cmsTransportRouteVo.getBranchId();
-                Branch branch = this.commonService.getObject(url, Branch.class);
-                if(branch != null) {
-                    transportRoute.setBranchName(branch.getBranchName());
-                }
-            }
+//            String prefUrl = applicationProperties.getPrefSrvUrl();
+//            if(cmsTransportRouteVo.getBranchId() != null) {
+//                String url = prefUrl+"/api/branch-by-id/"+cmsTransportRouteVo.getBranchId();
+//                Branch branch = this.commonService.getObject(url, Branch.class);
+//                if(branch != null) {
+//                    transportRoute.setBranchName(branch.getBranchName());
+//                }
+//            }
 
             transportRoute = this.transportRouteRepository.save(transportRoute);
             vo = CommonUtil.createCopyProperties(transportRoute, CmsTransportRouteVo.class);

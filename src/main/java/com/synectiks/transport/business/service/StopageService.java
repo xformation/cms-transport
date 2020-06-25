@@ -3,7 +3,6 @@ package com.synectiks.transport.business.service;
 import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.*;
-import com.synectiks.transport.domain.vo.CmsContractVo;
 import com.synectiks.transport.domain.vo.CmsStopageVo;
 import com.synectiks.transport.domain.vo.CmsTransportRouteVo;
 import com.synectiks.transport.graphql.types.Stopage.AddStopageInput;
@@ -163,12 +162,7 @@ public class StopageService {
         return null;
     }
 
-//    public List<CmsStopageVo> getStopageList(){
-//        List<Stopage> list = this.stopageRepository.findAll();
-//        List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
-//        logger.debug("Stopage list : "+list);
-//        return ls;
-//    }
+
 
     public List<TransportRouteStopageLink> getRouteStopageList(CmsStopageVo vo){
         TransportRouteStopageLink transportRouteStopageLink = new TransportRouteStopageLink();
@@ -189,22 +183,33 @@ public class StopageService {
         return ls;
     }
 
-    private void convertDatesAndProvideDependencies(Stopage c, CmsStopageVo vo) {
-        if (c.getCreatedOn() != null) {
-            vo.setStrCreatedOn(DateFormatUtil.changeLocalDateFormat(c.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setCreatedOn(null);
-
-        }
-        if(c.getUpdatedOn() != null) {
-            vo.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(c.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+    private void convertDatesAndProvideDependencies(Stopage s, CmsStopageVo vo) {
+        if(s.getUpdatedOn() != null) {
+            vo.setStrUpdatedOn(DateFormatUtil.changeLocalDateFormat(s.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
             vo.setUpdatedOn(null);
         }
+        if (s.getCreatedOn() != null) {
+            vo.setStrCreatedOn(DateFormatUtil.changeLocalDateFormat(s.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setCreatedOn(null);
+        }
+    }
+    public List<Stopage> getStopageList(Long branchId) {
+        List<Stopage> list = null;
+        if(branchId != null) {
+            Stopage st = new Stopage();
+            st.setBranchId(branchId);
+            list = this.stopageRepository.findAll(Example.of(st));
+        }else {
+            list = this.stopageRepository.findAll();
+        }
+        Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+        return list;
     }
     public List<CmsStopageVo> getStopageList(){
         List<Stopage> list = this.stopageRepository.findAll();
         List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
         Collections.sort(ls, (o1, o2) -> o2.getId().compareTo(o1.getId()));
-        logger.debug("CmsStopage list : "+list);
+//        logger.debug("CmsStopage list : "+list);
         return ls;
     }
 
@@ -240,42 +245,32 @@ public class StopageService {
             if (cmsStopageVo.getId() == null) {
                 logger.debug("Adding new stopage");
                 stopage = CommonUtil.createCopyProperties(cmsStopageVo, Stopage.class);
-//                stopage.setCreatedOn(LocalDate.now());
             } else {
                 logger.debug("Updating existing stopage");
                 stopage = this.stopageRepository.findById(cmsStopageVo.getId()).get();
             }
             //            Stopage st = this.stopageRepository.findById(CmsStopageVo.getStopageId()).get();
-            if (cmsStopageVo.getStopageName() != null) {
+
                 stopage.setStopageName(cmsStopageVo.getStopageName());
-            }
-            if (cmsStopageVo.getStatus() != null) {
                 stopage.setStatus(cmsStopageVo.getStatus());
-            }
-            if (cmsStopageVo.getUpdatedBy() != null) {
                 stopage.setUpdatedBy(cmsStopageVo.getUpdatedBy());
-            }
-            if (cmsStopageVo.getCreatedBy() != null) {
                 stopage.setCreatedBy(cmsStopageVo.getCreatedBy());
-            }
-            stopage.setCreatedOn(cmsStopageVo.getCreatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsStopageVo.getStrCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
-            stopage.setUpdatedOn(cmsStopageVo.getUpdatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsStopageVo.getStrUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
-//            stopage.setCreatedOn(cmsStopageVo.getStrCreatedOn());
-//            stopage.setUpdatedOn(cmsStopageVo.getUpdatedOn());
+            stopage.setUpdatedOn(cmsStopageVo.getStrUpdatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsStopageVo.getStrUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+            stopage.setCreatedOn(cmsStopageVo.getStrCreatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsStopageVo.getStrCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
             stopage.setBranchId(cmsStopageVo.getBranchId());
 
-            String prefUrl = applicationProperties.getPrefSrvUrl();
-            if (cmsStopageVo.getBranchId() != null) {
-                String url = prefUrl + "/api/branch-by-id/" + cmsStopageVo.getBranchId();
-                Branch branch = this.commonService.getObject(url, Branch.class);
-                if (branch != null) {
-                    stopage.setBranchName(branch.getBranchName());
-                }
-            }
+//            String prefUrl = applicationProperties.getPrefSrvUrl();
+//            if (cmsStopageVo.getBranchId() != null) {
+//                String url = prefUrl + "/api/branch-by-id/" + cmsStopageVo.getBranchId();
+//                Branch branch = this.commonService.getObject(url, Branch.class);
+//                if (branch != null) {
+//                    stopage.setBranchName(branch.getBranchName());
+//                }
+//            }
             stopage = this.stopageRepository.save(stopage);
             vo = CommonUtil.createCopyProperties(stopage, CmsStopageVo.class);
-            vo.setStrCreatedOn(stopage.getCreatedOn() != null ? DateFormatUtil.changeLocalDateFormat(stopage.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
             vo.setStrUpdatedOn(stopage.getUpdatedOn() != null ? DateFormatUtil.changeLocalDateFormat(stopage.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
+            vo.setStrCreatedOn(stopage.getCreatedOn() != null ? DateFormatUtil.changeLocalDateFormat(stopage.getCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
             vo.setCreatedOn(null);
             vo.setUpdatedOn(null);
             vo.setExitCode(0L);

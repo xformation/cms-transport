@@ -24,9 +24,9 @@ public class CmsTransportRouteVo extends CmsCommonVo implements Serializable {
     private String routeFrequency;
     private String status;
     private String createdBy;
-    private LocalDate createdOn;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate createdOn;
     private List<TransportRouteStopageLink> routeStopageList;
     private List<TransportRouteVehicleLink> routeVehicleList;
     private String updatedBy;

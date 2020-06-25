@@ -101,7 +101,7 @@ type CmsTransportRouteVo {
     createdOn:          Date
     updatedOn:          Date
     updatedBy:          String
-    BranchId:           String
+    branchId:            Long
     strCreatedOn:       String
     strUpdatedOn:       String
     routeVehicleList:   [TransportRouteVehicleLink]
@@ -134,7 +134,7 @@ type CmsStopageVo{
        	updatedBy:         String
        	updatedOn:         Date
        	strUpdatedOn:      String
-       	BranchId:          String
+        branchId:          Long
        	routeStopageList:  [TransportRouteStopageLink]
 }
 
@@ -150,7 +150,7 @@ type CmsStopageVo{
     createdOn:          Date
     updatedBy:          String
     updatedOn:          Date
-    branchId:           String
+    branchId:           Long
 }
 
 
@@ -166,6 +166,10 @@ input AddTransportRouteInput {
      createdOn:                 String
      updatedBy:                 String
      updatedOn:                 String
+     strCreatedOn:              String
+     strUpdatedOn:              String
+     branchId:                  Long
+
 }
 
 type AddTransportRoutePayload {
@@ -204,6 +208,7 @@ input AddVehicleInput{
      status:                    String
      strDateOfRegistration:     String
      strOnBoardingDate:         String
+     routeVehicleList:          Long
 }
 
 type AddVehiclePayload{
@@ -228,6 +233,8 @@ input AddStopageInput{
 	    createdOn:     String
 	    updatedBy:     String
 	    updatedOn:     String
+	    strCreatedOn:  String
+	    strUpdatedOn:  String
 	    branchId:      Long
 }
 type AddStopagePayload{
@@ -252,6 +259,8 @@ input AddContractInput{
         endDate:                Date
         strStartDate:           String
         strEndDate:             String
+        routeContractList:      Long
+
 }
 type AddContractPayload {
     cmsContractVo: CmsContractVo

@@ -284,6 +284,8 @@ public class VehicleService {
         for(Vehicle vehicle1: list) {
             CmsVehicleVo vo = CommonUtil.createCopyProperties(vehicle1, CmsVehicleVo.class);
             vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle1.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setStrOnBoardingDate(DateFormatUtil.changeLocalDateFormat(vehicle1.getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            vo.setStrOnBoardingDate(null);
             vo.setDateOfRegistration(null);
             ls.add(vo);
         }
@@ -420,9 +422,11 @@ public class VehicleService {
             vehicle.setBranchId(input.getBranchId());
 //            vehicle.setCollegeId(input.getCollegeId());
             vehicle.setDateOfRegistration(input.getStrDateOfRegistration() != null ? DateFormatUtil.convertStringToLocalDate(input.getStrDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
+           vehicle.setOnBoardingDate(input.getStrOnBoardingDate() != null ? DateFormatUtil.convertStringToLocalDate(input.getStrOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
             vehicle = this.vehicleRepository.save(vehicle);
             vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleVo.class);
             vo.setStrDateOfRegistration(vehicle.getDateOfRegistration() != null ? DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
+           vo.setStrOnBoardingDate(vehicle.getOnBoardingDate() != null ? DateFormatUtil.changeLocalDateFormat(vehicle.getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
             vo.setCreatedOn(null);
             vo.setUpdatedOn(null);
             vo.setExitCode(0L);
