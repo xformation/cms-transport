@@ -353,14 +353,14 @@ public class TransportRouteService {
                     transportRoute.setUpdatedOn(cmsTransportRouteVo.getStrUpdatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsTransportRouteVo.getStrUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
                     transportRoute.setBranchId(cmsTransportRouteVo.getBranchId());
 
-//            String prefUrl = applicationProperties.getPrefSrvUrl();
-//            if(cmsTransportRouteVo.getBranchId() != null) {
-//                String url = prefUrl+"/api/branch-by-id/"+cmsTransportRouteVo.getBranchId();
-//                Branch branch = this.commonService.getObject(url, Branch.class);
-//                if(branch != null) {
-//                    transportRoute.setBranchName(branch.getBranchName());
-//                }
-//            }
+            String prefUrl = applicationProperties.getPrefSrvUrl();
+            if(cmsTransportRouteVo.getBranchId() != null) {
+                String url = prefUrl+"/api/branch-by-id/"+cmsTransportRouteVo.getBranchId();
+                Branch branch = this.commonService.getObject(url, Branch.class);
+                if(branch != null) {
+                    transportRoute.setBranchName(branch.getBranchName());
+                }
+            }
 
             transportRoute = this.transportRouteRepository.save(transportRoute);
             vo = CommonUtil.createCopyProperties(transportRoute, CmsTransportRouteVo.class);

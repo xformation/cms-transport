@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.CmsVehicleVo;
@@ -61,6 +62,9 @@ public class VehicleService {
 
     @Autowired
     CommonService commonService;
+
+    @Autowired
+    ApplicationProperties applicationProperties;
 
     @Autowired
     TransportRouteService transportRouteService;
@@ -420,6 +424,15 @@ public class VehicleService {
             vehicle.setStatus(input.getStatus());
 //            vehicle.setEmployeeId(input.getEmployeeId());
             vehicle.setBranchId(input.getBranchId());
+
+            String prefUrl = applicationProperties.getPrefSrvUrl();
+            if (input.getBranchId() != null) {
+                String url = prefUrl + "/api/branch-by-id/" + input.getBranchId();
+                Branch branch = this.commonService.getObject(url, Branch.class);
+                if (branch != null) {
+                    vehicle.setBranchName(branch.getBranchName());
+                }
+            }
 //            vehicle.setCollegeId(input.getCollegeId());
             vehicle.setDateOfRegistration(input.getStrDateOfRegistration() != null ? DateFormatUtil.convertStringToLocalDate(input.getStrDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
            vehicle.setOnBoardingDate(input.getStrOnBoardingDate() != null ? DateFormatUtil.convertStringToLocalDate(input.getStrOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);

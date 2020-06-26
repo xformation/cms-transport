@@ -12,7 +12,7 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
     private CmsVehicleVo cmsVehicleVo;
     private Long vehicleId;
     private Long employeeId;
-    private List<CmsVehicleDriverLinkVo> dataList = new ArrayList<CmsVehicleDriverLinkVo>();
+    private List<CmsVehicleDriverLinkVo> dataList = new ArrayList<>();
 
     public Long getId() {
         return id;

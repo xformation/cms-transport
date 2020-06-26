@@ -264,14 +264,14 @@ public class StopageService {
             stopage.setCreatedOn(cmsStopageVo.getStrCreatedOn() != null ? DateFormatUtil.convertStringToLocalDate(cmsStopageVo.getStrCreatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : null);
             stopage.setBranchId(cmsStopageVo.getBranchId());
 
-//            String prefUrl = applicationProperties.getPrefSrvUrl();
-//            if (cmsStopageVo.getBranchId() != null) {
-//                String url = prefUrl + "/api/branch-by-id/" + cmsStopageVo.getBranchId();
-//                Branch branch = this.commonService.getObject(url, Branch.class);
-//                if (branch != null) {
-//                    stopage.setBranchName(branch.getBranchName());
-//                }
-//            }
+            String prefUrl = applicationProperties.getPrefSrvUrl();
+            if (cmsStopageVo.getBranchId() != null) {
+                String url = prefUrl + "/api/branch-by-id/" + cmsStopageVo.getBranchId();
+                Branch branch = this.commonService.getObject(url, Branch.class);
+                if (branch != null) {
+                    stopage.setBranchName(branch.getBranchName());
+                }
+            }
             stopage = this.stopageRepository.save(stopage);
             vo = CommonUtil.createCopyProperties(stopage, CmsStopageVo.class);
             vo.setStrUpdatedOn(stopage.getUpdatedOn() != null ? DateFormatUtil.changeLocalDateFormat(stopage.getUpdatedOn(), CmsConstants.DATE_FORMAT_dd_MM_yyyy) : "");
