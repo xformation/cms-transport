@@ -45,6 +45,7 @@ public class StopageService {
     @Autowired
     private ApplicationProperties applicationProperties;
 
+
     public List<CmsStopageVo> getCmsStopageListOnFilterCriteria(Map<String, String> criteriaMap) {
         Stopage obj = new Stopage();
         boolean isFilter = false;
@@ -146,6 +147,7 @@ public class StopageService {
         Optional<Stopage> s = this.stopageRepository.findById(id);
         if(s.isPresent()) {
             CmsStopageVo vo = CommonUtil.createCopyProperties(s.get(), CmsStopageVo.class);
+            convertDatesAndProvideDependencies(s.get(), vo);
             logger.debug("CmsStopage for given id : "+id+". CmsStopage object : "+vo);
             return vo;
         }
@@ -162,16 +164,6 @@ public class StopageService {
         return null;
     }
 
-
-
-    public List<TransportRouteStopageLink> getRouteStopageList(CmsStopageVo vo){
-        TransportRouteStopageLink transportRouteStopageLink = new TransportRouteStopageLink();
-        Stopage stopage = CommonUtil.createCopyProperties(vo, Stopage.class);
-        transportRouteStopageLink.setStopage(stopage);
-        List<TransportRouteStopageLink> list = this.transportRouteStopageLinkRepository.findAll(Example.of(transportRouteStopageLink));
-//    Collections.sort(list, (o1, o2) -> o1.getFacility().getName().compareTo(o2.getFacility().getName()));
-        return list;
-    }
 
     private List<CmsStopageVo> changeStopageToCmsStopageList(List<Stopage> list){
         List<CmsStopageVo> ls = new ArrayList<>();
@@ -193,6 +185,15 @@ public class StopageService {
             vo.setCreatedOn(null);
         }
     }
+
+    public List<TransportRouteStopageLink> getRouteStopageList(CmsStopageVo vo){
+        TransportRouteStopageLink transportRouteStopageLink = new TransportRouteStopageLink();
+        Stopage stopage = CommonUtil.createCopyProperties(vo, Stopage.class);
+        transportRouteStopageLink.setStopage(stopage);
+        List<TransportRouteStopageLink> list = this.transportRouteStopageLinkRepository.findAll(Example.of(transportRouteStopageLink));
+//    Collections.sort(list, (o1, o2) -> o1.getFacility().getName().compareTo(o2.getFacility().getName()));
+        return list;
+    }
     public List<Stopage> getStopageList(Long branchId) {
         List<Stopage> list = null;
         if(branchId != null) {
@@ -205,17 +206,9 @@ public class StopageService {
         Collections.sort(list, (o1, o2) -> o2.getId().compareTo(o1.getId()));
         return list;
     }
-    public List<CmsStopageVo> getStopageList(){
-        List<Stopage> list = this.stopageRepository.findAll();
-        List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
-        Collections.sort(ls, (o1, o2) -> o2.getId().compareTo(o1.getId()));
-//        logger.debug("CmsStopage list : "+list);
-        return ls;
-    }
 
-
-//    public List<CmsStopageVo> searchStopage(VehicleListFilterInput filter) throws Exception{
-//        Stopage stopage = new Stopage();
+    public List<CmsStopageVo> searchStopage(Long stopageId) throws Exception{
+        Stopage stopage = new Stopage();
 //
 ////        if(!CommonUtil.isNullOrEmpty(filter.getEmployeeId())) {
 ////            transportRoute.setEmployeeId(Long.parseLong(filter.getEmployeeId()));
@@ -228,15 +221,27 @@ public class StopageService {
 //        if(!CommonUtil.isNullOrEmpty(filter.getBranchId())) {
 //            transportRoute.setBranchId(Long.parseLong(filter.getBranchId()));
 //        }
-//        Example<TransportRoute> example = Example.of(transportRoute);
-//        List<TransportRoute> list = this.transportRouteRepository.findAll(example);
-//        List<CmsTransportRouteVo> ls = new ArrayList<>();
-//        for(TransportRoute transportRoute1: list){
-//            CmsTransportRouteVo vo = CommonUtil.createCopyProperties(transportRoute1, CmsTransportRouteVo.class);
-//            ls.add(vo);
-//        }
-//        return ls;
-//    }
+        if(stopageId != null) {
+            stopage.setId(stopageId);
+        }
+        Example<Stopage> example = Example.of(stopage);
+        List<Stopage> list = this.stopageRepository.findAll(example);
+        List<CmsStopageVo> ls = new ArrayList<>();
+        for(Stopage stopage1: list){
+            CmsStopageVo vo = CommonUtil.createCopyProperties(stopage1, CmsStopageVo.class);
+            ls.add(vo);
+        }
+        return ls;
+    }
+
+    public List<CmsStopageVo> getStopageList(){
+        List<Stopage> list = this.stopageRepository.findAll();
+        List<CmsStopageVo> ls = changeStopageToCmsStopageList(list);
+        Collections.sort(ls, (o1, o2) -> o2.getId().compareTo(o1.getId()));
+//        logger.debug("CmsStopage list : "+list);
+        return ls;
+    }
+
     public CmsStopageVo addStopage(AddStopageInput cmsStopageVo) {
         logger.info("Saving Stopage");
         CmsStopageVo vo = null;

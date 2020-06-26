@@ -135,6 +135,9 @@ type CmsStopageVo{
        	updatedOn:         Date
        	strUpdatedOn:      String
         branchId:          Long
+        exitCode:          Long
+        exitDescription:   String
+        dataList:          [CmsStopageVo]
        	routeStopageList:  [TransportRouteStopageLink]
 }
 

@@ -219,7 +219,7 @@ public class TransportRouteService {
             logger.debug("CmsTransportRoute for given id : "+id+". CmsTransportRoute object : "+vo);
             return vo;
         }
-        logger.debug("Transport Route object not found for the given id. "+id+". Returning null ");
+        logger.debug("TransportRoute object not found for the given id. "+id+". Returning null ");
         return null;
     }
 
