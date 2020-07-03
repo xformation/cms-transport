@@ -8,7 +8,9 @@ import com.synectiks.transport.domain.vo.CmsContractVo;
 import com.synectiks.transport.domain.vo.CmsVehicleDriverLinkVo;
 import com.synectiks.transport.domain.vo.CmsVehicleVo;
 import com.synectiks.transport.graphql.types.Vehicle.AddVehicleInput;
+import com.synectiks.transport.graphql.types.VehicleDriverList.AddVehicleDriverListInput;
 import com.synectiks.transport.repository.VehicleDriverLinkRepository;
+import com.synectiks.transport.repository.VehicleRepository;
 import com.synectiks.transport.service.util.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,9 @@ public class VehicleDriverLinkService {
 
     @Autowired
     VehicleDriverLinkRepository vehicleDriverLinkRepository;
+
+    @Autowired
+    VehicleRepository vehicleRepository;
 
     @Autowired
     VehicleService vehicleService;
@@ -154,24 +159,65 @@ public class VehicleDriverLinkService {
         }
     }
 
-    public VehicleDriverLink saveVehicleDriverLink(AddVehicleInput input) {
-        Vehicle vehicle = this.vehicleService.getVehicle(input.getId());
-        logger.debug("Making entries in vehicleDriverLink for the given vehicle id : "+input.getVehicleId());
-        VehicleDriverLink vehicleDriverLink = new VehicleDriverLink();
-        vehicleDriverLink.setVehicle(vehicle);
-        Optional<VehicleDriverLink> oth = this.vehicleDriverLinkRepository.findOne(Example.of(vehicleDriverLink));
-        if(!oth.isPresent()) {
-//            vehicleDriverLink.setDesc("Vehicle - "+vehicle.getvehicleNumber()+". Subject - "+ subject.getSubjectDesc()+". Branch - "+teacher.getBranch().getBranchName()+". Department - "+teacher.getDepartment().getName()+". Batch/Year - "+ subject.getBatch().getBatch() );
-//            vehicleDriverLink.setId("Vehicle - "+vehicle.getVehicleNumber()+". Branch - "+teacher.getBranch().getBranchName()+". Department - "+teacher.getDepartment().getName()+". Batch/Year - "+ subject.getBatch().getBatch() );
-
-            VehicleDriverLink th = this.vehicleDriverLinkRepository.save(vehicleDriverLink);
-            logger.debug("VehicleDriverLink data saved : "+vehicleDriverLink);
-            return th;
-        }else {
-            logger.debug("VehicleDriverLink mapping already exists. "+oth.get());
+    public CmsVehicleDriverLinkVo saveVehicleDriverLink(AddVehicleDriverListInput input) {
+        logger.info("Saving VehicleDriverLink");
+        CmsVehicleDriverLinkVo vo = null;
+        try {
+            VehicleDriverLink vehicleDriverLink = null;
+            if (input.getId() == null) {
+                logger.debug("Adding new VehicleDriverLink");
+                vehicleDriverLink = CommonUtil.createCopyProperties(input, VehicleDriverLink.class);
+//                transportRoute.setCreatedOn(LocalDate.now());
+            }
+            else {
+                logger.debug("Updating existing VehicleDriverLink");
+                vehicleDriverLink = this.vehicleDriverLinkRepository.findById(input.getId()).get();
+            }
+            Vehicle v = this.vehicleRepository.findById(input.getVehicleId()).get();
+            vehicleDriverLink.setVehicle(v);
+            vehicleDriverLink.setEmployeeId(input.getEmployeeId());
+            vehicleDriverLink = this.vehicleDriverLinkRepository.save(vehicleDriverLink);
+            vo = CommonUtil.createCopyProperties(vehicleDriverLink, CmsVehicleDriverLinkVo.class);
+            vo.setExitCode(0L);
+            if (input.getId() == null) {
+                vo.setExitDescription("VehicleDriverLink is added successfully");
+                logger.debug("VehicleDriverLink is added successfully");
+            } else {
+                vo.setExitDescription("VehicleDriverLink is updated successfully");
+                logger.debug("VehicleDriverLink is updated successfully");
+            }
+        } catch (Exception e) {
+            vo = new CmsVehicleDriverLinkVo();
+            vo.setExitCode(1L);
+            vo.setExitDescription("Due to some exception, VehicleDriverLink data could not be saved");
+            logger.error("VehicleDriverLink save failed. Exception : ", e);
         }
-        return oth.get();
+        logger.info("VehicleDriverLink saved successfully");
+        List<CmsVehicleDriverLinkVo> ls = getVehicleDriverList();
+        vo.setDataList((ls));
+        return vo;
     }
+//    public VehicleDriverLink saveVehicleDriverLink(AddVehicleDriverListInput input) {
+//        CmsVehicleDriverLinkVo vo = null;
+//        Vehicle vehicle = this.vehicleService.getVehicle(input.getId());
+//        VehicleDriverLink vdl=null;
+//        logger.debug("Making entries in vehicleDriverLink for the given vehicle id : "+input.getVehicleId());
+//        VehicleDriverLink vehicleDriverLink = new VehicleDriverLink();
+//        vehicleDriverLink.setVehicle(vehicle);
+//        vdl.setEmployeeId(input.getEmployeeId());
+//        Optional<VehicleDriverLink> oth = this.vehicleDriverLinkRepository.findOne(Example.of(vehicleDriverLink));
+//        if(!oth.isPresent()) {
+////            vehicleDriverLink.setDesc("Vehicle - "+vehicle.getvehicleNumber()+". Subject - "+ subject.getSubjectDesc()+". Branch - "+teacher.getBranch().getBranchName()+". Department - "+teacher.getDepartment().getName()+". Batch/Year - "+ subject.getBatch().getBatch() );
+////            vehicleDriverLink.setId("Vehicle - "+vehicle.getVehicleNumber()+". Branch - "+teacher.getBranch().getBranchName()+". Department - "+teacher.getDepartment().getName()+". Batch/Year - "+ subject.getBatch().getBatch() );
+//
+//            VehicleDriverLink th = this.vehicleDriverLinkRepository.save(vehicleDriverLink);
+//            logger.debug("VehicleDriverLink data saved : "+vehicleDriverLink);
+//            return th;
+//        }else {
+//            logger.debug("VehicleDriverLink mapping already exists. "+oth.get());
+//        }
+//        return oth.get();
+//    }
 
 
 }

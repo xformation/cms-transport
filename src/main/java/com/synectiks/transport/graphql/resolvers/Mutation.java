@@ -7,6 +7,7 @@ import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.Branch;
 import com.synectiks.transport.domain.Employee;
 import com.synectiks.transport.domain.Vehicle;
+import com.synectiks.transport.domain.VehicleContractLink;
 import com.synectiks.transport.domain.vo.*;
 import com.synectiks.transport.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.transport.graphql.types.Contract.AddContractInput;
@@ -17,8 +18,16 @@ import com.synectiks.transport.graphql.types.Stopage.AddStopageInput;
 import com.synectiks.transport.graphql.types.Stopage.AddStopagePaylaod;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRouteInput;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRoutePayload;
+import com.synectiks.transport.graphql.types.TransportRouteStopageLink.AddTransportRouteStopageLinkInput;
+import com.synectiks.transport.graphql.types.TransportRouteStopageLink.AddTransportRouteStopageLinkPayload;
+import com.synectiks.transport.graphql.types.TransportRouteVehicleLink.AddTransportRouteVehicleLinkInput;
+import com.synectiks.transport.graphql.types.TransportRouteVehicleLink.AddTransportRouteVehicleLinkPayload;
 import com.synectiks.transport.graphql.types.Vehicle.AddVehicleInput;
 import com.synectiks.transport.graphql.types.Vehicle.AddVehiclePayload;
+import com.synectiks.transport.graphql.types.VehicleContractList.AddVehicleContractListInput;
+import com.synectiks.transport.graphql.types.VehicleContractList.AddVehicleContractListPayload;
+import com.synectiks.transport.graphql.types.VehicleDriverList.AddVehicleDriverListInput;
+import com.synectiks.transport.graphql.types.VehicleDriverList.AddVehicleDriverListPayload;
 import com.synectiks.transport.repository.*;
 import com.synectiks.transport.service.util.CommonUtil;
 import com.synectiks.transport.service.util.DateFormatUtil;
@@ -55,6 +64,18 @@ public class Mutation implements GraphQLMutationResolver {
 
     @Autowired
     StopageService stopageService;
+
+    @Autowired
+    VehicleContractLinkService vehicleContractLinkService;
+
+    @Autowired
+    VehicleDriverLinkService vehicleDriverLinkService;
+
+    @Autowired
+    TransportRouteVehicleLinkService transportRouteVehicleLinkService;
+
+    @Autowired
+    TransportRouteStopageLinkService transportRouteStopageLinkService;
 
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -104,6 +125,22 @@ public class Mutation implements GraphQLMutationResolver {
         return new AddStopagePaylaod(vo);
     }
 
+    public AddVehicleContractListPayload saveVehicleContractLink(AddVehicleContractListInput cmsVehicleContractLinkVo) {
+        CmsVehicleContractLinkVo vo = this.vehicleContractLinkService.saveVehicleContractLink(cmsVehicleContractLinkVo);
+        return new AddVehicleContractListPayload(vo);
+    }
+    public AddVehicleDriverListPayload saveVehicleDriverLink(AddVehicleDriverListInput cmsVehicleDriverLinkVo) {
+        CmsVehicleDriverLinkVo vo = this.vehicleDriverLinkService.saveVehicleDriverLink(cmsVehicleDriverLinkVo);
+        return new AddVehicleDriverListPayload(vo);
+    }
+    public AddTransportRouteVehicleLinkPayload saveTransportRouteVehicleLink(AddTransportRouteVehicleLinkInput cmsTransportRouteVehicleLinkVo) {
+        CmsTransportRouteVehicleLinkVo vo = this.transportRouteVehicleLinkService.saveTransportRouteVehicleLink(cmsTransportRouteVehicleLinkVo);
+        return new AddTransportRouteVehicleLinkPayload(vo);
+    }
+    public AddTransportRouteStopageLinkPayload saveTransportRouteStopageLink(AddTransportRouteStopageLinkInput cmsTransportRouteStopageLinkVo) {
+        CmsTransportRouteStopageLinkVo vo = this.transportRouteStopageLinkService.saveTransportRouteStopageLink(cmsTransportRouteStopageLinkVo);
+        return new AddTransportRouteStopageLinkPayload(vo);
+    }
     public List<CmsVehicleVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
         List<Vehicle> list = this.vehicleFilterProcessor.searchVehicle(filter);
         List<CmsVehicleVo> ls = new ArrayList<>();

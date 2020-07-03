@@ -465,7 +465,7 @@ public class VehicleService {
 
 
     public void saveTransportVehicleMapping(AddVehicleInput input, CmsVehicleVo vo) {
-        TransportRouteVehicleLink transportRouteVehicleLink = this.transportRouteVehicleLinkService.saveTransportRouteVehicleLink(input);
+//        TransportRouteVehicleLink transportRouteVehicleLink = this.transportRouteVehicleLinkService.saveTransportRouteVehicleLink(input);
 //        VehicleDriverLink vehicleDriverLink = this.vehicleDriverLinkService.saveVehicleDriverLink(input);
 //        VehicleContractLink vehicleContractLink = this.vehicleContractLinkService.saveVehicleContractLink(input);
 //        providedVehicleDependencies(transportRoute, vo);

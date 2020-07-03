@@ -1,5 +1,7 @@
 package com.synectiks.transport.domain.vo;
 
+import com.synectiks.transport.domain.Employee;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
 
     private Long id;
     private CmsVehicleVo cmsVehicleVo;
+    private Employee employee;
     private Long vehicleId;
     private Long employeeId;
     private List<CmsVehicleDriverLinkVo> dataList = new ArrayList<>();
@@ -28,6 +31,14 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
 
     public void setCmsVehicleVo(CmsVehicleVo cmsVehicleVo) {
         this.cmsVehicleVo = cmsVehicleVo;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Long getVehicleId() {

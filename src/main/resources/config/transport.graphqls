@@ -6,6 +6,10 @@ scalar Date
    addInsurance(input: AddInsuranceInput): AddInsurancePayload
    addTransportRoute(input: AddTransportRouteInput): AddTransportRoutePayload
    addStopage(input: AddStopageInput): AddStopagePayload
+   saveVehicleContractLink(input: AddVehicleContractListInput): AddVehicleContractListPayload
+   saveVehicleDriverLink(input: AddVehicleDriverListInput): AddVehicleDriverListPayload
+   saveTransportRouteVehicleLink(input: AddTransportRouteVehicleLinkInput): AddTransportRouteVehicleLinkPayload
+   saveTransportRouteStopageLink(input: AddTransportRouteStopageLinkInput): AddTransportRouteStopageLinkPayload
    getVehicleList(filter: VehicleListFilterInput): [CmsVehicleVo]
 
  }
@@ -17,6 +21,10 @@ type Query {
  getContractList:          [CmsContractVo]
  getTransportRouteList:    [CmsTransportRouteVo]
  getStopageList:           [CmsStopageVo]
+ getTransportRouteVehicleList: [CmsTransportRouteVehicleLinkVo]
+ getVehicleContractList:   [CmsVehicleContractLinkVo]
+ getRouteStopageList:      [CmsTransportRouteStopageLinkVo]
+ getVehicleDriverList:     [CmsVehicleDriverLinkVo]
  createVehicleDataCache:   VehicleDataCache
  createInsuranceDataCache: InsuranceDataCache
 
@@ -140,7 +148,42 @@ type CmsStopageVo{
         dataList:          [CmsStopageVo]
        	routeStopageList:  [TransportRouteStopageLink]
 }
-
+type CmsTransportRouteStopageLinkVo{
+     transportRouteId: Long
+     stopageId: Long
+     cmsTransportRouteVo:  CmsTransportRouteVo
+     cmsStopageVo:  CmsStopageVo
+     exitCode:          Long
+     exitDescription:   String
+     dataList: [CmsTransportRouteStopageLinkVo]
+}
+type CmsTransportRouteVehicleLinkVo{
+     transportRouteId: Long
+     vehicleId: Long
+     cmsTransportRouteVo:  CmsTransportRouteVo
+     cmsVehicleVo:  CmsVehicleVo
+     exitCode:          Long
+     exitDescription:   String
+     dataList: [CmsTransportRouteVehicleLinkVo]
+}
+type CmsVehicleContractLinkVo{
+      vehicleId: Long
+      contractId: Long
+      cmsVehicleVo: CmsVehicleVo
+      cmsContractVo: CmsContractVo
+      exitCode:          Long
+      exitDescription:   String
+      dataList:  [CmsVehicleContractLinkVo]
+}
+type CmsVehicleDriverLinkVo{
+     vehicleId: Long
+     employeeId: Long
+     cmsVehicleVo: CmsVehicleVo
+     employee: Employee
+     exitCode:          Long
+     exitDescription:   String
+     dataList: [CmsVehicleDriverLinkVo]
+}
   type TransportRoute{
     id:                 Long
     routeName:          String
@@ -155,8 +198,6 @@ type CmsStopageVo{
     updatedOn:          Date
     branchId:           Long
 }
-
-
 input AddTransportRouteInput {
      id:                        Long
      routeName:                 String
@@ -172,13 +213,10 @@ input AddTransportRouteInput {
      strCreatedOn:              String
      strUpdatedOn:              String
      branchId:                  Long
-
 }
-
 type AddTransportRoutePayload {
-    cmsTransportRouteVo:        CmsTransportRouteVo
+    cmsTransportRouteVo: CmsTransportRouteVo
 }
-
 type Vehicle{
      id:                    Long
      vehicleNumber:         String
@@ -195,7 +233,6 @@ type Vehicle{
       status:               String
       branchId:             Long
 }
-
 input AddVehicleInput{
       id:                       Long
      vehicleNumber:             String
@@ -274,23 +311,49 @@ type VehicleDriverLink{
        employeeId:      Long
        vehicle:         Vehicle
 }
-
+input AddVehicleDriverListInput{
+      vehicleId: Long
+      employeeId: Long
+}
+type AddVehicleDriverListPayload{
+   cmsVehicleDriverLinkVo: CmsVehicleDriverLinkVo
+}
 type VehicleContractLink{
-
+       id:   Long
        vehicle:         Vehicle
        contract:        Contract
 }
-
+input AddVehicleContractListInput{
+      vehicleId: Long
+      contractId: Long
+}
+type AddVehicleContractListPayload{
+    cmsVehicleContractLinkVo: CmsVehicleContractLinkVo
+}
 type TransportRouteStopageLink{
+       id:   Long
        transportRoute:  TransportRoute
        stopage:         Stopage
 }
-
+input AddTransportRouteStopageLinkInput{
+      transportRouteId: Long
+      stopageId: Long
+}
+type AddTransportRouteStopageLinkPayload{
+    cmsTransportRouteStopageLinkVo: CmsTransportRouteStopageLinkVo
+}
 type TransportRouteVehicleLink {
+      id:   Long
      transportRoute:  TransportRoute
      vehicle:         Vehicle
 }
-
+input AddTransportRouteVehicleLinkInput{
+      transportRouteId: Long
+      vehicleId: Long
+}
+type AddTransportRouteVehicleLinkPayload{
+     cmsTransportRouteVehicleLinkVo: CmsTransportRouteVehicleLinkVo
+}
 type Insurance{
         id:                 Long
         insuranceCompany:   String
@@ -298,7 +361,6 @@ type Insurance{
         typeOfInsurance:    String
         dateOfInsurance:    Date
         validTill:          Date
-
 }
 input AddInsuranceInput{
          id:                    Long
@@ -314,7 +376,37 @@ input AddInsuranceInput{
 type AddInsurancePayload{
         cmsInsuranceVo:     CmsInsuranceVo
 }
-
+type Employee{
+    id: Long
+    employeeName: String
+    designation: String
+    joiningDate: Date
+    jobEndDate: Date
+    resignationDate: Date
+    resignationAcceptanceDate: Date
+    aadharNo: String
+    panNo: String
+    passportNo: String
+    primaryContactNo: String
+    secondaryContactNo: String
+    employeeFatherName: String
+    employeeMotherName: String
+    primaryAddress: String
+    secondaryAddress: String
+    employeeAddress: String
+    personalMailId: String
+    officialMailId: String
+    disability: String
+    drivingLicenceNo: String
+    drivingLicenceValidity: Date
+    gender: String
+	typeOfEmployment: String
+	managerId: Long
+	status: String
+	maritalStatus: String
+	transportRoute: TransportRoute
+	staffType: String
+}
 
 
 

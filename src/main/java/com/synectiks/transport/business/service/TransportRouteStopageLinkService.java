@@ -3,7 +3,11 @@ package com.synectiks.transport.business.service;
 import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.*;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRouteInput;
+import com.synectiks.transport.graphql.types.TransportRouteStopageLink.AddTransportRouteStopageLinkInput;
+import com.synectiks.transport.repository.StopageRepository;
+import com.synectiks.transport.repository.TransportRouteRepository;
 import com.synectiks.transport.repository.TransportRouteStopageLinkRepository;
+import com.synectiks.transport.repository.VehicleRepository;
 import com.synectiks.transport.service.util.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +30,12 @@ public class TransportRouteStopageLinkService {
 
     @Autowired
     StopageService stopageService;
+
+    @Autowired
+    TransportRouteRepository transportRouteRepository;
+
+    @Autowired
+    StopageRepository stopageRepository;
 
     public List<CmsTransportRouteStopageLinkVo> getCmsTransportRouteStopageLinkListOnFilterCriteria(Map<String, String> criteriaMap){
         TransportRouteStopageLink obj = new TransportRouteStopageLink();
@@ -173,25 +183,61 @@ public class TransportRouteStopageLinkService {
         }
     }
 
-    public TransportRouteStopageLink saveTransportRouteStopageLink(AddTransportRouteInput input) {
-        TransportRoute transportRoute = this.transportRouteService.getTransportRoute(input.getId());
-        Stopage stopage = this.stopageService.getStopage(input.getStopageId());
-        logger.debug("Making entries in transportRouteStopageLink for the given transportRoute id : "+input.getTransportRouteId()+"and stopage id : "+input.getStopageId());
-        TransportRouteStopageLink transportRouteStopageLink = new TransportRouteStopageLink();
-        transportRouteStopageLink.setTransportRoute(transportRoute);
-        transportRouteStopageLink.setStopage(stopage);
-        Optional<TransportRouteStopageLink> oth = this.transportRouteStopageLinkRepository.findOne(Example.of(transportRouteStopageLink));
-        if(!oth.isPresent()) {
-//            teach.setDesc("Teacher - "+teacher.getTeacherName()+". Subject - "+ subject.getSubjectDesc()+". Branch - "+teacher.getBranch().getBranchName()+". Department - "+teacher.getDepartment().getName()+". Batch/Year - "+ subject.getBatch().getBatch() );
-            TransportRouteStopageLink th = this.transportRouteStopageLinkRepository.save(transportRouteStopageLink);
-            logger.debug("TransportRouteStopageLink data saved : "+transportRouteStopageLink);
-            return th;
-        }else {
-            logger.debug("TransportRouteStopageLink mapping already exists. "+oth.get());
+    public CmsTransportRouteStopageLinkVo saveTransportRouteStopageLink(AddTransportRouteStopageLinkInput input) {
+        logger.info("Saving TransportRouteStopageLink");
+        CmsTransportRouteStopageLinkVo vo = null;
+        try {
+            TransportRouteStopageLink transportRouteStopageLink = null;
+            if (input.getId() == null) {
+                logger.debug("Adding new TransportRouteStopageLink");
+                transportRouteStopageLink = CommonUtil.createCopyProperties(input, TransportRouteStopageLink.class);
+//                transportRoute.setCreatedOn(LocalDate.now());
+            }
+            else {
+                logger.debug("Updating existing TransportRouteStopageLink");
+                transportRouteStopageLink = this.transportRouteStopageLinkRepository.findById(input.getId()).get();
+            }
+            TransportRoute t = this.transportRouteRepository.findById(input.getTransportRouteId()).get();
+            transportRouteStopageLink.setTransportRoute(t);
+            Stopage s = this.stopageRepository.findById(input.getStopageId()).get();
+            transportRouteStopageLink.setStopage(s);
+            transportRouteStopageLink = this.transportRouteStopageLinkRepository.save(transportRouteStopageLink);
+            vo = CommonUtil.createCopyProperties(transportRouteStopageLink, CmsTransportRouteStopageLinkVo.class);
+            vo.setExitCode(0L);
+            if (input.getId() == null) {
+                vo.setExitDescription("TransportRouteStopageLink is added successfully");
+                logger.debug("TransportRouteStopageLink is added successfully");
+            } else {
+                vo.setExitDescription("TransportRouteStopageLink is updated successfully");
+                logger.debug("TransportRouteStopageLink is updated successfully");
+            }
+        } catch (Exception e) {
+            vo = new CmsTransportRouteStopageLinkVo();
+            vo.setExitCode(1L);
+            vo.setExitDescription("Due to some exception, TransportRouteStopageLink data could not be saved");
+            logger.error("TransportRouteStopageLink save failed. Exception : ", e);
         }
-        return oth.get();
+        logger.info("TransportRouteStopageLink saved successfully");
+        List<CmsTransportRouteStopageLinkVo> ls = getTransportRouteStopageList();
+        vo.setDataList((ls));
+        return vo;
     }
-
-
-
+//    public TransportRouteStopageLink saveTransportRouteStopageLink(AddTransportRouteInput input) {
+//        TransportRoute transportRoute = this.transportRouteService.getTransportRoute(input.getId());
+//        Stopage stopage = this.stopageService.getStopage(input.getStopageId());
+//        logger.debug("Making entries in transportRouteStopageLink for the given transportRoute id : "+input.getTransportRouteId()+"and stopage id : "+input.getStopageId());
+//        TransportRouteStopageLink transportRouteStopageLink = new TransportRouteStopageLink();
+//        transportRouteStopageLink.setTransportRoute(transportRoute);
+//        transportRouteStopageLink.setStopage(stopage);
+//        Optional<TransportRouteStopageLink> oth = this.transportRouteStopageLinkRepository.findOne(Example.of(transportRouteStopageLink));
+//        if(!oth.isPresent()) {
+////            teach.setDesc("Teacher - "+teacher.getTeacherName()+". Subject - "+ subject.getSubjectDesc()+". Branch - "+teacher.getBranch().getBranchName()+". Department - "+teacher.getDepartment().getName()+". Batch/Year - "+ subject.getBatch().getBatch() );
+//            TransportRouteStopageLink th = this.transportRouteStopageLinkRepository.save(transportRouteStopageLink);
+//            logger.debug("TransportRouteStopageLink data saved : "+transportRouteStopageLink);
+//            return th;
+//        }else {
+//            logger.debug("TransportRouteStopageLink mapping already exists. "+oth.get());
+//        }
+//        return oth.get();
+//    }
 }

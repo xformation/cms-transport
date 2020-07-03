@@ -3,8 +3,11 @@ package com.synectiks.transport.business.service;
 import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.*;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRouteInput;
+import com.synectiks.transport.graphql.types.TransportRouteVehicleLink.AddTransportRouteVehicleLinkInput;
 import com.synectiks.transport.graphql.types.Vehicle.AddVehicleInput;
+import com.synectiks.transport.repository.TransportRouteRepository;
 import com.synectiks.transport.repository.TransportRouteVehicleLinkRepository;
+import com.synectiks.transport.repository.VehicleRepository;
 import com.synectiks.transport.service.util.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,12 @@ public class TransportRouteVehicleLinkService {
 
     @Autowired
     TransportRouteVehicleLinkRepository transportRouteVehicleLinkRepository;
+
+    @Autowired
+    TransportRouteRepository transportRouteRepository;
+
+    @Autowired
+    VehicleRepository vehicleRepository;
 
     @Autowired
     TransportRouteService transportRouteService;
@@ -172,22 +181,62 @@ public class TransportRouteVehicleLinkService {
         }
     }
 
-    public TransportRouteVehicleLink saveTransportRouteVehicleLink(AddVehicleInput input) {
-        TransportRoute transportRoute = this.transportRouteService.getTransportRoute(input.getId());
-        Vehicle vehicle = this.vehicleService.getVehicle(input.getId());
-        logger.debug("Making entries in transportRouteVehicleLink for the given transportRoute id : "+input.getTransportRouteId()+"and vehicle id : "+input.getVehicleId());
-        TransportRouteVehicleLink transportRouteVehicleLink = new TransportRouteVehicleLink();
-        transportRouteVehicleLink.setTransportRoute(transportRoute);
-        transportRouteVehicleLink.setVehicle(vehicle);
-        Optional<TransportRouteVehicleLink> oth = this.transportRouteVehicleLinkRepository.findOne(Example.of(transportRouteVehicleLink));
-        if(!oth.isPresent()) {
-//            teach.setDesc("Teacher - "+teacher.getTeacherName()+". Subject - "+ subject.getSubjectDesc()+". Branch - "+teacher.getBranch().getBranchName()+". Department - "+teacher.getDepartment().getName()+". Batch/Year - "+ subject.getBatch().getBatch() );
-            TransportRouteVehicleLink th = this.transportRouteVehicleLinkRepository.save(transportRouteVehicleLink);
-            logger.debug("TransportRouteVehicleLink data saved : "+transportRouteVehicleLink);
-            return th;
-        }else {
-            logger.debug("TransportRouteVehicleLink mapping already exists. "+oth.get());
+    public CmsTransportRouteVehicleLinkVo saveTransportRouteVehicleLink(AddTransportRouteVehicleLinkInput input) {
+        logger.info("Saving TransportRouteVehicleLink");
+        CmsTransportRouteVehicleLinkVo vo = null;
+        try {
+            TransportRouteVehicleLink transportRouteVehicleLink = null;
+            if (input.getId() == null) {
+                logger.debug("Adding new TransportRouteVehicleLink");
+                transportRouteVehicleLink = CommonUtil.createCopyProperties(input, TransportRouteVehicleLink.class);
+//                transportRoute.setCreatedOn(LocalDate.now());
+            }
+            else {
+                logger.debug("Updating existing TransportRouteVehicleLink");
+                transportRouteVehicleLink = this.transportRouteVehicleLinkRepository.findById(input.getId()).get();
+            }
+            Vehicle v = this.vehicleRepository.findById(input.getVehicleId()).get();
+            transportRouteVehicleLink.setVehicle(v);
+            TransportRoute t = this.transportRouteRepository.findById(input.getTransportRouteId()).get();
+            transportRouteVehicleLink.setTransportRoute(t);
+            transportRouteVehicleLink = this.transportRouteVehicleLinkRepository.save(transportRouteVehicleLink);
+            vo = CommonUtil.createCopyProperties(transportRouteVehicleLink, CmsTransportRouteVehicleLinkVo.class);
+            vo.setExitCode(0L);
+            if (input.getId() == null) {
+                vo.setExitDescription("TransportRouteVehicleLink is added successfully");
+                logger.debug("TransportRouteVehicleLink is added successfully");
+            } else {
+                vo.setExitDescription("TransportRouteVehicleLink is updated successfully");
+                logger.debug("TransportRouteVehicleLink is updated successfully");
+            }
+        } catch (Exception e) {
+            vo = new CmsTransportRouteVehicleLinkVo();
+            vo.setExitCode(1L);
+            vo.setExitDescription("Due to some exception, TransportRouteVehicleLink data could not be saved");
+            logger.error("TransportRouteVehicleLink save failed. Exception : ", e);
         }
-        return oth.get();
+        logger.info("TransportRouteVehicleLink saved successfully");
+        List<CmsTransportRouteVehicleLinkVo> ls = getTransportRouteVehicleList();
+        vo.setDataList((ls));
+        return vo;
     }
+
+//    public TransportRouteVehicleLink saveTransportRouteVehicleLink(AddTransportRouteVehicleLinkInput input) {
+//        TransportRoute transportRoute = this.transportRouteService.getTransportRoute(input.getId());
+//        Vehicle vehicle = this.vehicleService.getVehicle(input.getId());
+//        logger.debug("Making entries in transportRouteVehicleLink for the given transportRoute id : "+input.getTransportRouteId()+"and vehicle id : "+input.getVehicleId());
+//        TransportRouteVehicleLink transportRouteVehicleLink = new TransportRouteVehicleLink();
+//        transportRouteVehicleLink.setTransportRoute(transportRoute);
+//        transportRouteVehicleLink.setVehicle(vehicle);
+//        Optional<TransportRouteVehicleLink> oth = this.transportRouteVehicleLinkRepository.findOne(Example.of(transportRouteVehicleLink));
+//        if(!oth.isPresent()) {
+////            teach.setDesc("Teacher - "+teacher.getTeacherName()+". Subject - "+ subject.getSubjectDesc()+". Branch - "+teacher.getBranch().getBranchName()+". Department - "+teacher.getDepartment().getName()+". Batch/Year - "+ subject.getBatch().getBatch() );
+//            TransportRouteVehicleLink th = this.transportRouteVehicleLinkRepository.save(transportRouteVehicleLink);
+//            logger.debug("TransportRouteVehicleLink data saved : "+transportRouteVehicleLink);
+//            return th;
+//        }else {
+//            logger.debug("TransportRouteVehicleLink mapping already exists. "+oth.get());
+//        }
+//        return oth.get();
+//    }
 }
