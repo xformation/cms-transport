@@ -171,16 +171,16 @@ public class TransportRouteStopageLinkService {
     }
 
     private void convertDatesAndProvideDependencies(TransportRouteStopageLink tr, CmsTransportRouteStopageLinkVo vo) {
-        if(tr.getTransportRoute() != null) {
-            vo.setTransportRouteId(tr.getTransportRoute().getId());
-            CmsTransportRouteVo cmsSvo =CommonUtil.createCopyProperties(tr.getTransportRoute(), CmsTransportRouteVo.class);
-            vo.setCmsTransportRouteVo(cmsSvo);
-        }
-        if(tr.getStopage() != null) {
-            vo.setStopageId(tr.getStopage().getId());
-            CmsStopageVo cmsTvo =CommonUtil.createCopyProperties(tr.getStopage(), CmsStopageVo.class);
-            vo.setCmsStopageVo(cmsTvo);
-        }
+//        if(tr.getTransportRoute() != null) {
+//            vo.setTransportRouteId(tr.getTransportRoute().getId());
+//            CmsTransportRouteVo cmsSvo =CommonUtil.createCopyProperties(tr.getTransportRoute(), CmsTransportRouteVo.class);
+//            vo.setCmsTransportRouteVo(cmsSvo);
+//        }
+//        if(tr.getStopage() != null) {
+//            vo.setStopageId(tr.getStopage().getId());
+//            CmsStopageVo cmsTvo =CommonUtil.createCopyProperties(tr.getStopage(), CmsStopageVo.class);
+//            vo.setCmsStopageVo(cmsTvo);
+//        }
     }
 
     public CmsTransportRouteStopageLinkVo saveTransportRouteStopageLink(AddTransportRouteStopageLinkInput input) {

@@ -169,16 +169,16 @@ public class TransportRouteVehicleLinkService {
     }
 
     private void convertDatesAndProvideDependencies(TransportRouteVehicleLink tr, CmsTransportRouteVehicleLinkVo vo) {
-        if(tr.getTransportRoute() != null) {
-            vo.setTransportRouteId(tr.getTransportRoute().getId());
-            CmsTransportRouteVo cmsSvo =CommonUtil.createCopyProperties(tr.getTransportRoute(), CmsTransportRouteVo.class);
-            vo.setCmsTransportRouteVo(cmsSvo);
-        }
-        if(tr.getVehicle() != null) {
-            vo.setVehicleId(tr.getVehicle().getId());
-            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
-            vo.setCmsVehicleVo(cmsSvo);
-        }
+//        if(tr.getTransportRoute() != null) {
+//            vo.setTransportRouteId(tr.getTransportRoute().getId());
+//            CmsTransportRouteVo cmsSvo =CommonUtil.createCopyProperties(tr.getTransportRoute(), CmsTransportRouteVo.class);
+//            vo.setCmsTransportRouteVo(cmsSvo);
+//        }
+//        if(tr.getVehicle() != null) {
+//            vo.setVehicleId(tr.getVehicle().getId());
+//            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
+//            vo.setCmsVehicleVo(cmsSvo);
+//        }
     }
 
     public CmsTransportRouteVehicleLinkVo saveTransportRouteVehicleLink(AddTransportRouteVehicleLinkInput input) {

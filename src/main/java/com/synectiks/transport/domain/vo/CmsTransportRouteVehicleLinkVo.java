@@ -1,5 +1,8 @@
 package com.synectiks.transport.domain.vo;
 
+import com.synectiks.transport.domain.TransportRoute;
+import com.synectiks.transport.domain.Vehicle;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +12,8 @@ public class CmsTransportRouteVehicleLinkVo extends CmsCommonVo implements Seria
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private CmsTransportRouteVo cmsTransportRouteVo;
-    private CmsVehicleVo cmsVehicleVo;
+    private TransportRoute transportRoute;
+    private Vehicle vehicle;
     private Long transportRouteId;
     private Long vehicleId;
     private List<CmsTransportRouteVehicleLinkVo> dataList = new ArrayList<CmsTransportRouteVehicleLinkVo>();
@@ -23,20 +26,20 @@ public class CmsTransportRouteVehicleLinkVo extends CmsCommonVo implements Seria
         this.id = id;
     }
 
-    public CmsTransportRouteVo getCmsTransportRouteVo() {
-        return cmsTransportRouteVo;
+    public TransportRoute getTransportRoute() {
+        return transportRoute;
     }
 
-    public void setCmsTransportRouteVo(CmsTransportRouteVo cmsTransportRouteVo) {
-        this.cmsTransportRouteVo = cmsTransportRouteVo;
+    public void setTransportRoute(TransportRoute transportRoute) {
+        this.transportRoute = transportRoute;
     }
 
-    public CmsVehicleVo getCmsVehicleVo() {
-        return cmsVehicleVo;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setCmsVehicleVo(CmsVehicleVo cmsVehicleVo) {
-        this.cmsVehicleVo = cmsVehicleVo;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public Long getTransportRouteId() {
@@ -67,8 +70,8 @@ public class CmsTransportRouteVehicleLinkVo extends CmsCommonVo implements Seria
     public String toString() {
         return "CmsTransportRouteVehicleLinkVo{" +
             "id=" + id +
-            ", cmsTransportRouteVo=" + cmsTransportRouteVo +
-            ", cmsVehicleVo=" + cmsVehicleVo +
+            ", transportRoute=" + transportRoute +
+            ", vehicle=" + vehicle +
             ", transportRouteId=" + transportRouteId +
             ", vehicleId=" + vehicleId +
             ", dataList=" + dataList +

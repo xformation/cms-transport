@@ -152,11 +152,11 @@ public class VehicleDriverLinkService {
     }
 
     private void convertDatesAndProvideDependencies(VehicleDriverLink tr, CmsVehicleDriverLinkVo vo) {
-        if(tr.getVehicle() != null) {
-            vo.setVehicleId(tr.getVehicle().getId());
-            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
-            vo.setCmsVehicleVo(cmsSvo);
-        }
+//        if(tr.getVehicle() != null) {
+//            vo.setVehicleId(tr.getVehicle().getId());
+//            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
+//            vo.setCmsVehicleVo(cmsSvo);
+//        }
     }
 
     public CmsVehicleDriverLinkVo saveVehicleDriverLink(AddVehicleDriverListInput input) {

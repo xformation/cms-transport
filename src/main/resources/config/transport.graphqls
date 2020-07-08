@@ -149,36 +149,40 @@ type CmsStopageVo{
        	routeStopageList:  [TransportRouteStopageLink]
 }
 type CmsTransportRouteStopageLinkVo{
+     id: Long
      transportRouteId: Long
      stopageId: Long
-     cmsTransportRouteVo:  CmsTransportRouteVo
-     cmsStopageVo:  CmsStopageVo
+     transportRoute:  TransportRoute
+     stopage:  Stopage
      exitCode:          Long
      exitDescription:   String
      dataList: [CmsTransportRouteStopageLinkVo]
 }
 type CmsTransportRouteVehicleLinkVo{
+     id:Long
      transportRouteId: Long
      vehicleId: Long
-     cmsTransportRouteVo:  CmsTransportRouteVo
-     cmsVehicleVo:  CmsVehicleVo
+     transportRoute:  TransportRoute
+     vehicle:  Vehicle
      exitCode:          Long
      exitDescription:   String
      dataList: [CmsTransportRouteVehicleLinkVo]
 }
 type CmsVehicleContractLinkVo{
+      id: Long
       vehicleId: Long
       contractId: Long
-      cmsVehicleVo: CmsVehicleVo
-      cmsContractVo: CmsContractVo
+      vehicle: Vehicle
+      contract: Contract
       exitCode:          Long
       exitDescription:   String
       dataList:  [CmsVehicleContractLinkVo]
 }
 type CmsVehicleDriverLinkVo{
+     id: Long
      vehicleId: Long
      employeeId: Long
-     cmsVehicleVo: CmsVehicleVo
+     vehicle: Vehicle
      employee: Employee
      exitCode:          Long
      exitDescription:   String
@@ -312,6 +316,7 @@ type VehicleDriverLink{
        vehicle:         Vehicle
 }
 input AddVehicleDriverListInput{
+      id: Long
       vehicleId: Long
       employeeId: Long
 }
@@ -324,6 +329,7 @@ type VehicleContractLink{
        contract:        Contract
 }
 input AddVehicleContractListInput{
+      id: Long
       vehicleId: Long
       contractId: Long
 }
@@ -336,6 +342,7 @@ type TransportRouteStopageLink{
        stopage:         Stopage
 }
 input AddTransportRouteStopageLinkInput{
+      id: Long
       transportRouteId: Long
       stopageId: Long
 }
@@ -348,6 +355,7 @@ type TransportRouteVehicleLink {
      vehicle:         Vehicle
 }
 input AddTransportRouteVehicleLinkInput{
+      id: Long
       transportRouteId: Long
       vehicleId: Long
 }

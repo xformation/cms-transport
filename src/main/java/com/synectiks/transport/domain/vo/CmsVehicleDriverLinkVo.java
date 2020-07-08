@@ -1,6 +1,7 @@
 package com.synectiks.transport.domain.vo;
 
 import com.synectiks.transport.domain.Employee;
+import com.synectiks.transport.domain.Vehicle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private CmsVehicleVo cmsVehicleVo;
+    private Vehicle vehicle;
     private Employee employee;
     private Long vehicleId;
     private Long employeeId;
@@ -25,13 +26,6 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
         this.id = id;
     }
 
-    public CmsVehicleVo getCmsVehicleVo() {
-        return cmsVehicleVo;
-    }
-
-    public void setCmsVehicleVo(CmsVehicleVo cmsVehicleVo) {
-        this.cmsVehicleVo = cmsVehicleVo;
-    }
 
     public Employee getEmployee() {
         return employee;
@@ -39,6 +33,14 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public Long getVehicleId() {
@@ -69,9 +71,10 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
     public String toString() {
         return "CmsVehicleDriverLinkVo{" +
             "id=" + id +
-            ", cmsVehicleVo=" + cmsVehicleVo +
+            ", vehicle=" + vehicle +
             ", vehicleId=" + vehicleId +
             ", employeeId=" + employeeId +
+            ", employee=" + employee +
             ", dataList=" + dataList +
             "} " + super.toString();
     }

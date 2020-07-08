@@ -1,5 +1,8 @@
 package com.synectiks.transport.domain.vo;
 
+import com.synectiks.transport.domain.Contract;
+import com.synectiks.transport.domain.Vehicle;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +12,8 @@ public class CmsVehicleContractLinkVo extends CmsCommonVo implements Serializabl
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private CmsVehicleVo cmsVehicleVo;
-    private CmsContractVo cmsContractVo;
+    private Vehicle vehicle;
+    private Contract contract;
     private Long vehicleId;
     private Long contractId;
     private List<CmsVehicleContractLinkVo> dataList = new ArrayList<CmsVehicleContractLinkVo>();
@@ -23,20 +26,20 @@ public class CmsVehicleContractLinkVo extends CmsCommonVo implements Serializabl
         this.id = id;
     }
 
-    public CmsVehicleVo getCmsVehicleVo() {
-        return cmsVehicleVo;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setCmsVehicleVo(CmsVehicleVo cmsVehicleVo) {
-        this.cmsVehicleVo = cmsVehicleVo;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
-    public CmsContractVo getCmsContractVo() {
-        return cmsContractVo;
+    public Contract getContract() {
+        return contract;
     }
 
-    public void setCmsContractVo(CmsContractVo cmsContractVo) {
-        this.cmsContractVo = cmsContractVo;
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 
     public Long getVehicleId() {
@@ -67,8 +70,8 @@ public class CmsVehicleContractLinkVo extends CmsCommonVo implements Serializabl
     public String toString() {
         return "CmsVehicleContractLinkVo{" +
             "id=" + id +
-            ", cmsVehicleVo=" + cmsVehicleVo +
-            ", cmsContractVo=" + cmsContractVo +
+            ", vehicle=" + vehicle +
+            ", contract=" + contract +
             ", vehicleId=" + vehicleId +
             ", contractId=" + contractId +
             ", dataList=" + dataList +

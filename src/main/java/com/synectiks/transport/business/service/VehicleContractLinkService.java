@@ -175,16 +175,16 @@ public class VehicleContractLinkService {
     }
 
     private void convertDatesAndProvideDependencies(VehicleContractLink tr, CmsVehicleContractLinkVo vo) {
-        if (tr.getVehicle() != null) {
-            vo.setVehicleId(tr.getVehicle().getId());
-            CmsVehicleVo cmsSvo = CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
-            vo.setCmsVehicleVo(cmsSvo);
-        }
-        if (tr.getContract() != null) {
-            vo.setContractId(tr.getContract().getId());
-            CmsContractVo cmsTvo = CommonUtil.createCopyProperties(tr.getContract(), CmsContractVo.class);
-            vo.setCmsContractVo(cmsTvo);
-        }
+//        if (tr.getVehicle() != null) {
+//            vo.setVehicleId(tr.getVehicle().getId());
+//            CmsVehicleVo cmsSvo = CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
+//            vo.setVehicle(cmsSvo);
+//        }
+//        if (tr.getContract() != null) {
+//            vo.setContractId(tr.getContract().getId());
+//            CmsContractVo cmsTvo = CommonUtil.createCopyProperties(tr.getContract(), CmsContractVo.class);
+//            vo.setCmsContractVo(cmsTvo);
+//        }
     }
 
     public CmsVehicleContractLinkVo saveVehicleContractLink(AddVehicleContractListInput input) {

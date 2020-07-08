@@ -1,5 +1,8 @@
 package com.synectiks.transport.domain.vo;
 
+import com.synectiks.transport.domain.Stopage;
+import com.synectiks.transport.domain.TransportRoute;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +11,8 @@ public class CmsTransportRouteStopageLinkVo extends CmsCommonVo implements Seria
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private CmsTransportRouteVo cmsTransportRouteVo;
-    private CmsStopageVo cmsStopageVo;
+    private TransportRoute transportRoute;
+    private Stopage stopage;
     private Long transportRouteId;
     private Long stopageId;
     private List<CmsTransportRouteStopageLinkVo> dataList = new ArrayList<CmsTransportRouteStopageLinkVo>();
@@ -22,20 +25,20 @@ public class CmsTransportRouteStopageLinkVo extends CmsCommonVo implements Seria
         this.id = id;
     }
 
-    public CmsTransportRouteVo getCmsTransportRouteVo() {
-        return cmsTransportRouteVo;
+    public TransportRoute getTransportRoute() {
+        return transportRoute;
     }
 
-    public void setCmsTransportRouteVo(CmsTransportRouteVo cmsTransportRouteVo) {
-        this.cmsTransportRouteVo = cmsTransportRouteVo;
+    public void setTransportRoute(TransportRoute transportRoute) {
+        this.transportRoute = transportRoute;
     }
 
-    public CmsStopageVo getCmsStopageVo() {
-        return cmsStopageVo;
+    public Stopage getStopage() {
+        return stopage;
     }
 
-    public void setCmsStopageVo(CmsStopageVo cmsStopageVo) {
-        this.cmsStopageVo = cmsStopageVo;
+    public void setStopage(Stopage stopage) {
+        this.stopage = stopage;
     }
 
     public Long getTransportRouteId() {
@@ -66,8 +69,8 @@ public class CmsTransportRouteStopageLinkVo extends CmsCommonVo implements Seria
     public String toString() {
         return "CmsTransportRouteStopageLinkVo{" +
             "id=" + id +
-            ", cmsTransportRouteVo=" + cmsTransportRouteVo +
-            ", cmsStopageVo=" + cmsStopageVo +
+            ", transportRoute=" + transportRoute +
+            ", stopage=" + stopage +
             ", transportRouteId=" + transportRouteId +
             ", stopageId=" + stopageId +
             ", dataList=" + dataList +
