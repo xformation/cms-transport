@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -188,18 +189,25 @@ public class Query implements GraphQLQueryResolver {
         List<CmsTransportRouteVo> transportRouteList = this.transportRouteService.getTransportRouteList();
         List<CmsContractVo> contractList = this.contractService.getContractList();
         List<CmsVehicleVo> vehicleList = this.vehicleService.getVehicleList();
-//        List<Employee> employeeList = this.commonService.findAllEmployee();
-//        List<Branch> branchList = this.commonService.findAllBranch();
+        List<CmsVehicleContractLinkVo> vehicleContractLinkList = this.vehicleContractLinkService.getVehicleContractList();
+        List<CmsVehicleDriverLinkVo> vehicleDriverLinkList = this.vehicleDriverLinkService.getVehicleDriverList();
+        List<CmsTransportRouteVehicleLinkVo> transportRouteVehicleLinkList = this.transportRouteVehicleLinkService.getTransportRouteVehicleList();
+        List<CmsTransportRouteStopageLinkVo> transportRouteStopageLinkList = this.transportRouteStopageLinkService.getTransportRouteStopageList();
         String preUrl = this.applicationProperties.getPrefSrvUrl();
-        List<Branch> branchList = this.commonService.getList(preUrl+"/api/branch-by-filters");
-        List<Employee> employeeList = this.commonService.getList(preUrl+"/api/employee-by-filters");
-
+        String url = preUrl+"/api/employee-by-filters/";
+        Employee[] employeeList = this.commonService.getObject(url,Employee[].class);
+        url = preUrl+"/api/branch-by-filters";
+        Branch[] branchList = this.commonService.getObject(url,Branch[].class);
         VehicleDataCache cache = new VehicleDataCache();
         cache.setTransportRoute(transportRouteList);
         cache.setContract(contractList);
         cache.setVehicle(vehicleList);
-        cache.setEmployee(employeeList);
-        cache.setBranches(branchList);
+        cache.setVehicleContractLink(vehicleContractLinkList);
+        cache.setVehicleDriverLink(vehicleDriverLinkList);
+        cache.setTransportRouteVehicleLink(transportRouteVehicleLinkList);
+        cache.setTransportRouteStopageLink(transportRouteStopageLinkList);
+        cache.setEmployee(Arrays.asList(employeeList));
+        cache.setBranches(Arrays.asList(branchList));
         return cache;
     }
     public InsuranceDataCache createInsuranceDataCache() throws Exception {
@@ -208,5 +216,4 @@ public class Query implements GraphQLQueryResolver {
         cache.setVehicle(vehicleList);
         return cache;
     }
-
 }

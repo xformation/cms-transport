@@ -1,8 +1,7 @@
 package com.synectiks.transport.domain;
 
-import com.synectiks.transport.domain.vo.CmsContractVo;
-import com.synectiks.transport.domain.vo.CmsTransportRouteVo;
-import com.synectiks.transport.domain.vo.CmsVehicleVo;
+import com.synectiks.transport.domain.vo.*;
+
 import java.util.List;
 
 public class VehicleDataCache {
@@ -11,7 +10,10 @@ public class VehicleDataCache {
     private List<CmsContractVo> contract;
     private List<CmsVehicleVo> vehicle;
     private List<Employee> employee;
-//    private List<College> colleges;
+    private List<CmsVehicleContractLinkVo> vehicleContractLink;
+    private List<CmsVehicleDriverLinkVo> vehicleDriverLink;
+    private List<CmsTransportRouteVehicleLinkVo> transportRouteVehicleLink;
+    private List<CmsTransportRouteStopageLinkVo> transportRouteStopageLink;
     private List<Branch> branches;
 
     public List<CmsTransportRouteVo> getTransportRoute() {
@@ -38,16 +40,42 @@ public class VehicleDataCache {
     public void setEmployee(List<Employee> employee) {
         this.employee = employee;
     }
-//    public List<College> getColleges() {
-//        return colleges;
-//    }
-//    public void setColleges(List<College> colleges) {
-//        this.colleges = colleges;
-//    }
     public List<Branch> getBranches() {
         return branches;
     }
     public void setBranches(List<Branch> branches) {
         this.branches = branches;
+    }
+
+    public List<CmsVehicleContractLinkVo> getVehicleContractLink() {
+        return vehicleContractLink;
+    }
+
+    public void setVehicleContractLink(List<CmsVehicleContractLinkVo> vehicleContractLink) {
+        this.vehicleContractLink = vehicleContractLink;
+    }
+
+    public List<CmsVehicleDriverLinkVo> getVehicleDriverLink() {
+        return vehicleDriverLink;
+    }
+
+    public void setVehicleDriverLink(List<CmsVehicleDriverLinkVo> vehicleDriverLink) {
+        this.vehicleDriverLink = vehicleDriverLink;
+    }
+
+    public List<CmsTransportRouteVehicleLinkVo> getTransportRouteVehicleLink() {
+        return transportRouteVehicleLink;
+    }
+
+    public void setTransportRouteVehicleLink(List<CmsTransportRouteVehicleLinkVo> transportRouteVehicleLink) {
+        this.transportRouteVehicleLink = transportRouteVehicleLink;
+    }
+
+    public List<CmsTransportRouteStopageLinkVo> getTransportRouteStopageLink() {
+        return transportRouteStopageLink;
+    }
+
+    public void setTransportRouteStopageLink(List<CmsTransportRouteStopageLinkVo> transportRouteStopageLink) {
+        this.transportRouteStopageLink = transportRouteStopageLink;
     }
 }
