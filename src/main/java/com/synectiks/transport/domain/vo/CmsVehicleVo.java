@@ -27,42 +27,15 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     private String model;
     private String chasisNo;
     private String rcNo;
-//    private String contactNumber;
     private String status;
     private LocalDate onBoardingDate;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
-//    private LocalDate dateOfInsurance;
-    private LocalDate startDate;
-    private LocalDate endDate;
     private LocalDate validTill;
-    private CmsTransportRouteVo cmsTransportRouteVo;
-    private CmsContractVo cmsContractVo;
-    private Long transportRouteId;
-//    private Long collegeId;
-    private Long contractId;
-    private Long insuranceId;
-    private Insurance insurance;
     private Long branchId;
-    private Long vehicleId;
     private Branch branch;
     private String strOnBoardingDate;
     private String strDateOfRegistration;
-    private String strStartDate;
-    private String strEndDate;
-    private String strValidTill;
-    private Long vehicleContractLinkId;
-    private Long vehicleDriverLinkId;
-    private Long transportRouteVehicleLinkId;
-
-    //    private String strDateOfInsurance;
-
-    private CmsVehicleContractLinkVo cmsVehicleContractLinkVo;
-    private CmsVehicleDriverLinkVo cmsVehicleDriverLinkVo;
-    private CmsTransportRouteVehicleLinkVo cmsTransportRouteVehicleLinkVo;
-    private List<VehicleContractLink> vehicleContractList;
-    private List<VehicleDriverLink> driverList;
-    private List<TransportRouteVehicleLink> routeVehicleList;
     private List<CmsVehicleVo> dataList = new ArrayList<>();
 
     public Long getId() {
@@ -171,22 +144,6 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         this.onBoardingDate = onBoardingDate;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public LocalDate getValidTill() {
         return validTill;
     }
@@ -194,63 +151,6 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     public void setValidTill(LocalDate validTill) {
         this.validTill = validTill;
     }
-
-    public CmsTransportRouteVo getCmsTransportRouteVo() {
-        return cmsTransportRouteVo;
-    }
-
-    public void setCmsTransportRouteVo(CmsTransportRouteVo cmsTransportRouteVo) {
-        this.cmsTransportRouteVo = cmsTransportRouteVo;
-    }
-
-    public CmsContractVo getCmsContractVo() {
-        return cmsContractVo;
-    }
-
-    public void setCmsContractVo(CmsContractVo cmsContractVo) {
-        this.cmsContractVo = cmsContractVo;
-    }
-
-
-    public Long getTransportRouteId() {
-        return transportRouteId;
-    }
-
-    public void setTransportRouteId(Long transportRouteId) {
-        this.transportRouteId = transportRouteId;
-    }
-
-    public Long getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(Long contractId) {
-        this.contractId = contractId;
-    }
-
-    public Long getInsuranceId() {
-        return insuranceId;
-    }
-
-    public void setInsuranceId(Long insuranceId) {
-        this.insuranceId = insuranceId;
-    }
-
-    public Insurance getInsurance() {
-        return insurance;
-    }
-
-    public void setInsurance(Insurance insurance) {
-        this.insurance = insurance;
-    }
-
-//    public Long getEmployeeId() {
-//        return employeeId;
-//    }
-//
-//    public void setEmployeeId(Long employeeId) {
-//        this.employeeId = employeeId;
-//    }
 
     public Long getBranchId() {
         return branchId;
@@ -284,102 +184,6 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
         this.strDateOfRegistration = strDateOfRegistration;
     }
 
-    public String getStrStartDate() {
-        return strStartDate;
-    }
-
-    public void setStrStartDate(String strStartDate) {
-        this.strStartDate = strStartDate;
-    }
-
-    public String getStrEndDate() {
-        return strEndDate;
-    }
-
-    public void setStrEndDate(String strEndDate) {
-        this.strEndDate = strEndDate;
-    }
-
-    public String getStrValidTill() {
-        return strValidTill;
-    }
-
-    public void setStrValidTill(String strValidTill) {
-        this.strValidTill = strValidTill;
-    }
-
-    public Long getVehicleContractLinkId() {
-        return vehicleContractLinkId;
-    }
-
-    public void setVehicleContractLinkId(Long vehicleContractLinkId) {
-        this.vehicleContractLinkId = vehicleContractLinkId;
-    }
-
-    public Long getVehicleDriverLinkId() {
-        return vehicleDriverLinkId;
-    }
-
-    public void setVehicleDriverLinkId(Long vehicleDriverLinkId) {
-        this.vehicleDriverLinkId = vehicleDriverLinkId;
-    }
-
-    public Long getTransportRouteVehicleLinkId() {
-        return transportRouteVehicleLinkId;
-    }
-
-    public void setTransportRouteVehicleLinkId(Long transportRouteVehicleLinkId) {
-        this.transportRouteVehicleLinkId = transportRouteVehicleLinkId;
-    }
-
-    public CmsVehicleContractLinkVo getCmsVehicleContractLinkVo() {
-        return cmsVehicleContractLinkVo;
-    }
-
-    public void setCmsVehicleContractLinkVo(CmsVehicleContractLinkVo cmsVehicleContractLinkVo) {
-        this.cmsVehicleContractLinkVo = cmsVehicleContractLinkVo;
-    }
-
-    public CmsVehicleDriverLinkVo getCmsVehicleDriverLinkVo() {
-        return cmsVehicleDriverLinkVo;
-    }
-
-    public void setCmsVehicleDriverLinkVo(CmsVehicleDriverLinkVo cmsVehicleDriverLinkVo) {
-        this.cmsVehicleDriverLinkVo = cmsVehicleDriverLinkVo;
-    }
-
-    public CmsTransportRouteVehicleLinkVo getCmsTransportRouteVehicleLinkVo() {
-        return cmsTransportRouteVehicleLinkVo;
-    }
-
-    public void setCmsTransportRouteVehicleLinkVo(CmsTransportRouteVehicleLinkVo cmsTransportRouteVehicleLinkVo) {
-        this.cmsTransportRouteVehicleLinkVo = cmsTransportRouteVehicleLinkVo;
-    }
-
-    public List<VehicleContractLink> getVehicleContractList() {
-        return vehicleContractList;
-    }
-
-    public void setVehicleContractList(List<VehicleContractLink> vehicleContractList) {
-        this.vehicleContractList = vehicleContractList;
-    }
-
-    public List<VehicleDriverLink> getDriverList() {
-        return driverList;
-    }
-
-    public void setDriverList(List<VehicleDriverLink> driverList) {
-        this.driverList = driverList;
-    }
-
-    public List<TransportRouteVehicleLink> getRouteVehicleList() {
-        return routeVehicleList;
-    }
-
-    public void setRouteVehicleList(List<TransportRouteVehicleLink> routeVehicleList) {
-        this.routeVehicleList = routeVehicleList;
-    }
-
     public List<CmsVehicleVo> getDataList() {
         return dataList;
     }
@@ -404,40 +208,12 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
             ", rcNo='" + rcNo + '\'' +
             ", status='" + status + '\'' +
             ", onBoardingDate=" + onBoardingDate +
-            ", startDate=" + startDate +
-            ", endDate=" + endDate +
             ", validTill=" + validTill +
-            ", cmsTransportRouteVo=" + cmsTransportRouteVo +
-            ", cmsContractVo=" + cmsContractVo +
-            ", transportRouteId=" + transportRouteId +
-            ", contractId=" + contractId +
-            ", insuranceId=" + insuranceId +
-            ", insurance=" + insurance +
             ", branchId=" + branchId +
             ", branch=" + branch +
             ", strOnBoardingDate='" + strOnBoardingDate + '\'' +
             ", strDateOfRegistration='" + strDateOfRegistration + '\'' +
-            ", strStartDate='" + strStartDate + '\'' +
-            ", strEndDate='" + strEndDate + '\'' +
-            ", strValidTill='" + strValidTill + '\'' +
-            ", vehicleContractLinkId=" + vehicleContractLinkId +
-            ", vehicleDriverLinkId=" + vehicleDriverLinkId +
-            ", transportRouteVehicleLinkId=" + transportRouteVehicleLinkId +
-            ", cmsVehicleContractLinkVo=" + cmsVehicleContractLinkVo +
-            ", cmsVehicleDriverLinkVo=" + cmsVehicleDriverLinkVo +
-            ", cmsTransportRouteVehicleLinkVo=" + cmsTransportRouteVehicleLinkVo +
-            ", vehicleContractList=" + vehicleContractList +
-            ", driverList=" + driverList +
-            ", routeVehicleList=" + routeVehicleList +
             ", dataList=" + dataList +
             "} " + super.toString();
-    }
-
-    public Long getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
     }
 }

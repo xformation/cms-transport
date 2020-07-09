@@ -23,13 +23,6 @@ public class CmsContractVo extends CmsCommonVo implements Serializable {
     private LocalDate endDate;
     private String strStartDate;
     private String strEndDate;
-    private Long vehicleContractLinkId;
-    private Long vehicleId;
-    private Long contractId;
-    private CmsVehicleVo cmsVehicleVo;
-    private CmsVehicleContractLinkVo cmsVehicleContractLinkVo;
-
-    private List<VehicleContractLink> vehicleContractList;
     private List<CmsContractVo> dataList = new ArrayList<>();
 
     public Long getId() {
@@ -96,60 +89,12 @@ public class CmsContractVo extends CmsCommonVo implements Serializable {
         this.strEndDate = strEndDate;
     }
 
-    public List<VehicleContractLink> getVehicleContractList() {
-        return vehicleContractList;
-    }
-
-    public void setVehicleContractList(List<VehicleContractLink> vehicleContractList) {
-        this.vehicleContractList = vehicleContractList;
-    }
-
     public List<CmsContractVo> getDataList() {
         return dataList;
     }
 
     public void setDataList(List<CmsContractVo> dataList) {
         this.dataList = dataList;
-    }
-
-    public Long getVehicleContractLinkId() {
-        return vehicleContractLinkId;
-    }
-
-    public void setVehicleContractLinkId(Long vehicleContractLinkId) {
-        this.vehicleContractLinkId = vehicleContractLinkId;
-    }
-
-    public CmsVehicleContractLinkVo getCmsVehicleContractLinkVo() {
-        return cmsVehicleContractLinkVo;
-    }
-
-    public void setCmsVehicleContractLinkVo(CmsVehicleContractLinkVo cmsVehicleContractLinkVo) {
-        this.cmsVehicleContractLinkVo = cmsVehicleContractLinkVo;
-    }
-
-    public Long getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
-    }
-
-    public CmsVehicleVo getCmsVehicleVo() {
-        return cmsVehicleVo;
-    }
-
-    public void setCmsVehicleVo(CmsVehicleVo cmsVehicleVo) {
-        this.cmsVehicleVo = cmsVehicleVo;
-    }
-
-    public Long getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(Long contractId) {
-        this.contractId = contractId;
     }
 
     @Override
@@ -163,12 +108,6 @@ public class CmsContractVo extends CmsCommonVo implements Serializable {
             ", endDate=" + endDate +
             ", strStartDate='" + strStartDate + '\'' +
             ", strEndDate='" + strEndDate + '\'' +
-            ", vehicleContractLinkId=" + vehicleContractLinkId +
-            ", vehicleId=" + vehicleId +
-            ", contractId=" + contractId +
-            ", cmsVehicleVo=" + cmsVehicleVo +
-            ", cmsVehicleContractLinkVo=" + cmsVehicleContractLinkVo +
-            ", vehicleContractList=" + vehicleContractList +
             ", dataList=" + dataList +
             "} " + super.toString();
     }

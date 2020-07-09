@@ -12,8 +12,8 @@ public class CmsTransportRouteVehicleLinkVo extends CmsCommonVo implements Seria
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private TransportRoute transportRoute;
-    private Vehicle vehicle;
+    private CmsTransportRouteVo transportRoute;
+    private CmsVehicleVo vehicle;
     private Long transportRouteId;
     private Long vehicleId;
     private List<CmsTransportRouteVehicleLinkVo> dataList = new ArrayList<CmsTransportRouteVehicleLinkVo>();
@@ -26,19 +26,19 @@ public class CmsTransportRouteVehicleLinkVo extends CmsCommonVo implements Seria
         this.id = id;
     }
 
-    public TransportRoute getTransportRoute() {
+    public CmsTransportRouteVo getTransportRoute() {
         return transportRoute;
     }
 
-    public void setTransportRoute(TransportRoute transportRoute) {
+    public void setTransportRoute(CmsTransportRouteVo transportRoute) {
         this.transportRoute = transportRoute;
     }
 
-    public Vehicle getVehicle() {
+    public CmsVehicleVo getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
+    public void setVehicle(CmsVehicleVo vehicle) {
         this.vehicle = vehicle;
     }
 

@@ -11,8 +11,8 @@ public class CmsTransportRouteStopageLinkVo extends CmsCommonVo implements Seria
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private TransportRoute transportRoute;
-    private Stopage stopage;
+    private CmsTransportRouteVo transportRoute;
+    private CmsStopageVo stopage;
     private Long transportRouteId;
     private Long stopageId;
     private List<CmsTransportRouteStopageLinkVo> dataList = new ArrayList<CmsTransportRouteStopageLinkVo>();
@@ -25,19 +25,19 @@ public class CmsTransportRouteStopageLinkVo extends CmsCommonVo implements Seria
         this.id = id;
     }
 
-    public TransportRoute getTransportRoute() {
+    public CmsTransportRouteVo getTransportRoute() {
         return transportRoute;
     }
 
-    public void setTransportRoute(TransportRoute transportRoute) {
+    public void setTransportRoute(CmsTransportRouteVo transportRoute) {
         this.transportRoute = transportRoute;
     }
 
-    public Stopage getStopage() {
+    public CmsStopageVo getStopage() {
         return stopage;
     }
 
-    public void setStopage(Stopage stopage) {
+    public void setStopage(CmsStopageVo stopage) {
         this.stopage = stopage;
     }
 

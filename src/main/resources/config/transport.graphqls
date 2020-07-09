@@ -66,25 +66,13 @@ type CmsVehicleVo {
     chasisNo:              String
     rcNo:                  String
     status:                String
-    startDate:             Date
-    endDate:               Date
     onBoardingDate:        Date
-    validTill:             Date
-    strStartDate:          String
-    strEndDate:            String
     strDateOfRegistration: String
     strOnBoardingDate:     String
-    strValidTill:          String
-    transportRouteId:      Long
-    contractId:            Long
     branchId:              Long
-    cmsContractVo:         CmsContractVo
     exitCode:              Long
     exitDescription:       String
     dataList:             [CmsVehicleVo]
-    routeVehicleList:     [TransportRouteVehicleLink]
-    driverList:           [VehicleDriverLink]
-    vehicleContractList:  [VehicleContractLink]
 }
 
 type CmsInsuranceVo {
@@ -117,8 +105,6 @@ type CmsTransportRouteVo {
     branchId:            Long
     strCreatedOn:       String
     strUpdatedOn:       String
-    routeVehicleList:   [TransportRouteVehicleLink]
-    routeStopageList:   [TransportRouteStopageLink]
     exitCode:           Long
     exitDescription:    String
     dataList:           [CmsTransportRouteVo]
@@ -135,7 +121,6 @@ type CmsContractVo {
      exitCode:           Long
      exitDescription:    String
      dataList:           [CmsContractVo]
-     vehicleContractList: [VehicleContractLink]
 }
 type CmsStopageVo{
         id:                Long
@@ -151,14 +136,13 @@ type CmsStopageVo{
         exitCode:          Long
         exitDescription:   String
         dataList:          [CmsStopageVo]
-       	routeStopageList:  [TransportRouteStopageLink]
 }
 type CmsTransportRouteStopageLinkVo{
      id: Long
      transportRouteId: Long
      stopageId: Long
-     transportRoute:  TransportRoute
-     stopage:  Stopage
+     transportRoute:  CmsTransportRouteVo
+     stopage:  CmsStopageVo
      exitCode:          Long
      exitDescription:   String
      dataList: [CmsTransportRouteStopageLinkVo]
@@ -167,8 +151,8 @@ type CmsTransportRouteVehicleLinkVo{
      id:Long
      transportRouteId: Long
      vehicleId: Long
-     transportRoute:  TransportRoute
-     vehicle:  Vehicle
+     transportRoute:  CmsTransportRouteVo
+     vehicle:  CmsVehicleVo
      exitCode:          Long
      exitDescription:   String
      dataList: [CmsTransportRouteVehicleLinkVo]
@@ -177,8 +161,8 @@ type CmsVehicleContractLinkVo{
       id: Long
       vehicleId: Long
       contractId: Long
-      vehicle: Vehicle
-      contract: Contract
+      vehicle: CmsVehicleVo
+      contract: CmsContractVo
       exitCode:          Long
       exitDescription:   String
       dataList:  [CmsVehicleContractLinkVo]
@@ -187,7 +171,7 @@ type CmsVehicleDriverLinkVo{
      id: Long
      vehicleId: Long
      employeeId: Long
-     vehicle: Vehicle
+     vehicle: CmsVehicleVo
      employee: Employee
      exitCode:          Long
      exitDescription:   String

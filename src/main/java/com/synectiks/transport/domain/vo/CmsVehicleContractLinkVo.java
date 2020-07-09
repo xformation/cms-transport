@@ -12,8 +12,8 @@ public class CmsVehicleContractLinkVo extends CmsCommonVo implements Serializabl
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private Vehicle vehicle;
-    private Contract contract;
+    private CmsVehicleVo vehicle;
+    private CmsContractVo contract;
     private Long vehicleId;
     private Long contractId;
     private List<CmsVehicleContractLinkVo> dataList = new ArrayList<CmsVehicleContractLinkVo>();
@@ -26,19 +26,19 @@ public class CmsVehicleContractLinkVo extends CmsCommonVo implements Serializabl
         this.id = id;
     }
 
-    public Vehicle getVehicle() {
+    public CmsVehicleVo getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
+    public void setVehicle(CmsVehicleVo vehicle) {
         this.vehicle = vehicle;
     }
 
-    public Contract getContract() {
+    public CmsContractVo getContract() {
         return contract;
     }
 
-    public void setContract(Contract contract) {
+    public void setContract(CmsContractVo contract) {
         this.contract = contract;
     }
 

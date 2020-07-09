@@ -26,14 +26,8 @@ public class CmsStopageVo extends CmsCommonVo  implements Serializable {
     private LocalDate updatedOn;
     private String strCreatedOn;
     private String strUpdatedOn;
-    private Long transportRouteId;
-    private Long stopageId;
     private Branch branch;
     private Long branchId;
-    private CmsTransportRouteVo cmsTransportRouteVo;
-    private Long transportRouteStopageLinkId;
-    private CmsTransportRouteStopageLinkVo cmsTransportRouteStopageLinkVo;
-    private List<TransportRouteStopageLink> routeStopageList;
     private List<CmsStopageVo> dataList = new ArrayList<>();
 
 
@@ -123,22 +117,6 @@ public class CmsStopageVo extends CmsCommonVo  implements Serializable {
         this.strUpdatedOn = strUpdatedOn;
     }
 
-    public Long getTransportRouteId() {
-        return transportRouteId;
-    }
-
-    public void setTransportRouteId(Long transportRouteId) {
-        this.transportRouteId = transportRouteId;
-    }
-
-    public Long getStopageId() {
-        return stopageId;
-    }
-
-    public void setStopageId(Long stopageId) {
-        this.stopageId = stopageId;
-    }
-
     public Branch getBranch() {
         return branch;
     }
@@ -153,38 +131,6 @@ public class CmsStopageVo extends CmsCommonVo  implements Serializable {
 
     public void setBranchId(Long branchId) {
         this.branchId = branchId;
-    }
-
-    public CmsTransportRouteVo getCmsTransportRouteVo() {
-        return cmsTransportRouteVo;
-    }
-
-    public void setCmsTransportRouteVo(CmsTransportRouteVo cmsTransportRouteVo) {
-        this.cmsTransportRouteVo = cmsTransportRouteVo;
-    }
-
-    public Long getTransportRouteStopageLinkId() {
-        return transportRouteStopageLinkId;
-    }
-
-    public void setTransportRouteStopageLinkId(Long transportRouteStopageLinkId) {
-        this.transportRouteStopageLinkId = transportRouteStopageLinkId;
-    }
-
-    public CmsTransportRouteStopageLinkVo getCmsTransportRouteStopageLinkVo() {
-        return cmsTransportRouteStopageLinkVo;
-    }
-
-    public void setCmsTransportRouteStopageLinkVo(CmsTransportRouteStopageLinkVo cmsTransportRouteStopageLinkVo) {
-        this.cmsTransportRouteStopageLinkVo = cmsTransportRouteStopageLinkVo;
-    }
-
-    public List<TransportRouteStopageLink> getRouteStopageList() {
-        return routeStopageList;
-    }
-
-    public void setRouteStopageList(List<TransportRouteStopageLink> routeStopageList) {
-        this.routeStopageList = routeStopageList;
     }
 
     public List<CmsStopageVo> getDataList() {
@@ -207,14 +153,8 @@ public class CmsStopageVo extends CmsCommonVo  implements Serializable {
             ", updatedOn=" + updatedOn +
             ", strCreatedOn='" + strCreatedOn + '\'' +
             ", strUpdatedOn='" + strUpdatedOn + '\'' +
-            ", transportRouteId=" + transportRouteId +
-            ", stopageId=" + stopageId +
             ", branch=" + branch +
             ", branchId=" + branchId +
-            ", cmsTransportRouteVo=" + cmsTransportRouteVo +
-            ", transportRouteStopageLinkId=" + transportRouteStopageLinkId +
-            ", cmsTransportRouteStopageLinkVo=" + cmsTransportRouteStopageLinkVo +
-            ", routeStopageList=" + routeStopageList +
             ", dataList=" + dataList +
             "} " + super.toString();
     }

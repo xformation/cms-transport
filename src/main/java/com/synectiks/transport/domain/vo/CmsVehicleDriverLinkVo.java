@@ -12,7 +12,7 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private Vehicle vehicle;
+    private CmsVehicleVo vehicle;
     private Employee employee;
     private Long vehicleId;
     private Long employeeId;
@@ -35,11 +35,11 @@ public class CmsVehicleDriverLinkVo extends CmsCommonVo implements Serializable 
         this.employee = employee;
     }
 
-    public Vehicle getVehicle() {
+    public CmsVehicleVo getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
+    public void setVehicle(CmsVehicleVo vehicle) {
         this.vehicle = vehicle;
     }
 
