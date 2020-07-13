@@ -10,6 +10,7 @@ public class VehicleDataCache {
     private List<CmsContractVo> contract;
     private List<CmsVehicleVo> vehicle;
     private List<Employee> employee;
+    private List<CmsStopageVo> stopage;
     private List<CmsVehicleContractLinkVo> vehicleContractLink;
     private List<CmsVehicleDriverLinkVo> vehicleDriverLink;
     private List<CmsTransportRouteVehicleLinkVo> transportRouteVehicleLink;
@@ -37,6 +38,15 @@ public class VehicleDataCache {
     public List<Employee> getEmployee() {
         return employee;
     }
+
+    public List<CmsStopageVo> getStopage() {
+        return stopage;
+    }
+
+    public void setStopage(List<CmsStopageVo> stopage) {
+        this.stopage = stopage;
+    }
+
     public void setEmployee(List<Employee> employee) {
         this.employee = employee;
     }
