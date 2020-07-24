@@ -1,5 +1,6 @@
 package com.synectiks.transport.business.service;
 
+import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.Contract;
 import com.synectiks.transport.domain.Vehicle;
 import com.synectiks.transport.domain.VehicleContractLink;
@@ -12,6 +13,7 @@ import com.synectiks.transport.repository.ContractRepository;
 import com.synectiks.transport.repository.VehicleContractLinkRepository;
 import com.synectiks.transport.repository.VehicleRepository;
 import com.synectiks.transport.service.util.CommonUtil;
+import com.synectiks.transport.service.util.DateFormatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,16 +177,30 @@ public class VehicleContractLinkService {
     }
 
     private void convertDatesAndProvideDependencies(VehicleContractLink tr, CmsVehicleContractLinkVo vo) {
-//        if (tr.getVehicle() != null) {
-//            vo.setVehicleId(tr.getVehicle().getId());
-//            CmsVehicleVo cmsSvo = CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
-//            vo.setVehicle(cmsSvo);
-//        }
-//        if (tr.getContract() != null) {
-//            vo.setContractId(tr.getContract().getId());
-//            CmsContractVo cmsTvo = CommonUtil.createCopyProperties(tr.getContract(), CmsContractVo.class);
-//            vo.setCmsContractVo(cmsTvo);
-//        }
+        if(tr.getVehicle() != null) {
+            vo.setVehicleId(tr.getVehicle().getId());
+            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
+            if(tr.getVehicle().getDateOfRegistration() != null) {
+                cmsSvo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(tr.getVehicle().getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            }
+            if(tr.getVehicle().getOnBoardingDate() != null) {
+                cmsSvo.setStrOnBoardingDate(DateFormatUtil.changeLocalDateFormat(tr.getVehicle().getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            }
+            vo.setVehicle(cmsSvo);
+        }
+        if (tr.getContract() != null) {
+            vo.setContractId(tr.getContract().getId());
+            CmsContractVo cmsTvo = CommonUtil.createCopyProperties(tr.getContract(), CmsContractVo.class);
+            if(tr.getContract().getStartDate() != null) {
+                cmsTvo.setStrStartDate(DateFormatUtil.changeLocalDateFormat(tr.getContract().getStartDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//             vo.setStartDate(null);
+            }
+            if(tr.getContract().getEndDate() != null) {
+                cmsTvo.setStrEndDate(DateFormatUtil.changeLocalDateFormat(tr.getContract().getEndDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//             vo.setEndDate(null);
+            }
+            vo.setContract(cmsTvo);
+        }
     }
 
     public CmsVehicleContractLinkVo saveVehicleContractLink(AddVehicleContractListInput input) {

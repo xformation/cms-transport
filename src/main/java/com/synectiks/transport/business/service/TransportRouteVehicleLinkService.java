@@ -1,5 +1,6 @@
 package com.synectiks.transport.business.service;
 
+import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.*;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRouteInput;
@@ -9,6 +10,7 @@ import com.synectiks.transport.repository.TransportRouteRepository;
 import com.synectiks.transport.repository.TransportRouteVehicleLinkRepository;
 import com.synectiks.transport.repository.VehicleRepository;
 import com.synectiks.transport.service.util.CommonUtil;
+import com.synectiks.transport.service.util.DateFormatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -169,16 +171,22 @@ public class TransportRouteVehicleLinkService {
     }
 
     private void convertDatesAndProvideDependencies(TransportRouteVehicleLink tr, CmsTransportRouteVehicleLinkVo vo) {
-//        if(tr.getTransportRoute() != null) {
-//            vo.setTransportRouteId(tr.getTransportRoute().getId());
-//            CmsTransportRouteVo cmsSvo =CommonUtil.createCopyProperties(tr.getTransportRoute(), CmsTransportRouteVo.class);
-//            vo.setCmsTransportRouteVo(cmsSvo);
-//        }
-//        if(tr.getVehicle() != null) {
-//            vo.setVehicleId(tr.getVehicle().getId());
-//            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
-//            vo.setCmsVehicleVo(cmsSvo);
-//        }
+        if(tr.getTransportRoute() != null) {
+            vo.setTransportRouteId(tr.getTransportRoute().getId());
+            CmsTransportRouteVo cmsSvo =CommonUtil.createCopyProperties(tr.getTransportRoute(), CmsTransportRouteVo.class);
+            vo.setTransportRoute(cmsSvo);
+        }
+        if(tr.getVehicle() != null) {
+            vo.setVehicleId(tr.getVehicle().getId());
+            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
+            if(tr.getVehicle().getDateOfRegistration() != null) {
+                cmsSvo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(tr.getVehicle().getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            }
+            if(tr.getVehicle().getOnBoardingDate() != null) {
+                cmsSvo.setStrOnBoardingDate(DateFormatUtil.changeLocalDateFormat(tr.getVehicle().getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            }
+            vo.setVehicle(cmsSvo);
+        }
     }
 
     public CmsTransportRouteVehicleLinkVo saveTransportRouteVehicleLink(AddTransportRouteVehicleLinkInput input) {
