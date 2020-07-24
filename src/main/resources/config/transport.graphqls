@@ -23,7 +23,7 @@ type Query {
  getStopageList:           [CmsStopageVo]
  getTransportRouteVehicleList: [CmsTransportRouteVehicleLinkVo]
  getVehicleContractList:   [CmsVehicleContractLinkVo]
- getRouteStopageList:      [CmsTransportRouteStopageLinkVo]
+ getTransportRouteStopageList:      [CmsTransportRouteStopageLinkVo]
  getVehicleDriverList:     [CmsVehicleDriverLinkVo]
  createVehicleDataCache:   VehicleDataCache
  createInsuranceDataCache: InsuranceDataCache

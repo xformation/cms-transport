@@ -15,7 +15,7 @@ import com.synectiks.transport.graphql.types.Contract.AddContractPayload;
 import com.synectiks.transport.graphql.types.Insurance.AddInsuranceInput;
 import com.synectiks.transport.graphql.types.Insurance.AddInsurancePayload;
 import com.synectiks.transport.graphql.types.Stopage.AddStopageInput;
-import com.synectiks.transport.graphql.types.Stopage.AddStopagePaylaod;
+import com.synectiks.transport.graphql.types.Stopage.AddStopagePayload;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRouteInput;
 import com.synectiks.transport.graphql.types.TransportRoute.AddTransportRoutePayload;
 import com.synectiks.transport.graphql.types.TransportRouteStopageLink.AddTransportRouteStopageLinkInput;
@@ -120,9 +120,9 @@ public class Mutation implements GraphQLMutationResolver {
         CmsInsuranceVo vo = this.insuranceService.addInsurance(cmsInsuranceVo);
         return new AddInsurancePayload(vo);
     }
-    public AddStopagePaylaod addStopage(AddStopageInput cmsStopageVo) {
+    public AddStopagePayload addStopage(AddStopageInput cmsStopageVo) {
         CmsStopageVo vo = this.stopageService.addStopage(cmsStopageVo);
-        return new AddStopagePaylaod(vo);
+        return new AddStopagePayload(vo);
     }
 
     public AddVehicleContractListPayload saveVehicleContractLink(AddVehicleContractListInput cmsVehicleContractLinkVo) {

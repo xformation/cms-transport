@@ -72,8 +72,8 @@ public class Query implements GraphQLQueryResolver {
         logger.debug("Query - getTransportRouteList :");
         return this.transportRouteService.getTransportRouteList();
     }
-    public List<CmsTransportRouteStopageLinkVo> getRouteStopageList() throws Exception {
-        logger.debug("Query - getRouteStopageList :");
+    public List<CmsTransportRouteStopageLinkVo> getTransportRouteStopageList() throws Exception {
+        logger.debug("Query - geTransportRouteStopageList :");
         return this.transportRouteStopageLinkService.getTransportRouteStopageList();
     }
     public List<CmsTransportRouteVehicleLinkVo> getTransportRouteVehicleList() throws Exception {
@@ -139,6 +139,7 @@ public class Query implements GraphQLQueryResolver {
     public List<Vehicle>  vehicles(){
         return  Lists.newArrayList(vehicleRepository.findAll());
     }
+
     public Stopage stopage(long id){
         return stopageRepository.findById(id).get();
     }

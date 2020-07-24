@@ -2,10 +2,10 @@ package com.synectiks.transport.graphql.types.Stopage;
 
 import com.synectiks.transport.domain.vo.CmsStopageVo;
 
-public class AddStopagePaylaod {
+public class AddStopagePayload {
     private final CmsStopageVo cmsStopageVo;
 
-    public AddStopagePaylaod(CmsStopageVo cmsStopageVo) {
+    public AddStopagePayload(CmsStopageVo cmsStopageVo) {
         this.cmsStopageVo = cmsStopageVo;
     }
 
