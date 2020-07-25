@@ -1,5 +1,6 @@
 package com.synectiks.transport.business.service;
 
+import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.domain.Contract;
 import com.synectiks.transport.domain.Employee;
 import com.synectiks.transport.domain.Vehicle;
@@ -34,6 +35,12 @@ public class VehicleDriverLinkService {
 
     @Autowired
     VehicleService vehicleService;
+
+    @Autowired
+    private ApplicationProperties applicationProperties;
+
+    @Autowired
+    private CommonService commonService;
 
     public List<CmsVehicleDriverLinkVo> getCmsVehicleDriverLinkListOnFilterCriteria(Map<String, String> criteriaMap){
         VehicleDriverLink obj = new VehicleDriverLink();
@@ -152,11 +159,17 @@ public class VehicleDriverLinkService {
     }
 
     private void convertDatesAndProvideDependencies(VehicleDriverLink tr, CmsVehicleDriverLinkVo vo) {
-//        if(tr.getVehicle() != null) {
-//            vo.setVehicleId(tr.getVehicle().getId());
-//            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
-//            vo.setCmsVehicleVo(cmsSvo);
-//        }
+        if(tr.getVehicle() != null) {
+            vo.setVehicleId(tr.getVehicle().getId());
+            CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
+            vo.setVehicle(cmsSvo);
+        }
+        if(tr.getEmployeeId() != null) {
+            vo.setEmployeeId(tr.getEmployeeId());
+            String preUrl = this.applicationProperties.getPrefSrvUrl();
+            String url = preUrl+"/api/employee-by-filters/";
+            Employee[] employeeList = this.commonService.getObject(url,Employee[].class);
+        }
     }
 
     public CmsVehicleDriverLinkVo saveVehicleDriverLink(AddVehicleDriverListInput input) {
@@ -176,6 +189,9 @@ public class VehicleDriverLinkService {
             Vehicle v = this.vehicleRepository.findById(input.getVehicleId()).get();
             vehicleDriverLink.setVehicle(v);
             vehicleDriverLink.setEmployeeId(input.getEmployeeId());
+            String preUrl = this.applicationProperties.getPrefSrvUrl();
+            String url = preUrl+"/api/employee-by-filters/";
+            Employee[] employeeList = this.commonService.getObject(url,Employee[].class);
             vehicleDriverLink = this.vehicleDriverLinkRepository.save(vehicleDriverLink);
             vo = CommonUtil.createCopyProperties(vehicleDriverLink, CmsVehicleDriverLinkVo.class);
             vo.setExitCode(0L);
