@@ -1,6 +1,7 @@
 package com.synectiks.transport.business.service;
 
 import com.synectiks.transport.config.ApplicationProperties;
+import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.Contract;
 import com.synectiks.transport.domain.Employee;
 import com.synectiks.transport.domain.Vehicle;
@@ -13,6 +14,7 @@ import com.synectiks.transport.graphql.types.VehicleDriverList.AddVehicleDriverL
 import com.synectiks.transport.repository.VehicleDriverLinkRepository;
 import com.synectiks.transport.repository.VehicleRepository;
 import com.synectiks.transport.service.util.CommonUtil;
+import com.synectiks.transport.service.util.DateFormatUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -162,6 +164,12 @@ public class VehicleDriverLinkService {
         if(tr.getVehicle() != null) {
             vo.setVehicleId(tr.getVehicle().getId());
             CmsVehicleVo cmsSvo =CommonUtil.createCopyProperties(tr.getVehicle(), CmsVehicleVo.class);
+            if(tr.getVehicle().getDateOfRegistration() != null) {
+                cmsSvo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(tr.getVehicle().getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            }
+            if(tr.getVehicle().getOnBoardingDate() != null) {
+                cmsSvo.setStrOnBoardingDate(DateFormatUtil.changeLocalDateFormat(tr.getVehicle().getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+            }
             vo.setVehicle(cmsSvo);
         }
         if(tr.getEmployeeId() != null) {
