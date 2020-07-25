@@ -167,8 +167,9 @@ public class VehicleDriverLinkService {
         if(tr.getEmployeeId() != null) {
             vo.setEmployeeId(tr.getEmployeeId());
             String preUrl = this.applicationProperties.getPrefSrvUrl();
-            String url = preUrl+"/api/employee-by-filters/";
-            Employee[] employeeList = this.commonService.getObject(url,Employee[].class);
+            String url = preUrl+"/api/employee-by-id/"+tr.getEmployeeId();
+            Employee employeeList = this.commonService.getObject(url,Employee.class);
+            vo.setEmployee(employeeList);
         }
     }
 
