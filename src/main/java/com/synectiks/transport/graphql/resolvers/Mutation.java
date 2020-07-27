@@ -5,10 +5,10 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.Branch;
-import com.synectiks.transport.domain.Employee;
+import com.synectiks.transport.domain.TransportRouteVehicleLink;
 import com.synectiks.transport.domain.Vehicle;
-import com.synectiks.transport.domain.VehicleContractLink;
 import com.synectiks.transport.domain.vo.*;
+import com.synectiks.transport.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.transport.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.transport.graphql.types.Contract.AddContractInput;
 import com.synectiks.transport.graphql.types.Contract.AddContractPayload;
@@ -31,10 +31,10 @@ import com.synectiks.transport.graphql.types.VehicleDriverList.AddVehicleDriverL
 import com.synectiks.transport.repository.*;
 import com.synectiks.transport.service.util.CommonUtil;
 import com.synectiks.transport.service.util.DateFormatUtil;
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -93,6 +93,9 @@ public class Mutation implements GraphQLMutationResolver {
     private StopageRepository stopageRepository;
 
     @Autowired
+    private TransportRouteVehicleLinkRepository transportRouteVehicleLinkRepository;
+
+    @Autowired
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -141,22 +144,22 @@ public class Mutation implements GraphQLMutationResolver {
         CmsTransportRouteStopageLinkVo vo = this.transportRouteStopageLinkService.saveTransportRouteStopageLink(cmsTransportRouteStopageLinkVo);
         return new AddTransportRouteStopageLinkPayload(vo);
     }
-    public List<CmsVehicleVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
-        List<Vehicle> list = this.vehicleFilterProcessor.searchVehicle(filter);
-        List<CmsVehicleVo> ls = new ArrayList<>();
+    public List<CmsVehicleListVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
+        List<CmsVehicleListVo> list = this.vehicleFilterProcessor.searchVehicle(filter);
+        List<CmsVehicleListVo> ls = new ArrayList<>();
 
-        String prefUrl = applicationProperties.getPrefSrvUrl();
-        for(Vehicle vehicle: list) {
-            CmsVehicleVo vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleVo.class);
+//        String prefUrl = applicationProperties.getPrefSrvUrl();
+        for(CmsVehicleListVo vehicle: list) {
+            CmsVehicleListVo vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleListVo.class);
+//            TransportRouteVehicleLink tvl =  this.commonService.getList();
+//            String url = prefUrl + "/api/branch-by-id/" + vo.getBranchId();
+//            Branch br = this.commonService.getObject(url, Branch.class);
 
-            String url = prefUrl + "/api/branch-by-id/" + vo.getBranchId();
-            Branch br = this.commonService.getObject(url, Branch.class);
-
-            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setStrOnBoardingDate(DateFormatUtil.changeLocalDateFormat(vehicle.getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-            vo.setDateOfRegistration(null);
-            vo.setOnBoardingDate(null);
-            vo.setBranch(br);
+//            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setStrOnBoardingDate(DateFormatUtil.changeLocalDateFormat(vehicle.getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setDateOfRegistration(null);
+//            vo.setOnBoardingDate(null);
+//            vo.setBranch(br);
             ls.add(vo);
         }
         logger.debug("Total vehicles retrieved. "+list.size());

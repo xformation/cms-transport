@@ -10,12 +10,15 @@ scalar Date
    saveVehicleDriverLink(input: AddVehicleDriverListInput): AddVehicleDriverListPayload
    saveTransportRouteVehicleLink(input: AddTransportRouteVehicleLinkInput): AddTransportRouteVehicleLinkPayload
    saveTransportRouteStopageLink(input: AddTransportRouteStopageLinkInput): AddTransportRouteStopageLinkPayload
-   getVehicleList(filter: VehicleListFilterInput): [CmsVehicleVo]
+   getVehicleList(filter: VehicleListFilterInput): [CmsVehicleListVo]
 
  }
 
 type Query {
  vehicle(id: Long):Vehicle
+
+ searchVehicle(transportRouteId:Long,vehicleId:Long,transportRouteVehicleLinkId:Long): [CmsVehicleListVo!]!
+
  getVehicleList:           [CmsVehicleVo]
  getInsuranceList:         [CmsInsuranceVo]
  getContractList:          [CmsContractVo]
@@ -35,7 +38,10 @@ input VehicleListFilterInput {
    vehicleId:           String
    employeeId:          String
    branchId:            String
-   Status:              String
+   contractId:          String
+   insuranceId:         String
+   vehicleDriverLinkId:  String
+   transportRouteVehicleLinkId: String
 }
 
 type VehicleDataCache{
@@ -52,6 +58,32 @@ type VehicleDataCache{
 
 type InsuranceDataCache{
    vehicle:             [CmsVehicleVo]
+}
+
+type CmsVehicleListVo{
+    id: Long
+   transportRouteId:   Long
+   contractId:  Long
+   insuranceId:  Long
+   stopageId:  Long
+   employeeId:   Long
+   vehicleId:   Long
+   branchId:    Long
+   vehicleContractLinkId:   Long
+   vehicleDriverLinkId:     Long
+   transportRouteVehicleLinkId:  Long
+   transportRouteStopageLinkId:   Long
+   employee:  Employee
+   stopage:  Stopage
+   contract:   CmsContractVo
+   transportRoute:   CmsTransportRouteVo
+   insurance:    CmsInsuranceVo
+   vehicle:    CmsVehicleVo
+   vehicleContractLink:  CmsVehicleContractLinkVo
+   vehicleDriverLink:   CmsVehicleDriverLinkVo
+   transportRouteVehicleLink:  CmsTransportRouteVehicleLinkVo
+   transportRouteStopageLink:   CmsTransportRouteStopageLinkVo
+   dataList:             [CmsVehicleListVo]
 }
 
 type CmsVehicleVo {

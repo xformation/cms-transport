@@ -32,10 +32,36 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate validTill;
+    private LocalDate dateOfInsurance;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private CmsTransportRouteVo transportRoute;
+    private CmsContractVo contract;
+    private Long transportRouteId;
+    private Long contractId;
+    private Long insuranceId;
+    private Long stopageId;
+    private Long employeeId;
+    private Employee employee;
+    private Stopage stopage;
+    private CmsInsuranceVo insurance;
+    private Long vehicleId;
     private Long branchId;
     private Branch branch;
     private String strOnBoardingDate;
     private String strDateOfRegistration;
+    private String strStartDate;
+    private String strEndDate;
+    private String strValidTill;
+    private Long vehicleContractLinkId;
+    private Long vehicleDriverLinkId;
+    private Long transportRouteVehicleLinkId;
+    private Long transportRouteStopageLinkId;
+    private String strDateOfInsurance;
+    private CmsVehicleContractLinkVo vehicleContractLink;
+    private CmsVehicleDriverLinkVo vehicleDriverLink;
+    private CmsTransportRouteVehicleLinkVo transportRouteVehicleLink;
+    private CmsTransportRouteStopageLinkVo transportRouteStopageLink;
     private List<CmsVehicleVo> dataList = new ArrayList<>();
 
     public Long getId() {
@@ -182,6 +208,214 @@ public class CmsVehicleVo extends CmsCommonVo implements Serializable {
 
     public void setStrDateOfRegistration(String strDateOfRegistration) {
         this.strDateOfRegistration = strDateOfRegistration;
+    }
+
+    public LocalDate getDateOfInsurance() {
+        return dateOfInsurance;
+    }
+
+    public void setDateOfInsurance(LocalDate dateOfInsurance) {
+        this.dateOfInsurance = dateOfInsurance;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public CmsTransportRouteVo getTransportRoute() {
+        return transportRoute;
+    }
+
+    public void setTransportRoute(CmsTransportRouteVo transportRoute) {
+        this.transportRoute = transportRoute;
+    }
+
+    public CmsContractVo getContract() {
+        return contract;
+    }
+
+    public void setContract(CmsContractVo contract) {
+        this.contract = contract;
+    }
+
+    public Long getTransportRouteId() {
+        return transportRouteId;
+    }
+
+    public void setTransportRouteId(Long transportRouteId) {
+        this.transportRouteId = transportRouteId;
+    }
+
+    public Long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(Long contractId) {
+        this.contractId = contractId;
+    }
+
+    public Long getInsuranceId() {
+        return insuranceId;
+    }
+
+    public void setInsuranceId(Long insuranceId) {
+        this.insuranceId = insuranceId;
+    }
+
+    public Long getStopageId() {
+        return stopageId;
+    }
+
+    public void setStopageId(Long stopageId) {
+        this.stopageId = stopageId;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Stopage getStopage() {
+        return stopage;
+    }
+
+    public void setStopage(Stopage stopage) {
+        this.stopage = stopage;
+    }
+
+    public CmsInsuranceVo getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(CmsInsuranceVo insurance) {
+        this.insurance = insurance;
+    }
+
+    public Long getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(Long vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public String getStrStartDate() {
+        return strStartDate;
+    }
+
+    public void setStrStartDate(String strStartDate) {
+        this.strStartDate = strStartDate;
+    }
+
+    public String getStrEndDate() {
+        return strEndDate;
+    }
+
+    public void setStrEndDate(String strEndDate) {
+        this.strEndDate = strEndDate;
+    }
+
+    public String getStrValidTill() {
+        return strValidTill;
+    }
+
+    public void setStrValidTill(String strValidTill) {
+        this.strValidTill = strValidTill;
+    }
+
+    public Long getVehicleContractLinkId() {
+        return vehicleContractLinkId;
+    }
+
+    public void setVehicleContractLinkId(Long vehicleContractLinkId) {
+        this.vehicleContractLinkId = vehicleContractLinkId;
+    }
+
+    public Long getVehicleDriverLinkId() {
+        return vehicleDriverLinkId;
+    }
+
+    public void setVehicleDriverLinkId(Long vehicleDriverLinkId) {
+        this.vehicleDriverLinkId = vehicleDriverLinkId;
+    }
+
+    public Long getTransportRouteVehicleLinkId() {
+        return transportRouteVehicleLinkId;
+    }
+
+    public void setTransportRouteVehicleLinkId(Long transportRouteVehicleLinkId) {
+        this.transportRouteVehicleLinkId = transportRouteVehicleLinkId;
+    }
+
+    public Long getTransportRouteStopageLinkId() {
+        return transportRouteStopageLinkId;
+    }
+
+    public void setTransportRouteStopageLinkId(Long transportRouteStopageLinkId) {
+        this.transportRouteStopageLinkId = transportRouteStopageLinkId;
+    }
+
+    public String getStrDateOfInsurance() {
+        return strDateOfInsurance;
+    }
+
+    public void setStrDateOfInsurance(String strDateOfInsurance) {
+        this.strDateOfInsurance = strDateOfInsurance;
+    }
+
+    public CmsVehicleContractLinkVo getVehicleContractLink() {
+        return vehicleContractLink;
+    }
+
+    public void setVehicleContractLink(CmsVehicleContractLinkVo vehicleContractLink) {
+        this.vehicleContractLink = vehicleContractLink;
+    }
+
+    public CmsVehicleDriverLinkVo getVehicleDriverLink() {
+        return vehicleDriverLink;
+    }
+
+    public void setVehicleDriverLink(CmsVehicleDriverLinkVo vehicleDriverLink) {
+        this.vehicleDriverLink = vehicleDriverLink;
+    }
+
+    public CmsTransportRouteVehicleLinkVo getTransportRouteVehicleLink() {
+        return transportRouteVehicleLink;
+    }
+
+    public void setTransportRouteVehicleLink(CmsTransportRouteVehicleLinkVo transportRouteVehicleLink) {
+        this.transportRouteVehicleLink = transportRouteVehicleLink;
+    }
+
+    public CmsTransportRouteStopageLinkVo getTransportRouteStopageLink() {
+        return transportRouteStopageLink;
+    }
+
+    public void setTransportRouteStopageLink(CmsTransportRouteStopageLinkVo transportRouteStopageLink) {
+        this.transportRouteStopageLink = transportRouteStopageLink;
     }
 
     public List<CmsVehicleVo> getDataList() {

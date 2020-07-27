@@ -1,9 +1,9 @@
-package com.synectiks.transport.business.service;
+package com.synectiks.transport.filter.vehicle;
 
-import com.synectiks.transport.domain.*;
-import com.synectiks.transport.domain.vo.CmsContractVo;
-import com.synectiks.transport.domain.vo.CmsVehicleVo;
-import com.synectiks.transport.filter.vehicle.VehicleListFilterInput;
+import com.synectiks.transport.business.service.ContractService;
+import com.synectiks.transport.business.service.TransportRouteService;
+import com.synectiks.transport.business.service.VehicleService;
+import com.synectiks.transport.domain.vo.CmsVehicleListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +13,18 @@ import java.util.List;
 public class VehicleFilterProcessor {
     @Autowired
     private VehicleService vehicleService;
+
     @Autowired
     private TransportRouteService transportRouteService;
     @Autowired
-    private  ContractService contractService;
+    private ContractService contractService;
 
-
+    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId, Long transportRouteVehicleLinkId) throws Exception {
+        return vehicleService.searchVehicle(vehicleId,transportRouteId,transportRouteVehicleLinkId);
+    }
+    public List<CmsVehicleListVo> searchVehicle(VehicleListFilterInput filter) throws Exception {
+        return vehicleService.searchVehicle(filter);
+    }
 //    public List<CmsVehicleVo> searchVehicle(Long transportRouteId,Long vehicleId,Long employeeId, String vehicleNumber) throws Exception {
 //        return vehicleService.searchVehicle(vehicleId,transportRouteId,employeeId,vehicleNumber);
 //    }
@@ -42,8 +48,8 @@ public class VehicleFilterProcessor {
 //        return vehicleService.searchVehicle(vehicleId,transportRouteId,employeeId,vehicleNumber);
 //    }
 
-    public List<Vehicle> searchVehicle(VehicleListFilterInput filter) {
-        return vehicleService.searchVehicle(filter);
-    }
+//    public List<Vehicle> searchVehicle(VehicleListFilterInput filter) {
+//        return vehicleService.searchVehicle(filter);
+//    }
 
 }

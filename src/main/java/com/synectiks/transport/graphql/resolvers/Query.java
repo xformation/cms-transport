@@ -6,6 +6,7 @@ import com.synectiks.transport.business.service.*;
 import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.*;
+import com.synectiks.transport.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.transport.filter.vehicle.VehicleListFilterInput;
 import com.synectiks.transport.repository.*;
 import org.slf4j.Logger;
@@ -178,13 +179,13 @@ public class Query implements GraphQLQueryResolver {
     public List<VehicleDriverLink> vehicleDriverLinks(){
         return  Lists.newArrayList(vehicleDriverLinkRepository.findAll());
     }
-//    public List<CmsVehicleVo> searchVehicle(Long vehicleId, Long transportRouteId ,Long employeeId,String vehicleNumber) {
-//        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(vehicleId, transportRouteId, employeeId, vehicleNumber));
-//    }
-//
-//    public List<CmsVehicleVo> searchVehicle(VehicleListFilterInput filter) throws Exception {
-//        return vehicleService.searchVehicle(filter);
-//    }
+    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId, Long transportRouteVehicleLinkId) throws Exception {
+        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(vehicleId,transportRouteId,transportRouteVehicleLinkId));
+    }
+
+    public List<CmsVehicleListVo> searchVehicle(VehicleListFilterInput filter) throws Exception {
+        return vehicleService.searchVehicle(filter);
+    }
 
     public VehicleDataCache createVehicleDataCache() throws Exception{
         List<CmsTransportRouteVo> transportRouteList = this.transportRouteService.getTransportRouteList();
