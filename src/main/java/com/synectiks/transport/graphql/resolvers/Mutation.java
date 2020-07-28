@@ -148,19 +148,9 @@ public class Mutation implements GraphQLMutationResolver {
     public List<CmsVehicleListVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
         List<CmsVehicleListVo> list = this.vehicleFilterProcessor.searchVehicle(filter);
         List<CmsVehicleListVo> ls = new ArrayList<>();
-
-        String transportSrvUrl = applicationProperties.getTransportSrvUrl();
+//        String transportSrvUrl = applicationProperties.getTransportSrvUrl();
         for(CmsVehicleListVo vehicle: list) {
             CmsVehicleListVo vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleListVo.class);
-//            TransportRouteVehicleLink tvl =  this.transportRouteVehicleLinkRepository.findById(filter.getTransportRouteVehicleLinkId()).get();
-//            String url = transportSrvUrl + "/api/transportRoute-by-id/" + vo.getTransportRouteId();
-//            TransportRoute tr = this.commonService.getObject(url, TransportRoute.class);
-
-//            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-//            vo.setStrOnBoardingDate(DateFormatUtil.changeLocalDateFormat(vehicle.getOnBoardingDate(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
-//            vo.setDateOfRegistration(null);
-//            vo.setOnBoardingDate(null);
-//            vo.setTransportRoute(tr);
             ls.add(vo);
         }
         logger.debug("Total vehicles retrieved. "+list.size());

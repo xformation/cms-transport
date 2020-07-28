@@ -42,6 +42,8 @@ input VehicleListFilterInput {
    insuranceId:         String
    vehicleDriverLinkId:  String
    transportRouteVehicleLinkId: String
+   transportRouteStopageLinkId: String
+   vehicleContractLinkId:  String
 }
 
 type VehicleDataCache{
@@ -83,6 +85,11 @@ type CmsVehicleListVo{
    vehicleDriverLink:   VehicleDriverLink
    transportRouteVehicleLink:  TransportRouteVehicleLink
    transportRouteStopageLink:   TransportRouteStopageLink
+   transportRouteList: [TransportRoute]
+   transportRouteVehicleLinkList: [TransportRouteVehicleLink]
+   transportRouteStopageLinkList: [[TransportRouteStopageLink]]
+   vehicleContractLinkList:  [VehicleContractLink]
+   vehicleDriverLinkList:  [VehicleDriverLink]
    dataList:             [CmsVehicleListVo]
 }
 

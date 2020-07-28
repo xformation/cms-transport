@@ -31,7 +31,52 @@ public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
     private VehicleDriverLink vehicleDriverLink;
     private TransportRouteVehicleLink transportRouteVehicleLink;
     private TransportRouteStopageLink transportRouteStopageLink;
+    private List<List<TransportRouteStopageLink>> transportRouteStopageLinkList = new ArrayList<>();
+    private List<TransportRoute> transportRouteList = new ArrayList<>();
+    private List<TransportRouteVehicleLink> transportRouteVehicleLinkList = new ArrayList<>();
+    private List<VehicleContractLink> vehicleContractLinkList = new ArrayList<>();
+    private List<VehicleDriverLink> vehicleDriverLinkList = new ArrayList<>();
     private List<CmsVehicleListVo> dataList = new ArrayList<>();
+
+    public List<VehicleDriverLink> getVehicleDriverLinkList() {
+        return vehicleDriverLinkList;
+    }
+
+    public void setVehicleDriverLinkList(List<VehicleDriverLink> vehicleDriverLinkList) {
+        this.vehicleDriverLinkList = vehicleDriverLinkList;
+    }
+
+    public List<List<TransportRouteStopageLink>> getTransportRouteStopageLinkList() {
+        return transportRouteStopageLinkList;
+    }
+
+    public void setTransportRouteStopageLinkList(List<List<TransportRouteStopageLink>> transportRouteStopageLinkList) {
+        this.transportRouteStopageLinkList = transportRouteStopageLinkList;
+    }
+
+    public List<TransportRoute> getTransportRouteList() {
+        return transportRouteList;
+    }
+
+    public void setTransportRouteList(List<TransportRoute> transportRouteList) {
+        this.transportRouteList = transportRouteList;
+    }
+
+    public List<TransportRouteVehicleLink> getTransportRouteVehicleLinkList() {
+        return transportRouteVehicleLinkList;
+    }
+
+    public void setTransportRouteVehicleLinkList(List<TransportRouteVehicleLink> transportRouteVehicleLinkList) {
+        this.transportRouteVehicleLinkList = transportRouteVehicleLinkList;
+    }
+
+    public List<VehicleContractLink> getVehicleContractLinkList() {
+        return vehicleContractLinkList;
+    }
+
+    public void setVehicleContractLinkList(List<VehicleContractLink> vehicleContractLinkList) {
+        this.vehicleContractLinkList = vehicleContractLinkList;
+    }
 
     public Long getId() {
         return id;
