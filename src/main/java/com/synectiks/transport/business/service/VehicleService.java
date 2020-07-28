@@ -191,7 +191,7 @@ public class VehicleService {
 //            Vehicle vehicle1 = new Vehicle();
             if (vehicle != null) {
                 tvl.setId(Long.valueOf(filter.getVehicleId()));
-                tvl.setId(Long.valueOf(filter.getTransportRouteVehicleLinkId()));
+//                tvl.setId(Long.valueOf(filter.getTransportRouteVehicleLinkId()));
             }
         }
 //        VehicleDriverLink vdl = new VehicleDriverLink();

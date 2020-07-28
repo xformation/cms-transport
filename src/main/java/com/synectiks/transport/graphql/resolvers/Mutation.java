@@ -152,7 +152,7 @@ public class Mutation implements GraphQLMutationResolver {
         String transportSrvUrl = applicationProperties.getTransportSrvUrl();
         for(CmsVehicleListVo vehicle: list) {
             CmsVehicleListVo vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleListVo.class);
-            TransportRouteVehicleLink tvl =  this.transportRouteVehicleLinkRepository.findById(filter.getTransportRouteVehicleLinkId()).get();
+//            TransportRouteVehicleLink tvl =  this.transportRouteVehicleLinkRepository.findById(filter.getTransportRouteVehicleLinkId()).get();
 //            String url = transportSrvUrl + "/api/transportRoute-by-id/" + vo.getTransportRouteId();
 //            TransportRoute tr = this.commonService.getObject(url, TransportRoute.class);
 
