@@ -10,6 +10,7 @@ import java.util.Optional;
 import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.*;
+import com.synectiks.transport.domain.vo.CmsTransportRouteVo;
 import com.synectiks.transport.domain.vo.CmsVehicleListVo;
 import com.synectiks.transport.domain.vo.CmsVehicleVo;
 import com.synectiks.transport.filter.vehicle.VehicleListFilterInput;
@@ -71,6 +72,12 @@ public class VehicleService {
     TransportRouteService transportRouteService;
 
     @Autowired
+    VehicleService vehicleService;
+
+    @Autowired
+    StopageService stopageService;
+
+    @Autowired
     ContractService contractService;
 
     @Autowired
@@ -82,21 +89,34 @@ public class VehicleService {
     @Autowired
     TransportRouteVehicleLinkService transportRouteVehicleLinkService;
 
-    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId, Long transportRouteLinkId) throws Exception {
+    @Autowired
+    TransportRouteStopageLinkService transportRouteStopageLinkService;
+
+    @Autowired
+    TransportRouteRepository transportRouteRepository;
+
+    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId, Long transportRouteVehicleLinkId) throws Exception {
+        Vehicle vehicle = new Vehicle();
         TransportRouteVehicleLink tvl = new TransportRouteVehicleLink();
-        if(transportRouteLinkId != null) {
-            tvl.setId(transportRouteLinkId);
+        if(vehicleId != null) {
+             vehicle.setId(vehicleId);
         }
-        if (vehicleId != null) {
-            Vehicle vehicle = new Vehicle();
-            vehicle.setId(vehicleId);
+
+        if(transportRouteVehicleLinkId != null) {
+            tvl.setId(transportRouteVehicleLinkId);
             tvl.setVehicle(vehicle);
+            vehicle.setId(vehicleId);
         }
-        if (transportRouteId != null) {
-            TransportRoute transportRoute = new TransportRoute();
-            transportRoute.setId(transportRouteId);
-            tvl.setTransportRoute(transportRoute);
-        }
+//        if (vehicleId != null) {
+//            Vehicle vehicle = new Vehicle();
+//            vehicle.setId(vehicleId);
+//            tvl.setVehicle(vehicle);
+//        }
+//        if (transportRouteId != null) {
+//            TransportRoute transportRoute = new TransportRoute();
+//            transportRoute.setId(transportRouteId);
+//            tvl.setTransportRoute(transportRoute);
+//        }
 //        VehicleDriverLink vdl = new VehicleDriverLink();
 //        if (employeeId !=null){
 ////            VehicleDriverLink vdl = new VehicleDriverLink();
@@ -118,13 +138,31 @@ public class VehicleService {
 //            Insurance insurance = new Insurance();
 //            insurance.setId(insuranceId);
 //        }
-        Example<TransportRouteVehicleLink> example = Example.of(tvl);
-//        Example<VehicleDriverLink> ex = Example.of(vdl);
-        List<TransportRouteVehicleLink> list = this.transportRouteVehicleLinkRepository.findAll(example);
-//        List<VehicleDriverLink> list1 = this.vehicleDriverLinkRepository.findAll(ex);
+        Example<Vehicle> example = Example.of(vehicle);
+        Example<TransportRouteVehicleLink> ex = Example.of(tvl);
+        List<Vehicle> list = this.vehicleRepository.findAll(example);
+        List<TransportRouteVehicleLink> list1 = this.transportRouteVehicleLinkRepository.findAll(ex);
         List<CmsVehicleListVo> ls = new ArrayList<>();
-        for(TransportRouteVehicleLink vehicle1: list) {
+        for(Vehicle vehicle1: list) {
             CmsVehicleListVo vo = CommonUtil.createCopyProperties(vehicle1, CmsVehicleListVo.class);
+            TransportRoute t = this.transportRouteService.getTransportRoute(transportRouteId);
+            vo.getTransportRouteId();
+            Vehicle v = this.vehicleService.getVehicle(vehicleId);
+            vo.getVehicleId();
+            TransportRouteVehicleLink trvl = this.transportRouteVehicleLinkService.getTransportRouteVehicleLink(vehicleId);
+            vo.getTransportRouteVehicleLinkId();
+//            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle1.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setDateOfRegistration(null);
+            ls.add(vo);
+        }
+        for(TransportRouteVehicleLink transportRouteVehicleLink: list1){
+            CmsVehicleListVo vo = CommonUtil.createCopyProperties(transportRouteVehicleLink, CmsVehicleListVo.class);
+            TransportRoute t = this.transportRouteService.getTransportRoute(transportRouteId);
+            vo.getTransportRouteId();
+            Vehicle v = this.vehicleService.getVehicle(vehicleId);
+            vo.getVehicleId();
+//            TransportRouteVehicleLink trvl = this.transportRouteVehicleLinkService.getTransportRouteVehicleLink(vehicleId);
+//            vo.getTransportRouteVehicleLinkId();
 //            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle1.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
 //            vo.setDateOfRegistration(null);
             ls.add(vo);
@@ -133,26 +171,27 @@ public class VehicleService {
     }
 
     public List<CmsVehicleListVo> searchVehicle(VehicleListFilterInput filter) throws Exception {
+        Vehicle vehicle = new Vehicle();
         TransportRouteVehicleLink tvl = new TransportRouteVehicleLink();
         if (!CommonUtil.isNullOrEmpty(filter.getTransportRouteVehicleLinkId())) {
             TransportRouteVehicleLink transportRouteVehicleLink = new TransportRouteVehicleLink();
             if (transportRouteVehicleLink != null) {
                 tvl.setId(Long.valueOf(filter.getTransportRouteVehicleLinkId()));
-//                tvl.setId(transportRouteVehicleLink);
+                vehicle.setId(Long.valueOf(filter.getVehicleId()));
             }
         }
         if (!CommonUtil.isNullOrEmpty(filter.getTransportRouteId())) {
             TransportRoute transportRoute = new TransportRoute();
             if (transportRoute != null) {
-//                tvl.setId(Long.valueOf(filter.getTransportRouteId()));
-                tvl.setTransportRoute(transportRoute);
+                tvl.setId(Long.valueOf(filter.getTransportRouteId()));
+//                tvl.setTransportRoute(transportRoute);
             }
         }
         if (!CommonUtil.isNullOrEmpty(filter.getVehicleId())) {
-            Vehicle vehicle = new Vehicle();
+//            Vehicle vehicle1 = new Vehicle();
             if (vehicle != null) {
-//                tvl.setId(Long.valueOf(filter.getVehicleId()));
-                tvl.setVehicle(vehicle);
+                tvl.setId(Long.valueOf(filter.getVehicleId()));
+                tvl.setId(Long.valueOf(filter.getTransportRouteVehicleLinkId()));
             }
         }
 //        VehicleDriverLink vdl = new VehicleDriverLink();
@@ -189,11 +228,41 @@ public class VehicleService {
 //                insurance.setId(Long.valueOf(filter.getInsuranceId()));
 //            }
 //        }
-        Example<TransportRouteVehicleLink> example = Example.of(tvl);
-        List<TransportRouteVehicleLink> list = this.transportRouteVehicleLinkRepository.findAll(example);
+        Example<Vehicle> example = Example.of(vehicle);
+
+        List<Vehicle> list = this.vehicleRepository.findAll(example);
+        Example<TransportRouteVehicleLink> ex = Example.of(tvl);
         List<CmsVehicleListVo> ls = new ArrayList<>();
-        for(TransportRouteVehicleLink vehicle1: list) {
+        List<TransportRouteVehicleLink> list1 = this.transportRouteVehicleLinkRepository.findAll(ex);
+
+        for(Vehicle vehicle1: list) {
             CmsVehicleListVo vo = CommonUtil.createCopyProperties(vehicle1, CmsVehicleListVo.class);
+//            String url = transportSrvUrl + "/TransportRoute-by-filters/" + vo.getTransportRoute();
+//            TransportRoute tr = this.commonService.getObject(url, TransportRoute.class);
+//            vo.getTransportRoute();
+//            String url1 = transportSrvUrl + "/api/vehicle-by-id/" + vo.getVehicle();
+//            Vehicle v = this.commonService.getObject(url1, Vehicle.class);
+//            vo.getVehicleId();
+//            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle1.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
+//            vo.setDateOfRegistration(null);
+//            CmsVehicleListVo tr = new CmsVehicleListVo();
+//            if(tr.getTransportRoute() != null) {
+//                TransportRoute transportRoute = new TransportRoute();
+//                tr.setTransportRouteId(tr.getTransportRoute().getId());
+//                tr.setTransportRoute(transportRoute);
+////                CmsTransportRouteVo cmsSvo =CommonUtil.createCopyProperties(tr.getTransportRoute(), CmsTransportRouteVo.class);
+////                vo.setTransportRoute(cmsSvo);
+//            }
+            ls.add(vo);
+        }
+        for(TransportRouteVehicleLink transportRouteVehicleLink: list1){
+            CmsVehicleListVo vo = CommonUtil.createCopyProperties(transportRouteVehicleLink, CmsVehicleListVo.class);
+//            TransportRoute t = this.transportRouteService.getTransportRoute(transportRouteId);
+//            vo.getTransportRouteId();
+//            Vehicle v = this.vehicleService.getVehicle(vehicleId);
+//            vo.getVehicleId();
+//            TransportRouteVehicleLink trvl = this.transportRouteVehicleLinkService.getTransportRouteVehicleLink(vehicleId);
+//            vo.getTransportRouteVehicleLinkId();
 //            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle1.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
 //            vo.setDateOfRegistration(null);
             ls.add(vo);

@@ -75,14 +75,14 @@ type CmsVehicleListVo{
    transportRouteStopageLinkId:   Long
    employee:  Employee
    stopage:  Stopage
-   contract:   CmsContractVo
-   transportRoute:   CmsTransportRouteVo
-   insurance:    CmsInsuranceVo
-   vehicle:    CmsVehicleVo
-   vehicleContractLink:  CmsVehicleContractLinkVo
-   vehicleDriverLink:   CmsVehicleDriverLinkVo
-   transportRouteVehicleLink:  CmsTransportRouteVehicleLinkVo
-   transportRouteStopageLink:   CmsTransportRouteStopageLinkVo
+   contract:   Contract
+   transportRoute:   TransportRoute
+   insurance:    Insurance
+   vehicle:    Vehicle
+   vehicleContractLink:  VehicleContractLink
+   vehicleDriverLink:   VehicleDriverLink
+   transportRouteVehicleLink:  TransportRouteVehicleLink
+   transportRouteStopageLink:   TransportRouteStopageLink
    dataList:             [CmsVehicleListVo]
 }
 

@@ -1,8 +1,6 @@
 package com.synectiks.transport.domain.vo;
 
-import com.synectiks.transport.domain.Branch;
-import com.synectiks.transport.domain.Employee;
-import com.synectiks.transport.domain.Stopage;
+import com.synectiks.transport.domain.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,8 +9,8 @@ import java.util.List;
 public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
     private static final long serialVersionUID = 1L;
     private Long id;
-    private CmsTransportRouteVo transportRoute;
-    private CmsContractVo contract;
+    private TransportRoute transportRoute;
+    private Contract contract;
     private Long transportRouteId;
     private Long contractId;
     private Long insuranceId;
@@ -20,8 +18,8 @@ public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
     private Long employeeId;
     private Employee employee;
     private Stopage stopage;
-    private CmsInsuranceVo insurance;
-    private CmsVehicleVo vehicle;
+    private Insurance insurance;
+    private Vehicle vehicle;
     private Long vehicleId;
     private Long branchId;
     private Branch branch;
@@ -29,10 +27,10 @@ public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
     private Long vehicleDriverLinkId;
     private Long transportRouteVehicleLinkId;
     private Long transportRouteStopageLinkId;
-    private CmsVehicleContractLinkVo vehicleContractLink;
-    private CmsVehicleDriverLinkVo vehicleDriverLink;
-    private CmsTransportRouteVehicleLinkVo transportRouteVehicleLink;
-    private CmsTransportRouteStopageLinkVo transportRouteStopageLink;
+    private VehicleContractLink vehicleContractLink;
+    private VehicleDriverLink vehicleDriverLink;
+    private TransportRouteVehicleLink transportRouteVehicleLink;
+    private TransportRouteStopageLink transportRouteStopageLink;
     private List<CmsVehicleListVo> dataList = new ArrayList<>();
 
     public Long getId() {
@@ -43,19 +41,19 @@ public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
         this.id = id;
     }
 
-    public CmsTransportRouteVo getTransportRoute() {
+    public TransportRoute getTransportRoute() {
         return transportRoute;
     }
 
-    public void setTransportRoute(CmsTransportRouteVo transportRoute) {
+    public void setTransportRoute(TransportRoute transportRoute) {
         this.transportRoute = transportRoute;
     }
 
-    public CmsContractVo getContract() {
+    public Contract getContract() {
         return contract;
     }
 
-    public void setContract(CmsContractVo contract) {
+    public void setContract(Contract contract) {
         this.contract = contract;
     }
 
@@ -115,19 +113,19 @@ public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
         this.stopage = stopage;
     }
 
-    public CmsInsuranceVo getInsurance() {
+    public Insurance getInsurance() {
         return insurance;
     }
 
-    public void setInsurance(CmsInsuranceVo insurance) {
+    public void setInsurance(Insurance insurance) {
         this.insurance = insurance;
     }
 
-    public CmsVehicleVo getVehicle() {
+    public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(CmsVehicleVo vehicle) {
+    public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
 
@@ -187,35 +185,35 @@ public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
         this.transportRouteStopageLinkId = transportRouteStopageLinkId;
     }
 
-    public CmsVehicleContractLinkVo getVehicleContractLink() {
+    public VehicleContractLink getVehicleContractLink() {
         return vehicleContractLink;
     }
 
-    public void setVehicleContractLink(CmsVehicleContractLinkVo vehicleContractLink) {
+    public void setVehicleContractLink(VehicleContractLink vehicleContractLink) {
         this.vehicleContractLink = vehicleContractLink;
     }
 
-    public CmsVehicleDriverLinkVo getVehicleDriverLink() {
+    public VehicleDriverLink getVehicleDriverLink() {
         return vehicleDriverLink;
     }
 
-    public void setVehicleDriverLink(CmsVehicleDriverLinkVo vehicleDriverLink) {
+    public void setVehicleDriverLink(VehicleDriverLink vehicleDriverLink) {
         this.vehicleDriverLink = vehicleDriverLink;
     }
 
-    public CmsTransportRouteVehicleLinkVo getTransportRouteVehicleLink() {
+    public TransportRouteVehicleLink getTransportRouteVehicleLink() {
         return transportRouteVehicleLink;
     }
 
-    public void setTransportRouteVehicleLink(CmsTransportRouteVehicleLinkVo transportRouteVehicleLink) {
+    public void setTransportRouteVehicleLink(TransportRouteVehicleLink transportRouteVehicleLink) {
         this.transportRouteVehicleLink = transportRouteVehicleLink;
     }
 
-    public CmsTransportRouteStopageLinkVo getTransportRouteStopageLink() {
+    public TransportRouteStopageLink getTransportRouteStopageLink() {
         return transportRouteStopageLink;
     }
 
-    public void setTransportRouteStopageLink(CmsTransportRouteStopageLinkVo transportRouteStopageLink) {
+    public void setTransportRouteStopageLink(TransportRouteStopageLink transportRouteStopageLink) {
         this.transportRouteStopageLink = transportRouteStopageLink;
     }
 
