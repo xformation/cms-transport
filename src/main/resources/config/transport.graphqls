@@ -17,7 +17,7 @@ scalar Date
 type Query {
  vehicle(id: Long):Vehicle
 
- searchVehicle(transportRouteId:Long,vehicleId:Long,transportRouteVehicleLinkId:Long): [CmsVehicleListVo!]!
+ searchVehicle(transportRouteId:Long,vehicleId:Long,insuranceId:Long,transportRouteVehicleLinkId:Long,transportRouteStopageLinkId:Long,vehicleDriveLinkId:Long,vehicleContractLinkId:Long,): [CmsVehicleListVo!]!
 
  getVehicleList:           [CmsVehicleVo]
  getInsuranceList:         [CmsInsuranceVo]

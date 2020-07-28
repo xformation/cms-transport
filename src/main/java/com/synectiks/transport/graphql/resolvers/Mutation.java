@@ -1,13 +1,11 @@
 package com.synectiks.transport.graphql.resolvers;
 
+import com.google.common.collect.Lists;
 import com.synectiks.transport.business.service.*;
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.constant.CmsConstants;
-import com.synectiks.transport.domain.Branch;
-import com.synectiks.transport.domain.TransportRoute;
-import com.synectiks.transport.domain.TransportRouteVehicleLink;
-import com.synectiks.transport.domain.Vehicle;
+import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.*;
 import com.synectiks.transport.filter.vehicle.VehicleFilterProcessor;
 import com.synectiks.transport.filter.vehicle.VehicleListFilterInput;
@@ -97,6 +95,15 @@ public class Mutation implements GraphQLMutationResolver {
     private TransportRouteVehicleLinkRepository transportRouteVehicleLinkRepository;
 
     @Autowired
+    private TransportRouteStopageLinkRepository transportRouteStopageLinkRepository;
+
+    @Autowired
+    private VehicleContractLinkRepository vehicleContractLinkRepository;
+
+    @Autowired
+    private VehicleDriverLinkRepository vehicleDriverLinkRepository;
+
+    @Autowired
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -146,14 +153,30 @@ public class Mutation implements GraphQLMutationResolver {
         return new AddTransportRouteStopageLinkPayload(vo);
     }
     public List<CmsVehicleListVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
-        List<CmsVehicleListVo> list = this.vehicleFilterProcessor.searchVehicle(filter);
-        List<CmsVehicleListVo> ls = new ArrayList<>();
-//        String transportSrvUrl = applicationProperties.getTransportSrvUrl();
-        for(CmsVehicleListVo vehicle: list) {
-            CmsVehicleListVo vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleListVo.class);
-            ls.add(vo);
-        }
-        logger.debug("Total vehicles retrieved. "+list.size());
-        return ls;
+        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(filter));
     }
+//    public List<CmsVehicleListVo> getVehicleList(VehicleListFilterInput filter) throws Exception {
+//        List<CmsVehicleListVo> list = this.vehicleFilterProcessor.searchVehicle(filter);
+//        List<CmsVehicleListVo> ls = new ArrayList<>();
+//        for(CmsVehicleListVo vehicle: list) {
+//            CmsVehicleListVo vo = CommonUtil.createCopyProperties(vehicle, CmsVehicleListVo.class);
+//            Vehicle v = this.vehicleService.getVehicle(vo.getVehicleId());
+//            vo.setVehicle(v);
+//            TransportRoute tr = this.transportRouteService.getTransportRoute(vo.getTransportRouteId());
+//            vo.setTransportRoute(tr);
+//            TransportRouteStopageLink trsl = this.transportRouteStopageLinkService.getTransportRouteStopageLink(vo.getTransportRouteStopageLinkId());
+//            vo.setTransportRouteStopageLink(trsl);
+//            TransportRouteVehicleLink trvl = this.transportRouteVehicleLinkService.getTransportRouteVehicleLink(vo.getTransportRouteVehicleLinkId());
+//            vo.setTransportRouteVehicleLink(trvl);
+//            VehicleDriverLink vdl = this.vehicleDriverLinkService.getVehicleDriverLink(vo.getVehicleDriverLinkId());
+//            vo.setVehicleDriverLink(vdl);
+//            VehicleContractLink vcl = this.vehicleContractLinkService.getVehicleContractLink(vo.getVehicleContractLinkId());
+//            vo.setVehicleContractLink(vcl);
+//            Insurance i = this.insuranceService.getInsurance(vo.getInsuranceId());
+//            vo.setInsurance(i);
+//            ls.add(vo);
+//        }
+//        logger.debug("Total vehicles retrieved. "+list.size());
+//        return ls;
+//    }
 }

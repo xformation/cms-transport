@@ -179,8 +179,8 @@ public class Query implements GraphQLQueryResolver {
     public List<VehicleDriverLink> vehicleDriverLinks(){
         return  Lists.newArrayList(vehicleDriverLinkRepository.findAll());
     }
-    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId, Long transportRouteVehicleLinkId) throws Exception {
-        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(vehicleId,transportRouteId,transportRouteVehicleLinkId));
+    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId,Long insuranceId, Long transportRouteVehicleLinkId, Long transportRouteStopageLinkId,Long vehicleDriverLinkId,Long vehicelContractLinkId) throws Exception {
+        return Lists.newArrayList(vehicleFilterProcessor.searchVehicle(transportRouteId, vehicleId, insuranceId, transportRouteVehicleLinkId, transportRouteStopageLinkId, vehicleDriverLinkId, vehicelContractLinkId));
     }
 
     public List<CmsVehicleListVo> searchVehicle(VehicleListFilterInput filter) throws Exception {

@@ -19,8 +19,8 @@ public class VehicleFilterProcessor {
     @Autowired
     private ContractService contractService;
 
-    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId, Long transportRouteVehicleLinkId) throws Exception {
-        return vehicleService.searchVehicle(vehicleId,transportRouteId,transportRouteVehicleLinkId);
+    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId,Long insuranceId, Long transportRouteVehicleLinkId, Long transportRouteStopageLinkId,Long vehicleDriverLinkId,Long vehicelContractLinkId) throws Exception {
+        return vehicleService.searchVehicle(transportRouteId, vehicleId, insuranceId, transportRouteVehicleLinkId, transportRouteStopageLinkId, vehicleDriverLinkId, vehicelContractLinkId);
     }
     public List<CmsVehicleListVo> searchVehicle(VehicleListFilterInput filter) throws Exception {
         return vehicleService.searchVehicle(filter);

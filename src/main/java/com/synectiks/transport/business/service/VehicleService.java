@@ -50,8 +50,8 @@ public class VehicleService {
 //    @Autowired
 //    TransportRouteRepository transportRouteRepository;
 //
-//    @Autowired
-//    ContractRepository contractRepository;
+    @Autowired
+    InsuranceRepository insuranceRepository;
 
     @Autowired
     VehicleDriverLinkRepository vehicleDriverLinkRepository;
@@ -66,6 +66,9 @@ public class VehicleService {
 
     @Autowired
     CommonService commonService;
+
+    @Autowired
+    InsuranceService insuranceService;
 
     @Autowired
     ApplicationProperties applicationProperties;
@@ -97,62 +100,71 @@ public class VehicleService {
     @Autowired
     TransportRouteRepository transportRouteRepository;
 
-    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId, Long transportRouteVehicleLinkId) throws Exception {
+    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId,Long insuranceId, Long transportRouteVehicleLinkId, Long transportRouteStopageLinkId,Long vehicleDriverLinkId,Long vehicelContractLinkId) throws Exception {
         Vehicle vehicle = new Vehicle();
         TransportRouteVehicleLink tvl = new TransportRouteVehicleLink();
+        CmsVehicleListVo vo = new CmsVehicleListVo();
         if(vehicleId != null) {
              vehicle.setId(vehicleId);
         }
-
         if(transportRouteVehicleLinkId != null) {
             tvl.setId(transportRouteVehicleLinkId);
-            tvl.setVehicle(vehicle);
+            vo.setVehicle(vehicle);
             vehicle.setId(vehicleId);
         }
-//        if (vehicleId != null) {
+        if (insuranceId != null) {
+            Insurance insurance = new Insurance();
+            insurance.setId(insuranceId);
+            vo.setInsurance(insurance);
+        }
+        if (transportRouteId != null) {
+            TransportRoute transportRoute = new TransportRoute();
+            transportRoute.setId(transportRouteId);
+            vo.setTransportRoute(transportRoute);
+        }
+        VehicleDriverLink vdl = new VehicleDriverLink();
+        if (vehicleDriverLinkId !=null){
+            vdl.setId(vehicleDriverLinkId);
+            vo.setVehicleDriverLink(vdl);
+        }
+        VehicleContractLink vcl = new VehicleContractLink();
+        if (vehicelContractLinkId != null) {
 //            Vehicle vehicle = new Vehicle();
-//            vehicle.setId(vehicleId);
-//            tvl.setVehicle(vehicle);
-//        }
-//        if (transportRouteId != null) {
-//            TransportRoute transportRoute = new TransportRoute();
-//            transportRoute.setId(transportRouteId);
-//            tvl.setTransportRoute(transportRoute);
-//        }
-//        VehicleDriverLink vdl = new VehicleDriverLink();
-//        if (employeeId !=null){
-////            VehicleDriverLink vdl = new VehicleDriverLink();
-//            Employee employee = new Employee();
-//            employee.setId(employeeId);
-//            vdl.setEmployeeId(employeeId);
-//        }
-//        if (vehicleId != null) {
-//            Vehicle vehicle = new Vehicle();
-//            vehicle.setId(vehicleId);
-//            tvl.setVehicle(vehicle);
+            vcl.setId(vehicelContractLinkId);
+            vo.setVehicleContractLink(vcl);
 //            vdl.setVehicle(vehicle);
-//        }
-//        if (contractId !=null){
-//            Contract contract = new Contract();
-//            contract.setId(contractId);
-//        }
+        }
+        if (transportRouteStopageLinkId !=null){
+            TransportRouteStopageLink trsl = new TransportRouteStopageLink();
+            trsl.setId(transportRouteStopageLinkId);
+            vo.setTransportRouteStopageLink(trsl);
+        }
 //        if (insuranceId !=null){
 //            Insurance insurance = new Insurance();
 //            insurance.setId(insuranceId);
 //        }
         Example<Vehicle> example = Example.of(vehicle);
-        Example<TransportRouteVehicleLink> ex = Example.of(tvl);
-        List<Vehicle> list = this.vehicleRepository.findAll(example);
-        List<TransportRouteVehicleLink> list1 = this.transportRouteVehicleLinkRepository.findAll(ex);
+//        Example<TransportRouteVehicleLink> ex = Example.of(tvl);
+//        List<Vehicle> list = this.vehicleRepository.findAll(example);
+//        List<TransportRouteVehicleLink> list1 = this.transportRouteVehicleLinkRepository.findAll(ex);
         List<CmsVehicleListVo> ls = new ArrayList<>();
-        for(Vehicle vehicle1: list) {
-            CmsVehicleListVo vo = CommonUtil.createCopyProperties(vehicle1, CmsVehicleListVo.class);
-//            TransportRoute t = this.transportRouteService.getTransportRoute(transportRouteId);
-//            vo.getTransportRouteId();
-//            Vehicle v = this.vehicleService.getVehicle(vehicleId);
-//            vo.getVehicleId();
-//            TransportRouteVehicleLink trvl = this.transportRouteVehicleLinkService.getTransportRouteVehicleLink(vehicleId);
-//            vo.getTransportRouteVehicleLinkId();
+        for(CmsVehicleListVo vehicle1: ls) {
+            CmsVehicleListVo vo1 = CommonUtil.createCopyProperties(vehicle1, CmsVehicleListVo.class);
+
+            TransportRoute t = this.transportRouteService.getTransportRoute(transportRouteId);
+            vo.getTransportRouteId();
+            Vehicle v = this.vehicleService.getVehicle(vehicleId);
+            vo.getVehicleId();
+            TransportRouteVehicleLink trvl = this.transportRouteVehicleLinkService.getTransportRouteVehicleLink(transportRouteVehicleLinkId);
+            vo.getTransportRouteVehicleLinkId();
+            TransportRouteStopageLink trsl = this.transportRouteStopageLinkService.getTransportRouteStopageLink(transportRouteStopageLinkId);
+            vo.getTransportRouteStopageLinkId();
+            VehicleContractLink vc = this.vehicleContractLinkService.getVehicleContractLink(vehicelContractLinkId);
+            vo.getVehicleContractLinkId();
+            VehicleDriverLink vd = this.vehicleDriverLinkService.getVehicleDriverLink(vehicleDriverLinkId);
+            vo.getVehicleDriverLinkId();
+            Insurance i = this.insuranceService.getInsurance(insuranceId);
+            vo.getInsuranceId();
 //            vo.setStrDateOfRegistration(DateFormatUtil.changeLocalDateFormat(vehicle1.getDateOfRegistration(), CmsConstants.DATE_FORMAT_dd_MM_yyyy));
 //            vo.setDateOfRegistration(null);
             ls.add(vo);
@@ -161,35 +173,60 @@ public class VehicleService {
     }
 
     public List<CmsVehicleListVo> searchVehicle(VehicleListFilterInput filter) throws Exception {
-//        List<Vehicle> vehicleList = new ArrayList<>();
+        List<Vehicle> vehicleList = new ArrayList<>();
         CmsVehicleListVo vo = new CmsVehicleListVo();
+         vo = CommonUtil.createCopyProperties(vehicleList, CmsVehicleListVo.class);
         List<CmsVehicleListVo> ls = new ArrayList<>();
         if (!CommonUtil.isNullOrEmpty(filter.getVehicleId())) {
             Vehicle v = this.vehicleRepository.findById(Long.parseLong(filter.getVehicleId())).get();
             vo.setVehicle(v);
-
-            TransportRouteVehicleLink trLink = new TransportRouteVehicleLink();
-            trLink.setVehicle(v);
-            List<TransportRouteVehicleLink> trList = this.transportRouteVehicleLinkRepository.findAll(Example.of(trLink));
-            vo.setTransportRouteVehicleLinkList(trList);
-
-            VehicleContractLink vcLink = new VehicleContractLink();
-            vcLink.setVehicle(v);
-            List<VehicleContractLink> vcList = this.vehicleContractLinkRepository.findAll(Example.of(vcLink));
-            vo.setVehicleContractLinkList(vcList);
-
-            for (TransportRouteVehicleLink tlink : trList) {
-                TransportRoute tr = tlink.getTransportRoute();
-                TransportRouteStopageLink tsLink = new TransportRouteStopageLink();
-                tsLink.setTransportRoute(tr);
-                List<TransportRouteStopageLink> tsList = this.transportRouteStopageLinkRepository.findAll(Example.of(tsLink));
-                vo.getTransportRouteStopageLinkList().add(tsList);
+        if (!CommonUtil.isNullOrEmpty(filter.getTransportRouteId()))  {
+            TransportRoute tr = this.transportRouteRepository.findById(Long.parseLong(filter.getTransportRouteId())).get();
+            vo.setTransportRoute(tr);
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getTransportRouteVehicleLinkId())) {
+            TransportRouteVehicleLink trvl = this.transportRouteVehicleLinkRepository.findById(Long.parseLong(filter.getTransportRouteVehicleLinkId())).get();
+            vo.setTransportRouteVehicleLink(trvl);
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getTransportRouteStopageLinkId())) {
+            TransportRouteStopageLink trsl = this.transportRouteStopageLinkRepository.findById(Long.parseLong(filter.getTransportRouteStopageLinkId())).get();
+            vo.setTransportRouteStopageLink(trsl);
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getVehicleContractLinkId())) {
+            VehicleContractLink vcl = this.vehicleContractLinkRepository.findById(Long.parseLong(filter.getVehicleContractLinkId())).get();
+            vo.setVehicleContractLink(vcl);
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getVehicleDriverLinkId())) {
+            VehicleDriverLink vdl = this.vehicleDriverLinkRepository.findById(Long.parseLong(filter.getVehicleDriverLinkId())).get();
+            vo.setVehicleDriverLink(vdl);
+        }
+        if (!CommonUtil.isNullOrEmpty(filter.getInsuranceId())) {
+            Insurance i = this.insuranceRepository.findById(Long.parseLong(filter.getInsuranceId())).get();
+            vo.setInsurance(i);
             }
 
-            VehicleDriverLink vdLink = new VehicleDriverLink();
-            vdLink.setVehicle(v);
-            List<VehicleDriverLink> vdList = this.vehicleDriverLinkRepository.findAll(Example.of(vdLink));
-            vo.setVehicleDriverLinkList(vdList);
+//            TransportRouteVehicleLink trLink = new TransportRouteVehicleLink();
+//            trLink.setVehicle(v);
+//            List<TransportRouteVehicleLink> trList = this.transportRouteVehicleLinkRepository.findAll(Example.of(trLink));
+//            vo.setTransportRouteVehicleLinkList(trList);
+
+//            VehicleContractLink vcLink = new VehicleContractLink();
+//            vcLink.setVehicle(v);
+//            List<VehicleContractLink> vcList = this.vehicleContractLinkRepository.findAll(Example.of(vcLink));
+//            vo.setVehicleContractLinkList(vcList);
+
+//            for (TransportRouteVehicleLink tlink : trList) {
+//                TransportRoute tr = tlink.getTransportRoute();
+//                TransportRouteStopageLink tsLink = new TransportRouteStopageLink();
+//                tsLink.setTransportRoute(tr);
+//                List<TransportRouteStopageLink> tsList = this.transportRouteStopageLinkRepository.findAll(Example.of(tsLink));
+//                vo.getTransportRouteStopageLinkList().add(tsList);
+//            }
+
+//            VehicleDriverLink vdLink = new VehicleDriverLink();
+//            vdLink.setVehicle(v);
+//            List<VehicleDriverLink> vdList = this.vehicleDriverLinkRepository.findAll(Example.of(vdLink));
+//            vo.setVehicleDriverLinkList(vdList);
             ls.add(vo);
         }
         return ls;
