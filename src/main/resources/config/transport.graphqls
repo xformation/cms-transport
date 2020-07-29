@@ -52,6 +52,7 @@ type VehicleDataCache{
    vehicle:         [CmsVehicleVo]
    employee:  [Employee]
    stopage:   [CmsStopageVo]
+   insurance: [CmsInsuranceVo]
    vehicleContractLink:  [CmsVehicleContractLinkVo]
    vehicleDriverLink:  [CmsVehicleDriverLinkVo]
    transportRouteVehicleLink:   [CmsTransportRouteVehicleLinkVo]

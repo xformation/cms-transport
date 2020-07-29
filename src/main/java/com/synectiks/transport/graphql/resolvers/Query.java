@@ -192,6 +192,7 @@ public class Query implements GraphQLQueryResolver {
         List<CmsContractVo> contractList = this.contractService.getContractList();
         List<CmsVehicleVo> vehicleList = this.vehicleService.getVehicleList();
         List<CmsStopageVo> stopageList = this.stopageService.getStopageList();
+        List<CmsInsuranceVo> insuranceList = this.insuranceService.getInsuranceList();
         List<CmsVehicleContractLinkVo> vehicleContractLinkList = this.vehicleContractLinkService.getVehicleContractList();
         List<CmsVehicleDriverLinkVo> vehicleDriverLinkList = this.vehicleDriverLinkService.getVehicleDriverList();
         List<CmsTransportRouteVehicleLinkVo> transportRouteVehicleLinkList = this.transportRouteVehicleLinkService.getTransportRouteVehicleList();
@@ -206,6 +207,7 @@ public class Query implements GraphQLQueryResolver {
         cache.setContract(contractList);
         cache.setVehicle(vehicleList);
         cache.setStopage(stopageList);
+        cache.setInsurance(insuranceList);
         cache.setVehicleContractLink(vehicleContractLinkList);
         cache.setVehicleDriverLink(vehicleDriverLinkList);
         cache.setTransportRouteVehicleLink(transportRouteVehicleLinkList);
