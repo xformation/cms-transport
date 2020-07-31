@@ -100,7 +100,7 @@ public class VehicleService {
     @Autowired
     TransportRouteRepository transportRouteRepository;
 
-    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId,Long insuranceId, Long transportRouteVehicleLinkId, Long transportRouteStopageLinkId,Long vehicleDriverLinkId,Long vehicelContractLinkId) throws Exception {
+    public List<CmsVehicleListVo> searchVehicle(Long transportRouteId, Long vehicleId,Long insuranceId, Long transportRouteVehicleLinkId, Long transportRouteStopageLinkId,Long vehicleDriverLinkId,Long vehicleContractLinkId) throws Exception {
         Vehicle vehicle = new Vehicle();
         TransportRouteVehicleLink tvl = new TransportRouteVehicleLink();
         CmsVehicleListVo vo = new CmsVehicleListVo();
@@ -128,9 +128,9 @@ public class VehicleService {
             vo.setVehicleDriverLink(vdl);
         }
         VehicleContractLink vcl = new VehicleContractLink();
-        if (vehicelContractLinkId != null) {
+        if (vehicleContractLinkId != null) {
 //            Vehicle vehicle = new Vehicle();
-            vcl.setId(vehicelContractLinkId);
+            vcl.setId(vehicleContractLinkId);
             vo.setVehicleContractLink(vcl);
 //            vdl.setVehicle(vehicle);
         }
@@ -159,7 +159,7 @@ public class VehicleService {
             vo.getTransportRouteVehicleLinkId();
             TransportRouteStopageLink trsl = this.transportRouteStopageLinkService.getTransportRouteStopageLink(transportRouteStopageLinkId);
             vo.getTransportRouteStopageLinkId();
-            VehicleContractLink vc = this.vehicleContractLinkService.getVehicleContractLink(vehicelContractLinkId);
+            VehicleContractLink vc = this.vehicleContractLinkService.getVehicleContractLink(vehicleContractLinkId);
             vo.getVehicleContractLinkId();
             VehicleDriverLink vd = this.vehicleDriverLinkService.getVehicleDriverLink(vehicleDriverLinkId);
             vo.getVehicleDriverLinkId();
@@ -227,6 +227,8 @@ public class VehicleService {
 //            vdLink.setVehicle(v);
 //            List<VehicleDriverLink> vdList = this.vehicleDriverLinkRepository.findAll(Example.of(vdLink));
 //            vo.setVehicleDriverLinkList(vdList);
+            vo.setVehicleId(v.getId());
+        vo.setId(v.getId());
             ls.add(vo);
         }
         return ls;
