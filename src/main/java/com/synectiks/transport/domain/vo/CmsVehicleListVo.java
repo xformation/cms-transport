@@ -28,7 +28,7 @@ public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
     private Long transportRouteVehicleLinkId;
     private Long transportRouteStopageLinkId;
     private VehicleContractLink vehicleContractLink;
-    private VehicleDriverLink vehicleDriverLink;
+    private CmsVehicleDriverLinkVo vehicleDriverLink;
     private TransportRouteVehicleLink transportRouteVehicleLink;
     private TransportRouteStopageLink transportRouteStopageLink;
     private List<List<TransportRouteStopageLink>> transportRouteStopageLinkList = new ArrayList<>();
@@ -238,11 +238,11 @@ public class CmsVehicleListVo extends CmsCommonVo implements Serializable {
         this.vehicleContractLink = vehicleContractLink;
     }
 
-    public VehicleDriverLink getVehicleDriverLink() {
+    public CmsVehicleDriverLinkVo getVehicleDriverLink() {
         return vehicleDriverLink;
     }
 
-    public void setVehicleDriverLink(VehicleDriverLink vehicleDriverLink) {
+    public void setVehicleDriverLink(CmsVehicleDriverLinkVo vehicleDriverLink) {
         this.vehicleDriverLink = vehicleDriverLink;
     }
 

@@ -83,7 +83,7 @@ type CmsVehicleListVo{
    insurance:    Insurance
    vehicle:    Vehicle
    vehicleContractLink:  VehicleContractLink
-   vehicleDriverLink:   VehicleDriverLink
+   vehicleDriverLink:   CmsVehicleDriverLinkVo
    transportRouteVehicleLink:  TransportRouteVehicleLink
    transportRouteStopageLink:   TransportRouteStopageLink
    transportRouteList: [TransportRoute]

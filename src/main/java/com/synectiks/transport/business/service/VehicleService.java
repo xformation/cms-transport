@@ -11,6 +11,7 @@ import com.synectiks.transport.config.ApplicationProperties;
 import com.synectiks.transport.constant.CmsConstants;
 import com.synectiks.transport.domain.*;
 import com.synectiks.transport.domain.vo.CmsTransportRouteVo;
+import com.synectiks.transport.domain.vo.CmsVehicleDriverLinkVo;
 import com.synectiks.transport.domain.vo.CmsVehicleListVo;
 import com.synectiks.transport.domain.vo.CmsVehicleVo;
 import com.synectiks.transport.filter.vehicle.VehicleListFilterInput;
@@ -122,7 +123,7 @@ public class VehicleService {
             transportRoute.setId(transportRouteId);
             vo.setTransportRoute(transportRoute);
         }
-        VehicleDriverLink vdl = new VehicleDriverLink();
+        CmsVehicleDriverLinkVo vdl = new CmsVehicleDriverLinkVo();
         if (vehicleDriverLinkId !=null){
             vdl.setId(vehicleDriverLinkId);
             vo.setVehicleDriverLink(vdl);
@@ -197,7 +198,7 @@ public class VehicleService {
             vo.setVehicleContractLink(vcl);
         }
         if (!CommonUtil.isNullOrEmpty(filter.getVehicleDriverLinkId())) {
-            VehicleDriverLink vdl = this.vehicleDriverLinkRepository.findById(Long.parseLong(filter.getVehicleDriverLinkId())).get();
+            CmsVehicleDriverLinkVo vdl = this.vehicleDriverLinkService.getCmsVehicleDriverLink(Long.parseLong(filter.getVehicleDriverLinkId()));
             vo.setVehicleDriverLink(vdl);
         }
         if (!CommonUtil.isNullOrEmpty(filter.getInsuranceId())) {
